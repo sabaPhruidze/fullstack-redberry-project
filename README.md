@@ -13,4 +13,7 @@
 
 1. retrieved images and icons for home page
 2. Created Main layout which consists Header,main part and footer
-3.
+3. tailwind.config.ts added for saving oftenly used colors
+4. build Header correctly for not authorized case
+5. added more colors in tailwind.config.ts and finished header part for unauthorized case
+6.

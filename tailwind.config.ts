@@ -8,6 +8,18 @@ export default {
       colors: {
         redberry: {
           background: "#F5F5F5",
+
+          border: {
+            gray: "#D1D1D1",
+            purple: {
+              light: "#958FEF",
+            },
+          },
+
+          text: {
+            purple: "#4F46E5",
+            gray: "#525252",
+          },
         },
       },
     },

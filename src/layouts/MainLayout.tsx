@@ -7,7 +7,7 @@ type MainLayoutProps = {
 };
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div>
+    <div className="bg-redberry-background">
       <Header />
       <div>{children}</div>
       <Footer />
