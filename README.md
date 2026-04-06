@@ -5,6 +5,7 @@
 3. installed tailwind for style.
 4. installed react-router-dom.
 5. Created Home page and added as Route ,also added \* which means all routes that are not written will be forwarded to / this path
+6. added lazy/loading for faster first retrieve. page will display through Loader before all data retrieved and than will display landing page
 
    stacks: react.js, typescript, tailwind
 
