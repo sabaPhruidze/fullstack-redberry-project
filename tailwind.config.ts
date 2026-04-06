@@ -18,7 +18,12 @@ export default {
 
           text: {
             purple: "#4F46E5",
-            gray: "#525252",
+
+            gray: {
+              light: "#525252",
+              medium: "#3D3D3D",
+            },
+            black: "#0A0A0A",
           },
         },
       },

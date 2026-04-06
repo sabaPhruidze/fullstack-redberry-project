@@ -6,7 +6,7 @@ import ARROW_LEFT from "../../../assets/icons/home/Arrowleft (1).svg";
 import ARROW_RIGHT from "../../../assets/icons/home/Carousel_nav (1).svg";
 const HeroSection = () => {
   return (
-    <section className="w-[1920px] px-[177px] py-[64px]">
+    <section className="py-[64px]">
       <div
         className="relative text-white w-[1566px] h-[420px] rounded-[30px] p-[48px] flex flex-col gap-[12px]  bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${HERO})` }}

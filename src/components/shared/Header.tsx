@@ -12,7 +12,7 @@ const Header = () => {
         <div className="flex w-[510px] h-[56px] items-center gap-[51px]">
           <div className="flex flex-row items-center w-[220px] px-[15px] border-1 border-black">
             <img src={STAR3} alt="3 stars" className="w-[26px] h-[26px]" />
-            <p className="w-[156px] font-[500] text-[20px] text-redberry-text-gray">
+            <p className="w-[156px] font-[500] text-[20px] text-redberry-text-gray-light">
               Browse Courses
             </p>
           </div>
