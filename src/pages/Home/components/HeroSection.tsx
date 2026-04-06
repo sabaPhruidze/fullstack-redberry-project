@@ -12,10 +12,10 @@ const HeroSection = () => {
         style={{ backgroundImage: `url(${HERO})` }}
       >
         <div>
-          <h1 className=" leading-[100%] text-[48px] font-bold h-[58px] ">
+          <h1 className="leading-[100%] text-[48px] font-bold h-[58px] ">
             Start learning something new today
           </h1>
-          <p className="mt-[12px] mb-[40px] font-light text-[24px] ">
+          <p className="mt-[12px] mb-[40px] font-light text-[24px] w-[1218px]">
             Explore a wide range of expert-led courses in design, development,
             business, and more. Find the skills you need to grow your career and
             learn at your own pace.

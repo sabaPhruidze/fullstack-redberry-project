@@ -18,3 +18,5 @@
 5. added more colors in tailwind.config.ts and finished header part for unauthorized case
 6. build hero Section and added button ui component
 7. started startLearning component and card needs to be added
+8. installed axios and tanstack query since It will need CRUD methods to be used and added necessary folders and files for using them (currently for card's data fetching in home page).
+9. displayed fetched data in StartLearning so currently it displays correctly. Since index 2 data avgRating was null I made it zero and adjusted also starts with the next logic if avgRating is null than empty start (it will not be yellow) else if it is less than or is same as 4 than half star and if it is above 4 than full start (fully yellow).Hope this is what the goal was .
