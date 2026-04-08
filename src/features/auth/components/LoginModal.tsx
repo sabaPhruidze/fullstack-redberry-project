@@ -1,5 +1,7 @@
 import CLOSE_ICON from "../../../assets/icons/authentification/ic_round-close.svg";
+import { useLockBodyScroll } from "../../../hooks/use-lock-body-scroll";
 import AuthModalHeader from "./AuthModalHeader";
+import AuthSignUpStepOneSection from "./AuthSignUpStepOneSection";
 import AuthStepIndicator from "./AuthStepIndicator";
 
 type LoginModalProps = {
@@ -7,6 +9,8 @@ type LoginModalProps = {
 };
 
 const LoginModal = ({ onClose }: LoginModalProps) => {
+  useLockBodyScroll(true);
+
   return (
     <div className="fixed inset-0 z-50 bg-[#00000040]">
       <div className="flex min-h-screen items-center justify-center">
@@ -31,6 +35,7 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
               subtitle="Join and start learning today"
             />
             <AuthStepIndicator currentStep={1} totalSteps={3} />
+            <AuthSignUpStepOneSection />
           </div>
         </section>
       </div>

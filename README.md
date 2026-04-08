@@ -74,3 +74,27 @@
    - Colors: active `#B7B3F4`, inactive `#EEEDFC`
 4. Added `24px` spacing below the progress row for the next section (Email block later).
 5. No input fields, validation, or API logic added in this step.
+
+## Sign Up Step 1 UI Block
+
+1. Created `src/features/auth/components/AuthSignUpStepOneSection.tsx`.
+2. Added only the next visual section under the step indicator:
+   - Email label (`Email*`)
+   - Email input (`you@example.com`)
+   - `Next` button
+   - Footer with divider row (`or`) and text row (`Already have an account? Log In`)
+3. Used `360px` content width and exact spacing values:
+   - Label to input: `8px`
+   - Input to button: `16px`
+   - Button to footer: `16px`
+   - Footer internal gap: `8px`
+4. Kept `Log In` dark + underlined, and the rest gray, close to design.
+5. No validation, submit logic, API logic, or auth logic added in this step.
+
+## Auth Modal Scroll Lock
+
+1. Created reusable hook `src/hooks/use-lock-body-scroll.ts`.
+2. Hook API: `useLockBodyScroll(isLocked: boolean)`.
+3. Connected hook inside auth modal component (`LoginModal`).
+4. While modal is open, body scroll is locked with `document.body.style.overflow = "hidden"`.
+5. On close/unmount, previous body overflow value is restored safely.
