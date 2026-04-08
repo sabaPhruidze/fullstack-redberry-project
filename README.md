@@ -24,3 +24,4 @@
 11. added in progress courses endpoint hook types and simple continue learning section rendering than imported it on ContinueLearning component and it returns GET https://api.redclass.redberryinternship.ge/api/courses/in-progress 401 (Unauthorized). Also Imported necessary icons for footer as well and built part of it's design in advance .
 12. I build a mock "continue learning" with 3 cards .than blarred it and added log in suggestion component
 13. footer is finished as well and by this Home Page visual part done .Moving forward I will start logic part from now on
+14.
