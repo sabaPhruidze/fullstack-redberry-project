@@ -20,7 +20,10 @@ const HeroSection = () => {
             business, and more. Find the skills you need to grow your career and
             learn at your own pace.
           </p>
-          <Button text="Browse Courses" classname="w-[206px] h-[64px]" />
+          <Button
+            text="Browse Courses"
+            classname="text-[20px] w-[206px] h-[64px]"
+          />
           <div className="flex fle-row justify-center  mt-[31px]">
             <div className="w-[1206px] h-[54px] flex items-center gap-[12px] justify-center">
               <img

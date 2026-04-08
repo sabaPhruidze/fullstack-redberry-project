@@ -62,8 +62,8 @@ const ContinueLearning = () => {
         </div>
         <div className="mt-[32px] flex flex-row flex-wrap gap-[24px] w-full h-[219px] relative z-1">
           {DATA.data.map((course) => (
-            <div>
-              <ContinueLearningCard key={course.id} course={course} />
+            <div key={course.id}>
+              <ContinueLearningCard course={course} />
               <ContinueLearningLocked />
             </div>
           ))}

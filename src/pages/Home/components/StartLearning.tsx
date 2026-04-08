@@ -70,7 +70,7 @@ const StartLearning = () => {
                     ${Number(course.basePrice)}
                   </p>
                 </div>
-                <Button text="Details" classname="text-[#F5F5F5]" />
+                <Button text="Details" classname="text-[#F5F5F5] text-[20px]" />
               </div>
             </div>
           ))}

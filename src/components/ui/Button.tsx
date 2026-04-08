@@ -4,9 +4,12 @@ interface ButtonProps {
 }
 
 const Button = ({ text, classname }: ButtonProps) => {
+  const hasCustomPadding = !!classname?.match(/(^|\s)p[trblxy]?-[^\s]+/);
+  const paddingClass = hasCustomPadding ? "" : "px-[25px] py-[17px]";
+
   return (
     <button
-      className={`${classname} text-[20px] px-[25px] py-[17px] bg-redberry-text-purple text-white rounded-[8px] font-[500]`}
+      className={`${paddingClass} bg-redberry-text-purple text-white rounded-[8px] font-[500] ${classname ?? ""}`}
     >
       {text}
     </button>

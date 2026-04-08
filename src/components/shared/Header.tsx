@@ -19,7 +19,7 @@ const Header = () => {
           </div>
           <div className="flex flex-row gap-[15px]">
             <OutlineButton text="Log In" classname="w-[114px] h-[60px]" />
-            <Button text="Sign Up" classname="w-[125px] h-[60px]" />
+            <Button text="Sign Up" classname="text-[20px] w-[125px] h-[60px]" />
           </div>
         </div>
       </div>
