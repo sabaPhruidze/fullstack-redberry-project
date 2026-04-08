@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import LOGO from "../../assets/icons/header/Logo.svg";
 import STAR3 from "../../assets/icons/header/Nav icon.svg";
 import Button from "../ui/Button";
+import OutlineButton from "../ui/OutlineButton";
 const Header = () => {
   return (
     <header className="w-[1920px] h-[108px] border-b-1 border-b-redberry-border-gray">
@@ -17,9 +18,7 @@ const Header = () => {
             </p>
           </div>
           <div className="flex flex-row gap-[15px]">
-            <button className="w-[114px] h-[60px] border-2 border-redberry-border-purple-light rounded-[8px] font-[500] text-[20px] text-redberry-text-purple">
-              Log In
-            </button>
+            <OutlineButton text="Log In" classname="w-[114px] h-[60px]" />
             <Button text="Sign Up" classname="w-[125px] h-[60px]" />
           </div>
         </div>
