@@ -93,4 +93,5 @@
 3. Login form now uses React Hook Form + Zod schema validation from a separate auth schemas folder.
 4. RegisterModal now uses React Hook Form + Zod schema for core validation and real register submit flow.
 5. Unified auth input error visuals (label, border, placeholder, helper text in red) for Login and Register, and split modal internals into child components to keep modal files smaller.
-6. After Login the visual part of header's right side changes. Also when profile icon is clicked displays modal but currently nothing written inside
+6. After Login the visual part of header's right side changes. Also when profile icon is clicked displays modal but currently nothing written inside.
+7. Currently no enrolled course wilbe so nothing will be displayed after login . I will get back to this part later after finishing all major parts

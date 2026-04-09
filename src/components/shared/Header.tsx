@@ -56,7 +56,7 @@ const Header = () => {
                     alt="opened book"
                     className="h-[26px] w-[26px]"
                   />
-                  <span className="h-[24px] w-[163px] text-left font-[500] text-[20px] leading-[100%] text-[#666666]">
+                  <span className="h-[24px] w-[163px] text-left font-[500] text-[20px] leading-[100%] text-redberry-text-gray-light">
                     Enrolled Courses
                   </span>
                 </span>
