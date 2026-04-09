@@ -42,6 +42,8 @@
 1. Created src/features/auth/components/AuthSignUpStepOneSection.tsx.
 2. Added the email field, Next button, and footer actions.
 3. Kept this step focused on UI only.
+4. adjusted sign up modal footer layout to match figma
+5. aligned divider row and login action row
 
 ## Auth Modal Scroll Lock
 
@@ -55,6 +57,8 @@
 2. Connected Step 1 Next to open Step 2 in the same modal.
 3. Added back navigation from Step 2 to Step 1.
 4. Added Step 2 fields and updated step indicator state.
+5. replaced inline back arrow with provided svg asset
+6. kept auth modal back button simple and reusable
 
 ## Sign Up Step 2 Exact Variant
 
@@ -70,8 +74,3 @@
 4. Added separate password visibility toggle for both fields.
 5. Prevented moving to the next step until validation passes.
 6. Reset sign up state when the modal is closed.
-
-## Sign Up Modal Footer Update
-
-- adjusted sign up modal footer layout to match figma
-- aligned divider row and login action row
