@@ -19,7 +19,7 @@ const AuthUploadAvatarField = ({
   };
 
   return (
-    <div className={`${showTopSpacing ? "mt-[24px]" : ""} w-[360px]`}>
+    <div className={`${showTopSpacing ? "mt-[24px]" : ""} flex w-[360px] flex-col gap-[12px]`}>
       <label
         htmlFor="signup-avatar-upload"
         className="h-[17px] w-[360px] text-[14px] leading-[100%] text-[#3D3D3D]"
@@ -27,17 +27,17 @@ const AuthUploadAvatarField = ({
       >
         Upload Avatar
       </label>
-      <div className="mt-[12px] flex h-[140px] w-[360px] items-center justify-center rounded-[8px] border-[1.5px] border-[#D1D1D1] bg-white px-[16px]">
-        <div className="flex w-[360px] flex-col items-center gap-[8px] text-center">
+      <div className="flex h-[140px] w-[360px] items-center justify-center rounded-[8px] border-[1.5px] border-[#D1D1D1] bg-white px-[16px]">
+        <div className="flex flex-col items-center gap-[8px] text-center">
           <img src={DOWNLOAD_ICON} alt="" aria-hidden="true" className="h-[34px] w-[34px]" />
-          <div className="flex h-[38px] flex-col gap-[6px]">
-            <p className="text-[14px] leading-[100%] text-[#666666]" style={{ fontWeight: 500 }}>
+          <div className="flex flex-col items-center gap-[6px]">
+            <p className="text-center text-[14px] leading-[100%] text-[#666666]" style={{ fontWeight: 500 }}>
               Drag and drop or{" "}
-              <button type="button" onClick={handleUploadClick} className="text-[#4F46E5] underline">
+              <button type="button" onClick={handleUploadClick} className="text-[14px] leading-[100%] text-[#4F46E5] underline">
                 Upload file
               </button>
             </p>
-            <p className="h-[15px] text-[12px] leading-[100%] text-[#ADADAD]" style={{ fontWeight: 400 }}>
+            <p className="text-center text-[12px] leading-[100%] text-[#ADADAD]" style={{ fontWeight: 400 }}>
               JPG, PNG or WebP
             </p>
           </div>
