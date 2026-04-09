@@ -43,6 +43,7 @@ const RegisterModal = ({ onClose }: RegisterModalProps) => {
     <AuthModalShell
       onClose={closeModal}
       closeAriaLabel="Close register modal"
+      closeOnOverlayClick
       leadingControl={
         !isStepOne ? <AuthModalBackButton onClick={goBackStep} /> : undefined
       }
