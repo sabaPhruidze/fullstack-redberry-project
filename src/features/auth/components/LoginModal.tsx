@@ -5,6 +5,7 @@ import AuthModalBackButton from "./AuthModalBackButton";
 import AuthModalHeader from "./AuthModalHeader";
 import AuthSignUpStepOneSection from "./AuthSignUpStepOneSection";
 import AuthSignUpStepTwoSection from "./AuthSignUpStepTwoSection";
+import AuthSignUpStepThreeSection from "./AuthSignUpStepThreeSection";
 import AuthStepIndicator from "./AuthStepIndicator";
 
 type LoginModalProps = {
@@ -12,43 +13,19 @@ type LoginModalProps = {
 };
 
 const LoginModal = ({ onClose }: LoginModalProps) => {
-  const {
-    currentStep,
-    isStepOne,
-    isStepTwo,
-    signUpForm,
-    goToStepTwo,
-    goToStepThree,
-    goBackToStepOne,
-    updateField,
-    closeModal,
-  } = useSignUpModalState({ onClose });
+  const { currentStep, isStepOne, isStepTwo, isStepThree, signUpForm, goToStepTwo, goToStepThree, goBackStep, updateField, closeModal } = useSignUpModalState({ onClose });
   useLockBodyScroll(true);
 
   return (
     <div className="fixed inset-0 z-50 bg-[#00000040]">
       <div className="flex min-h-screen items-center justify-center">
-        <section
-          role="dialog"
-          aria-modal="true"
-          className="relative flex w-[460px] flex-col gap-[12px] rounded-[12px] bg-white p-[50px]"
-          style={{ height: isStepTwo ? "513px" : undefined }}
-        >
-          {isStepTwo && <AuthModalBackButton onClick={goBackToStepOne} />}
-          <button
-            type="button"
-            onClick={closeModal}
-            aria-label="Close auth modal"
-            className="absolute flex h-6 w-6 items-center justify-center"
-            style={{ top: "20.5px", right: "15px" }}
-          >
+        <section role="dialog" aria-modal="true" className="relative flex w-[460px] flex-col gap-[12px] rounded-[12px] bg-white p-[50px]">
+          {!isStepOne && <AuthModalBackButton onClick={goBackStep} />}
+          <button type="button" onClick={closeModal} aria-label="Close auth modal" className="absolute flex h-6 w-6 items-center justify-center" style={{ top: "20.5px", right: "15px" }}>
             <img src={CLOSE_ICON} alt="" className="h-6 w-6" />
           </button>
           <div className="flex w-[360px] flex-col gap-[24px]">
-            <AuthModalHeader
-              title="Create Account"
-              subtitle="Join and start learning today"
-            />
+            <AuthModalHeader title="Create Account" subtitle="Join and start learning today" />
             <AuthStepIndicator currentStep={currentStep} totalSteps={3} />
             {isStepOne && (
               <AuthSignUpStepOneSection
@@ -63,13 +40,12 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
                 password={signUpForm.password}
                 confirmPassword={signUpForm.confirmPassword}
                 onPasswordChange={(value) => updateField("password", value)}
-                onConfirmPasswordChange={(value) =>
-                  updateField("confirmPassword", value)
-                }
+                onConfirmPasswordChange={(value) => updateField("confirmPassword", value)}
                 onNext={goToStepThree}
                 onLogInClick={closeModal}
               />
             )}
+            {isStepThree && <AuthSignUpStepThreeSection onSignUp={closeModal} onLogInClick={closeModal} />}
           </div>
         </section>
       </div>

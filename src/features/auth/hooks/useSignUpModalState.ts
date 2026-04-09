@@ -16,7 +16,9 @@ export const useSignUpModalState = ({ onClose }: UseSignUpModalStateParams) => {
   );
 
   const isStepOne = currentStep === 1;
-  const isStepTwo = currentStep === 2 || currentStep === 3;
+  const isStepTwo = currentStep === 2;
+  const isStepThree = currentStep === 3;
+  const goBackStep = () => setCurrentStep((prev) => (prev === 3 ? 2 : 1));
 
   const updateField = (field: keyof SignUpFormValues, value: string) => {
     setSignUpForm((prev) => ({ ...prev, [field]: value }));
@@ -32,10 +34,11 @@ export const useSignUpModalState = ({ onClose }: UseSignUpModalStateParams) => {
     currentStep,
     isStepOne,
     isStepTwo,
+    isStepThree,
     signUpForm,
     goToStepTwo: () => setCurrentStep(2),
     goToStepThree: () => setCurrentStep(3),
-    goBackToStepOne: () => setCurrentStep(1),
+    goBackStep,
     updateField,
     closeModal,
   };

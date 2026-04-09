@@ -1,42 +1,50 @@
+import type { ComponentType, SVGProps } from "react";
+
 type AuthPasswordInputFieldProps = {
   id: string;
   label: string;
   value: string;
-  type: "password" | "text";
+  type?: "password" | "text";
   placeholder: string;
-  icon: string;
-  iconAlt: string;
-  ariaLabel: string;
+  icon?: ComponentType<SVGProps<SVGSVGElement>>;
+  ariaLabel?: string;
+  labelColor?: string;
   showTopSpacing?: boolean;
   error?: string;
   onChange: (value: string) => void;
-  onToggleVisibility: () => void;
+  onToggleVisibility?: () => void;
 };
 
 const AuthPasswordInputField = ({
   id,
   label,
   value,
-  type,
+  type = "text",
   placeholder,
-  icon,
-  iconAlt,
+  icon: Icon,
   ariaLabel,
+  labelColor = "#000000",
   showTopSpacing = false,
   error,
   onChange,
   onToggleVisibility,
 }: AuthPasswordInputFieldProps) => {
+  const hasError = Boolean(error);
+  const iconColorClass = hasError ? "text-[#F4161A]" : "text-[#ADADAD]";
+
   return (
-    <>
+    <div className={`${showTopSpacing ? "mt-[24px]" : ""} flex w-[360px] flex-col`}>
       <label
         htmlFor={id}
-        className={`${showTopSpacing ? "mt-[24px]" : ""} block h-[17px] w-[360px] text-[14px] leading-[100%]`}
-        style={{ fontWeight: 500, color: "#000000" }}
+        className="h-[17px] w-[360px] text-[14px] leading-[100%]"
+        style={{ fontWeight: 500, color: hasError ? "#F4161A" : labelColor }}
       >
         {label}
       </label>
-      <div className="mt-[8px] flex h-[48px] w-[360px] items-center gap-[10px] rounded-[8px] border-[1.5px] border-[#D1D1D1] bg-white px-[13px] py-[12px] pr-[15px]">
+      <div
+        className="mt-[8px] flex h-[48px] w-[360px] items-center gap-[10px] rounded-[8px] border-[1.5px] bg-white px-[13px] py-[12px] pr-[15px]"
+        style={{ borderColor: hasError ? "#F4161A" : "#D1D1D1" }}
+      >
         <input
           id={id}
           type={type}
@@ -46,14 +54,14 @@ const AuthPasswordInputField = ({
           className="h-full w-full border-0 bg-transparent p-0 text-[14px] leading-[100%] text-[#141414] outline-none placeholder:text-[#8A8A8A]"
           style={{ fontWeight: 500 }}
         />
-        <button type="button" aria-label={ariaLabel} onClick={onToggleVisibility}>
-          <img src={icon} alt={iconAlt} className="h-[22px] w-[22px]" />
-        </button>
+        {Icon && onToggleVisibility && ariaLabel ? (
+          <button type="button" aria-label={ariaLabel} onClick={onToggleVisibility}>
+            <Icon aria-hidden="true" focusable="false" className={`h-[22px] w-[22px] ${iconColorClass}`} />
+          </button>
+        ) : null}
       </div>
-      {error && (
-        <p className="mt-[6px] text-[12px] leading-[100%] text-[#D14343]">{error}</p>
-      )}
-    </>
+      {hasError && <p className="mt-[5px] h-[15px] w-[360px] text-[12px] leading-[100%] text-[#F4161A]" style={{ fontWeight: 400 }}>{error}</p>}
+    </div>
   );
 };
 

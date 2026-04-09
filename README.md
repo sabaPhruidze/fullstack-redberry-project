@@ -76,3 +76,10 @@
 4. Added separate password visibility toggle for both fields.
 5. Prevented moving to the next step until validation passes.
 6. Reset sign up state when the modal is closed.
+
+## Sign Up Step 3 UI Block
+
+1. Added a dedicated Step 3 section component with username input, upload avatar block, Sign Up button, and footer.
+2. Fixed Step 3 modal flow rendering so step 3 has its own content and correct back navigation to step 2.
+3. Matched Step 3 wrapper/layout structure to Figma spacing: 460 modal with 50 padding, 12 gap, and 360 inner content alignment.
+4. Built upload avatar area with existing upload icon asset, centered content, inline upload action, and helper text.

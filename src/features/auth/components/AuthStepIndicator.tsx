@@ -7,18 +7,21 @@ const AuthStepIndicator = ({
   currentStep = 1,
   totalSteps = 3,
 }: AuthStepIndicatorProps) => {
-  const steps = Array.from({ length: totalSteps }, (_, index) => index < currentStep);
+  const safeCurrentStep = Math.min(Math.max(currentStep, 1), totalSteps);
+
+  const getStepColor = (index: number) => {
+    if (index < safeCurrentStep - 1) return "#4F46E5";
+    if (index === safeCurrentStep - 1) return "#B7B3F4";
+    return "#EEEDFC";
+  };
 
   return (
     <div className="flex w-[360px] gap-[8px]">
-      {steps.map((isActive, index) => (
+      {Array.from({ length: totalSteps }, (_, index) => (
         <div
           key={index}
-          className="h-[8px] rounded-[30px]"
-          style={{
-            width: "114.67px",
-            backgroundColor: isActive ? "#4F46E5" : "#EEEDFC",
-          }}
+          className="h-[8px] flex-1 rounded-[30px]"
+          style={{ backgroundColor: getStepColor(index) }}
         />
       ))}
     </div>
