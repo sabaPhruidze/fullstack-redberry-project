@@ -36,7 +36,7 @@ const AuthSignUpStepTwoSection = ({
         value={password}
         type={showPassword ? "text" : "password"}
         placeholder="Password"
-        icon={showPassword ? EYE_CLOSED_ICON : EYE_OPENED_ICON}
+        icon={showPassword ? EYE_OPENED_ICON : EYE_CLOSED_ICON}
         ariaLabel="Toggle password visibility"
         error={errors.password}
         onChange={(value) => { onPasswordChange(value); updateError("password"); }}
