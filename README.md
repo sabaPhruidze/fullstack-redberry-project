@@ -83,3 +83,5 @@
 2. Fixed Step 3 modal flow rendering so step 3 has its own content and correct back navigation to step 2.
 3. Matched Step 3 wrapper/layout structure to Figma spacing: 460 modal with 50 padding, 12 gap, and 360 inner content alignment.
 4. Built upload avatar area with existing upload icon asset, centered content, inline upload action, and helper text.
+5. Connected sign up to backend `POST /register` using shared axios and TanStack Query mutation.
+6. Sign up now sends multipart form data (with optional avatar), stores `access_token` and `auth_user` in localStorage, and closes modal on success.

@@ -20,7 +20,10 @@ export const useSignUpModalState = ({ onClose }: UseSignUpModalStateParams) => {
   const isStepThree = currentStep === 3;
   const goBackStep = () => setCurrentStep((prev) => (prev === 3 ? 2 : 1));
 
-  const updateField = (field: keyof SignUpFormValues, value: string) => {
+  const updateField = <K extends keyof SignUpFormValues>(
+    field: K,
+    value: SignUpFormValues[K],
+  ) => {
     setSignUpForm((prev) => ({ ...prev, [field]: value }));
   };
 

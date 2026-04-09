@@ -1,19 +1,64 @@
 import CLOSE_ICON from "../../../assets/icons/authentification/ic_round-close.svg";
 import { useSignUpModalState } from "../hooks/useSignUpModalState";
 import { useLockBodyScroll } from "../../../hooks/use-lock-body-scroll";
+import useRegister from "../../../api/hooks/useRegister";
 import AuthModalBackButton from "./AuthModalBackButton";
 import AuthModalHeader from "./AuthModalHeader";
 import AuthSignUpStepOneSection from "./AuthSignUpStepOneSection";
 import AuthSignUpStepTwoSection from "./AuthSignUpStepTwoSection";
 import AuthSignUpStepThreeSection from "./AuthSignUpStepThreeSection";
 import AuthStepIndicator from "./AuthStepIndicator";
+import type { SignUpFormValues } from "../types/signup";
 
 type LoginModalProps = {
   onClose?: () => void;
 };
 
 const LoginModal = ({ onClose }: LoginModalProps) => {
-  const { currentStep, isStepOne, isStepTwo, isStepThree, signUpForm, goToStepTwo, goToStepThree, goBackStep, updateField, closeModal } = useSignUpModalState({ onClose });
+  const {
+    currentStep,
+    isStepOne,
+    isStepTwo,
+    isStepThree,
+    signUpForm,
+    goToStepTwo,
+    goToStepThree,
+    goBackStep,
+    updateField,
+    closeModal,
+  } = useSignUpModalState({ onClose });
+  const registerMutation = useRegister();
+  const signUpErrorText = registerMutation.isError
+    ? "Registration failed. Please try again."
+    : undefined;
+
+  const updateSignUpField = <K extends keyof SignUpFormValues>(
+    field: K,
+    value: SignUpFormValues[K],
+  ) => {
+    if (registerMutation.isError) {
+      registerMutation.reset();
+    }
+
+    updateField(field, value);
+  };
+
+  const handleSignUp = async () => {
+    if (registerMutation.isPending) {
+      return;
+    }
+
+    try {
+      const response = await registerMutation.mutateAsync(signUpForm);
+      localStorage.setItem("access_token", response.token);
+      localStorage.setItem("auth_user", JSON.stringify(response.user));
+      console.log("Registration successful:", response);
+      closeModal();
+    } catch (error) {
+      console.log("Registration failed:", error);
+    }
+  };
+
   useLockBodyScroll(true);
 
   return (
@@ -30,7 +75,7 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
             {isStepOne && (
               <AuthSignUpStepOneSection
                 email={signUpForm.email}
-                onEmailChange={(value) => updateField("email", value)}
+                onEmailChange={(value) => updateSignUpField("email", value)}
                 onNext={goToStepTwo}
                 onLogInClick={closeModal}
               />
@@ -39,13 +84,31 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
               <AuthSignUpStepTwoSection
                 password={signUpForm.password}
                 confirmPassword={signUpForm.confirmPassword}
-                onPasswordChange={(value) => updateField("password", value)}
-                onConfirmPasswordChange={(value) => updateField("confirmPassword", value)}
+                onPasswordChange={(value) =>
+                  updateSignUpField("password", value)
+                }
+                onConfirmPasswordChange={(value) =>
+                  updateSignUpField("confirmPassword", value)
+                }
                 onNext={goToStepThree}
                 onLogInClick={closeModal}
               />
             )}
-            {isStepThree && <AuthSignUpStepThreeSection onSignUp={closeModal} onLogInClick={closeModal} />}
+            {isStepThree && (
+              <AuthSignUpStepThreeSection
+                username={signUpForm.username}
+                onUsernameChange={(value) =>
+                  updateSignUpField("username", value)
+                }
+                onAvatarFileChange={(file) =>
+                  updateSignUpField("avatarFile", file)
+                }
+                onSignUp={handleSignUp}
+                onLogInClick={closeModal}
+                isSigningUp={registerMutation.isPending}
+                signUpError={signUpErrorText}
+              />
+            )}
           </div>
         </section>
       </div>
