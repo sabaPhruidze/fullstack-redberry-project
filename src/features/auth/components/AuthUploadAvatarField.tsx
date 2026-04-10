@@ -19,7 +19,9 @@ const AuthUploadAvatarField = ({
   };
 
   return (
-    <div className={`${showTopSpacing ? "mt-[24px]" : ""} flex w-[360px] flex-col gap-[12px]`}>
+    <div
+      className={`${showTopSpacing ? "mt-[24px]" : ""} flex w-[360px] flex-col gap-[12px]`}
+    >
       <label
         htmlFor="signup-avatar-upload"
         className="h-[17px] w-[360px] text-[14px] leading-[100%] text-[#3D3D3D]"
@@ -29,15 +31,30 @@ const AuthUploadAvatarField = ({
       </label>
       <div className="flex h-[140px] w-[360px] items-center justify-center rounded-[8px] border-[1.5px] border-[#D1D1D1] bg-white px-[16px]">
         <div className="flex flex-col items-center gap-[8px] text-center">
-          <img src={DOWNLOAD_ICON} alt="" aria-hidden="true" className="h-[34px] w-[34px]" />
+          <img
+            src={DOWNLOAD_ICON}
+            alt=""
+            aria-hidden="true"
+            className="h-[34px] w-[34px]"
+          />
           <div className="flex h-[38px] flex-col items-center gap-[6px]">
-            <p className="h-[17px] text-center text-[14px] leading-[100%] text-[#666666]" style={{ fontWeight: 500 }}>
+            <p
+              className="h-[17px] text-center text-[14px] leading-[100%] text-[#666666]"
+              style={{ fontWeight: 500 }}
+            >
               Drag and drop or{" "}
-              <button type="button" onClick={handleUploadClick} className="text-[14px] leading-[100%] text-[#281ED2] underline">
+              <button
+                type="button"
+                onClick={handleUploadClick}
+                className="text-[14px] leading-[100%] text-[#281ED2] underline cursor-pointer"
+              >
                 Upload file
               </button>
             </p>
-            <p className="h-[15px] text-center text-[12px] leading-[100%] text-[#ADADAD]" style={{ fontWeight: 400 }}>
+            <p
+              className="h-[15px] text-center text-[12px] leading-[100%] text-[#ADADAD]"
+              style={{ fontWeight: 400 }}
+            >
               JPG, PNG or WebP
             </p>
           </div>

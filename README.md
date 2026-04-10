@@ -105,6 +105,7 @@
 5. Matched the helper text to the 12px regular Inter style and Greyscale/300 color.
 6. Reused the existing shared Button component for the profile submit action.
 7. Adjusted the button usage to match the Figma width, height, radius, spacing, and purple background.
+
 - Added `profile.schema.ts` with Zod fields for full name, email, mobile number, age, and avatar.
 - Added Georgian mobile normalization for validation (spaces are ignored without mutating the original input value).
 - Added `normalizeGeorgianMobile` and `isProfileComplete` helpers for profile logic foundation.
@@ -120,4 +121,3 @@
 - profile feedback states were polished.
 - profile indicator now reflects completion state.
 - modal close behavior now respects incomplete profile rules.
-- no new assets were added.

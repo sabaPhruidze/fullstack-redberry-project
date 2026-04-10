@@ -26,7 +26,7 @@ const ProfileUploadAvatarBlock = () => {
           >
             <span className="text-[#666666]">Drag and drop or </span>
             <span
-              className="text-[#281ED2] underline"
+              className="text-[#281ED2] underline cursor-pointer"
               style={{
                 textDecorationStyle: "solid",
                 textUnderlineOffset: "25%",
