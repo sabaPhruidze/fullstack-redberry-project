@@ -27,10 +27,14 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
   return (
     <AuthModalShell
       onClose={onClose}
+      panelClassName="p-[50px]"
       closeAriaLabel="Close login modal"
       closeOnOverlayClick
     >
-      <AuthModalHeader title="Log In" subtitle="Welcome back, continue learning" />
+      <AuthModalHeader
+        title="Log In"
+        subtitle="Welcome back, continue learning"
+      />
       <LoginModalFormContent
         control={control}
         errors={errors}

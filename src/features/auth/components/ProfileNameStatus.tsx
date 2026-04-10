@@ -4,9 +4,9 @@ type ProfileNameStatusProps = {
 
 const ProfileNameStatus = ({ username }: ProfileNameStatusProps) => {
   return (
-    <div className="flex h-[56px] w-[292px] flex-col justify-center gap-[4px]">
+    <div className="flex h-[40.3px] w-[292px] flex-col justify-center gap-[4px]">
       <p
-        className="h-[24.3px] w-[292px] text-[20px] font-semibold leading-[24px] tracking-[0px] text-[#000000]"
+        className="h-[24.3px] w-[292px] text-[20px] font-semibold leading-[24px] tracking-[0px] text-[#0A0A0A]"
         style={{ fontFamily: "Inter, sans-serif" }}
       >
         {username}

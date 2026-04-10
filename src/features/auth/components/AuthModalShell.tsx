@@ -35,8 +35,10 @@ const AuthModalShell = ({
         <section
           role="dialog"
           aria-modal="true"
-          onClick={canCloseFromOverlay ? (event) => event.stopPropagation() : undefined}
-          className={`relative flex w-[460px] flex-col gap-[12px] rounded-[12px] bg-white p-[50px] ${panelClassName}`}
+          onClick={
+            canCloseFromOverlay ? (event) => event.stopPropagation() : undefined
+          }
+          className={`relative flex w-[460px] flex-col gap-[12px] rounded-[12px] bg-white ${panelClassName}`}
         >
           {leadingControl}
           <button
@@ -47,7 +49,9 @@ const AuthModalShell = ({
           >
             <img src={CLOSE_ICON} alt="" className="h-6 w-6" />
           </button>
-          <div className={`flex w-[360px] flex-col ${contentClassName}`}>{children}</div>
+          <div className={`flex w-[360px] flex-col ${contentClassName}`}>
+            {children}
+          </div>
         </section>
       </div>
     </div>

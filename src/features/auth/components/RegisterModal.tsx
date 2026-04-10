@@ -43,12 +43,16 @@ const RegisterModal = ({ onClose }: RegisterModalProps) => {
     <AuthModalShell
       onClose={closeModal}
       closeAriaLabel="Close register modal"
+      panelClassName="p-[50px]"
       closeOnOverlayClick
       leadingControl={
         !isStepOne ? <AuthModalBackButton onClick={goBackStep} /> : undefined
       }
     >
-      <AuthModalHeader title="Create Account" subtitle="Join and start learning today" />
+      <AuthModalHeader
+        title="Create Account"
+        subtitle="Join and start learning today"
+      />
       <AuthStepIndicator currentStep={currentStep} totalSteps={3} />
       <RegisterModalStepContent
         currentStep={currentStep}

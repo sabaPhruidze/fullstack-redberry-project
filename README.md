@@ -98,8 +98,10 @@
 
 ## Profile
 
-1. Corrected the field wrapper layout using the exact Figma values.
-2. Set the shared single-field wrapper to 360px fill, 73px hug, vertical flow, and 5px gap.
-3. Set the mobile and age row to a horizontal 360px fill wrapper with an 8px gap.
-4. Applied the correct 22px trailing icon sizes for the name and email fields.
-5. Reused shared field UI only where the visual structure truly matched.
+1. Corrected the upload text styles using the exact Figma values.
+2. Applied the main upload row as a centered 14px medium Inter text block.
+3. Styled the regular text with Greyscale/500 and the upload link with Purple/600.
+4. Added the exact 8px gap between the main upload text and the helper text.
+5. Matched the helper text to the 12px regular Inter style and Greyscale/300 color.
+6. Reused the existing shared Button component for the profile submit action.
+7. Adjusted the button usage to match the Figma width, height, radius, spacing, and purple background.

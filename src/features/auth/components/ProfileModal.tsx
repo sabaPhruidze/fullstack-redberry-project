@@ -35,19 +35,20 @@ const ProfileModal = ({ onClose }: ProfileModalProps) => {
     <AuthModalShell
       onClose={onClose}
       closeAriaLabel="Close profile panel"
-      panelClassName="h-[730px]"
-      contentClassName="gap-[16px]"
+      panelClassName="h-[730px] px-[50px] py-[49px]"
+      contentClassName="h-[632px]"
       closeButtonClassName="top-[21px] right-[12px]"
-      enableCloseActions={false}
+      enableCloseActions={true}
+      closeOnOverlayClick
     >
-      <header className="flex h-[39px] w-[360px] items-center justify-center">
+      <div className="flex h-[39px] w-[360px] items-center justify-center mb-[24px]">
         <h2
-          className="h-[39px] w-[360px] text-center text-[32px] font-semibold leading-[100%] tracking-[0px] text-[#141414]"
+          className="text-center font-[600] text-[32px] leading-[100%] tracking-[0px] text-[#141414]"
           style={{ fontFamily: "Inter, sans-serif" }}
         >
           Profile
         </h2>
-      </header>
+      </div>
       <ProfileIdentityBlock username={username} avatarUrl={avatarUrl} />
       <ProfileFieldsLayout />
     </AuthModalShell>
