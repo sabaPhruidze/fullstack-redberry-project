@@ -29,6 +29,7 @@
 16. Continue Learning now keeps showing for authenticated users with empty enrollments and displays the required empty state text with a Browse Courses action.
 17. `See All` in Continue Learning and `Enrolled Courses` in the authenticated header now open the enrolled courses modal flow (guest users are redirected to login through protected action logic).
 18. Enrolled courses modal now has an empty state, enrolled list, summary, total price, and a non-browser confirmation UI for complete enrollment action.
+19. Hero section is now a 3-slide carousel with slide-based text, background image, indicators, and arrow states.
 
 ## Auth Modal Header Block
 
