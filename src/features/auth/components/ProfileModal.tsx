@@ -1,56 +1,47 @@
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useLockBodyScroll } from "../../../hooks/use-lock-body-scroll";
-import type { RegisteredUser } from "../types/signup";
+import { useProfileModalForm } from "../hooks/useProfileModalForm";
 import AuthModalShell from "./AuthModalShell";
+import ProfileHeader from "./ProfileHeader";
 import ProfileIdentityBlock from "./ProfileIdentityBlock";
 import ProfileFieldsLayout from "./ProfileFieldsLayout";
 
-type ProfileModalProps = {
-  onClose?: () => void;
-};
-
-const getStoredAuthUser = (): RegisteredUser | null => {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const rawUser = localStorage.getItem("auth_user");
-  if (!rawUser) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(rawUser) as RegisteredUser;
-  } catch {
-    return null;
-  }
-};
+type ProfileModalProps = { onClose?: () => void };
 
 const ProfileModal = ({ onClose }: ProfileModalProps) => {
   useLockBodyScroll(true);
-  const authUser = getStoredAuthUser();
-  const username = authUser?.username?.trim() || "Username";
-  const avatarUrl = authUser?.avatar?.trim();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmitAttempted, setHasSubmitAttempted] = useState(false);
+  const { control, errors, isValid, isDirty, watchedValues, handleAttemptClose, handleAvatarChange } =
+    useProfileModalForm({ onClose });
+
+  const avatarUrl = useMemo(() => {
+    if (watchedValues.avatar instanceof File) return URL.createObjectURL(watchedValues.avatar);
+    if (typeof watchedValues.avatar === "string" && watchedValues.avatar.trim()) return watchedValues.avatar.trim();
+    return undefined;
+  }, [watchedValues.avatar]);
+
+  useEffect(() => {
+    if (!avatarUrl?.startsWith("blob:")) return;
+    return () => URL.revokeObjectURL(avatarUrl);
+  }, [avatarUrl]);
+
+  const handleSafeSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setHasSubmitAttempted(true);
+    if (!isValid || isSubmitting) return;
+    setIsSubmitting(true);
+    await Promise.resolve();
+    setIsSubmitting(false);
+  };
 
   return (
-    <AuthModalShell
-      onClose={onClose}
-      closeAriaLabel="Close profile panel"
-      panelClassName="h-[730px] px-[50px] py-[49px]"
-      contentClassName="h-[632px]"
-      closeButtonClassName="top-[21px] right-[12px]"
-      enableCloseActions={true}
-      closeOnOverlayClick
-    >
-      <div className="flex h-[39px] w-[360px] items-center justify-center mb-[24px]">
-        <h2
-          className="text-center font-[600] text-[32px] leading-[100%] tracking-[0px] text-[#141414]"
-          style={{ fontFamily: "Inter, sans-serif" }}
-        >
-          Profile
-        </h2>
-      </div>
-      <ProfileIdentityBlock username={username} avatarUrl={avatarUrl} />
-      <ProfileFieldsLayout />
+    <AuthModalShell onClose={handleAttemptClose} closeAriaLabel="Close profile panel" panelClassName="h-[730px] px-[50px] py-[49px]" contentClassName="h-[632px]" closeButtonClassName="top-[21px] right-[12px]" enableCloseActions={true} closeOnOverlayClick>
+      <form onSubmit={handleSafeSubmit}>
+        <ProfileHeader />
+        <ProfileIdentityBlock username={watchedValues.fullName?.trim() || "Username"} avatarUrl={avatarUrl} />
+        <ProfileFieldsLayout control={control} errors={errors} watchedValues={watchedValues} isDirty={isDirty} isValid={isValid} isSubmitting={isSubmitting} hasSubmitAttempted={hasSubmitAttempted} onAvatarChange={handleAvatarChange} />
+      </form>
     </AuthModalShell>
   );
 };

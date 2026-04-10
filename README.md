@@ -105,3 +105,12 @@
 5. Matched the helper text to the 12px regular Inter style and Greyscale/300 color.
 6. Reused the existing shared Button component for the profile submit action.
 7. Adjusted the button usage to match the Figma width, height, radius, spacing, and purple background.
+- Added `profile.schema.ts` with Zod fields for full name, email, mobile number, age, and avatar.
+- Added Georgian mobile normalization for validation (spaces are ignored without mutating the original input value).
+- Added `normalizeGeorgianMobile` and `isProfileComplete` helpers for profile logic foundation.
+- Added `useProfileModalForm` hook with React Hook Form + `zodResolver(profileSchema)` in `onBlur` mode.
+- Hook now reads `auth_user` from localStorage for default values with safe empty fallbacks.
+- Added logic-only close confirmation and avatar change handler without touching profile modal visuals.
+- profile modal now uses react-hook-form.
+- profile fields now have real blur validation.
+- email is visible but not editable.
