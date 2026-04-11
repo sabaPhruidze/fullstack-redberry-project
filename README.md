@@ -135,6 +135,13 @@
 3.
 4. Added typed catalog filter models for categories, topics, and instructors in the shared course types file.
 5. Added `/categories`, `/topics`, and `/instructors` API endpoint functions for the catalog filter data.
-6. Added types , TanStack Query hooks for categories, topics, and instructors to prepare the filter sidebar data flow.
+6. Added TanStack Query hooks for categories, topics, and instructors to prepare the filter sidebar data flow.
 7. Connected the new hooks inside the related catalog filter components and logged their states for the first integration step only.
-8. currently just logs but I will use from now on
+8. Checked and aligned the shared `/courses` catalog response types for the cards and pagination metadata.
+9. Connected the catalog courses response to simple console logging in the grid area without changing the current static card UI.
+10. Kept the current catalog UI unchanged for now; real rendering and filter behavior will be implemented next.
+11. Replaced the static catalog sidebar content with real backend-driven categories, topics, and instructors.
+12. Replaced the static catalog course cards with mapped `/courses` data from the API.
+13. Connected the catalog results text and pagination UI to the real response metadata.
+14. Removed temporary mock catalog content that was previously written by hand.
+15. Kept the catalog layout unchanged while making the page use real fetched data.

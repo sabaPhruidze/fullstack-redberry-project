@@ -1,65 +1,23 @@
-// Renders static topic chips and prepares topics query wiring.
-// Current integration logs fetched topics state without changing UI.
+// Renders catalog topics from backend data for the sidebar.
+// Keeps the existing topic chip layout without static mock values.
 import useTopics from "../../../api/hooks/useTopics";
 
 const Topics = () => {
-  const topicsQuery = useTopics();
+  const { data, isLoading, error } = useTopics();
 
-  console.log("Topics filter query:", {
-    data: topicsQuery.data,
-    isLoading: topicsQuery.isLoading,
-    error: topicsQuery.error,
-  });
-
-  const TOPICS = [
-    {
-      id: 1,
-      name: "React",
-    },
-    {
-      id: 2,
-      name: "TypeScript",
-    },
-    {
-      id: 3,
-      name: "Phyton",
-    },
-    {
-      id: 4,
-      name: "UX/UI",
-    },
-    {
-      id: 5,
-      name: "Figma",
-    },
-    {
-      id: 6,
-      name: "JavaScript",
-    },
-    {
-      id: 7,
-      name: "Node.js",
-    },
-    {
-      id: 8,
-      name: "Machine Learning",
-    },
-    {
-      id: 9,
-      name: "Seo",
-    },
-    {
-      id: 10,
-      name: "Analytics",
-    },
-  ];
   return (
-    <div className="w-full h-[229px] mt-[56px]">
+    <div className="w-full mt-[56px]">
       <h3 className="w-full h-[22px] text-[#666666] font-[500] text-[18px] leading-[100%]">
         Topics
       </h3>
-      <div className="mt-[24px] w-full h-[133px] flex flex-row flex-wrap gap-[8px]">
-        {TOPICS.map((item) => (
+      {isLoading ? (
+        <p className="mt-[24px] text-[14px] text-[#8A8A8A]">Loading...</p>
+      ) : null}
+      {error ? (
+        <p className="mt-[24px] text-[14px] text-[#F4161A]">Failed to load.</p>
+      ) : null}
+      <div className="mt-[24px] w-full flex flex-row flex-wrap gap-[8px]">
+        {data?.map((item) => (
           <div
             key={item.id}
             className="px-[12px] py-[8px] gap-[10px] flex flex-row bg-white rounded-[12px]"

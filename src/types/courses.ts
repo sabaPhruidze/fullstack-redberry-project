@@ -12,46 +12,45 @@ export interface CourseTopic {
 }
 
 export interface CourseInstructor {
-  id?: number;
-  name: string;
-  avatar?: string;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  icon: string;
-}
-
-export interface Topic {
-  id: number;
-  name: string;
-  categoryId: number;
-}
-
-export interface Instructor {
   id: number;
   name: string;
   avatar: string;
 }
 
-export interface Course {
+export interface CourseCardItem {
   id: number;
   title: string;
-  description?: string;
+  description: string;
   image: string;
-  basePrice?: number;
-  durationWeeks?: number;
-  isFeatured?: boolean;
+  basePrice: number;
+  durationWeeks: number;
+  isFeatured: boolean;
   avgRating: number;
-  reviewCount?: number;
-  category?: CourseCategory;
-  topic?: CourseTopic;
+  reviewCount: number;
+  category: CourseCategory;
+  topic: CourseTopic;
   instructor: CourseInstructor;
 }
 
+export interface CoursesMeta {
+  currentPage: number;
+  lastPage: number;
+  perPage: number;
+  total: number;
+}
+
+export interface CoursesResponse {
+  data: CourseCardItem[];
+  meta: CoursesMeta;
+}
+
+export type Category = CourseCategory;
+export type Topic = CourseTopic;
+export type Instructor = CourseInstructor;
+export type Course = CourseCardItem;
+
 export interface FeaturedCoursesResponse {
-  data: Course[];
+  data: CourseCardItem[];
 }
 
 export interface CategoriesResponse {

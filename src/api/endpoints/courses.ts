@@ -1,12 +1,20 @@
 import { api } from "../http";
 import type {
   CategoriesResponse,
+  CoursesResponse,
   FeaturedCoursesResponse,
   InstructorsResponse,
   InProgressCoursesResponse,
   TopicsResponse,
 } from "../../types/courses";
 //backend data fetch on courses
+export const getCourses = async (page = 1) => {
+  const response = await api.get<CoursesResponse>("/courses", {
+    params: { page },
+  });
+  return response.data;
+};
+
 export const getFeaturedCourses = async () => {
   const response = await api.get<FeaturedCoursesResponse>("/courses/featured");
   return response.data.data;
