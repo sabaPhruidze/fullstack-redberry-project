@@ -131,3 +131,5 @@
 ## courses/catalog page
 
 1. removed StartLearning component and added breadcrumb
+2. Created Filter component and starting building it
+3.
