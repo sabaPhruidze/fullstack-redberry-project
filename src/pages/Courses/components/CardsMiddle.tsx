@@ -13,7 +13,7 @@ const CardsMiddle = ({ courses }: CardsMiddleProps) => {
   }
 
   return (
-    <div className="w-[1167px] h-[1401px] flex flex-row flex-wrap gap-[24px] mt-[32px]">
+    <div className="w-[1167px] mt-[32px] grid grid-cols-3 gap-[24px]">
       {courses.map((course) => (
         <CatalogCourseCard key={course.id} course={course} />
       ))}

@@ -1,6 +1,6 @@
 // Renders one catalog course card using real backend course fields.
 // Maps backend category icon slugs to existing local category icons.
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BUSINESS from "../../../assets/icons/courses/Icon Set=Business.svg";
 import DATA_SCIENCE from "../../../assets/icons/courses/Icon Set=Data Science.svg";
 import DESIGN from "../../../assets/icons/courses/Icon Set=Design.svg";
@@ -9,7 +9,6 @@ import MARKETING from "../../../assets/icons/courses/Icon Set=Marketing.svg";
 import HALF_STAR from "../../../assets/icons/home/Star (1).svg";
 import EMPTY_STAR from "../../../assets/icons/home/Star (2).svg";
 import STAR from "../../../assets/icons/home/Star.svg";
-import Button from "../../../components/ui/Button";
 import type { CourseCardItem } from "../../../types/courses";
 
 type CatalogCourseCardProps = {
@@ -46,12 +45,14 @@ const getCategoryIcon = (icon: string) => {
 };
 
 const CatalogCourseCard = ({ course }: CatalogCourseCardProps) => {
-  const navigate = useNavigate();
   const categoryName = course.category?.name ?? "";
   const categoryIcon = getCategoryIcon(course.category?.icon ?? "");
 
   return (
-    <div className="w-[373px] h-[451px] p-[20px] rounded-[12px] bg-white border border-[#F5F5F5]">
+    <Link
+      to={`/courses/${course.id}`}
+      className="block w-[373px] h-[451px] p-[20px] rounded-[12px] bg-white border border-[#F5F5F5]"
+    >
       <img src={course.image} alt={course.title} className="w-full h-[181px]" />
       <div className="mt-[18px] mb-[12px] flex flex-row justify-between w-full">
         <p className="leading-[100%] font-[500] text-[14px] text-[#ADADAD]">
@@ -86,13 +87,11 @@ const CatalogCourseCard = ({ course }: CatalogCourseCardProps) => {
             ${Number(course.basePrice)}
           </p>
         </div>
-        <Button
-          text="Details"
-          classname="w-[103px] h-[48px] py-[12px] text-[#F5F5F5]"
-          onClick={() => navigate(`/courses/${course.id}`)}
-        />
+        <div className="w-[103px] h-[48px] py-[12px] rounded-[8px] bg-redberry-text-purple flex items-center justify-center">
+          <p className="text-[#F5F5F5] font-[500]">Details</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

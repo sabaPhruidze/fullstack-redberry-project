@@ -14,7 +14,7 @@ const Cards = () => {
   const meta = data?.meta;
 
   return (
-    <div className="w-[1167px] h-[1554px]">
+    <div className="w-[1167px]">
       <CardsTop
         total={meta?.total ?? 0}
         visibleCount={courses.length}
