@@ -7,7 +7,7 @@ const CoursesCatalogPage = () => {
     <MainLayout>
       <div className="w-[1920px] px-[177px] pt-[69.5px] pb-[161px]">
         <Breadcrumb />
-        <div className="flex flex-row mt-[34px]">
+        <div className="flex flex-row mt-[34px] gap-[90px]">
           <Filter />
           <Cards />
         </div>
