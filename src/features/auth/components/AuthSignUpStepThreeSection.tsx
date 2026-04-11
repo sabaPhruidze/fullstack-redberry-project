@@ -35,7 +35,11 @@ const AuthSignUpStepThreeSection = ({
         error={usernameError}
         onChange={onUsernameChange}
       />
-      <AuthUploadAvatarField showTopSpacing onFileSelect={onAvatarFileChange} />
+      <AuthUploadAvatarField
+        showTopSpacing
+        disabled={isSigningUp}
+        onFileSelect={onAvatarFileChange}
+      />
       <button
         type="button"
         disabled={isSigningUp}
