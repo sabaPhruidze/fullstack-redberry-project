@@ -5,7 +5,7 @@ import Instructor from "./Instructor";
 import Topics from "./Topics";
 const Filter = () => {
   return (
-    <div className="mt-[34px] w-[309px] h-[914px]">
+    <div className="w-[309px] h-[914px]">
       <div className="w-full h-[48px] flex flex-row items-center justify-between">
         <h2 className="text-[#0A0A0A] h-full w-[121px] font-[600] text-[40px] leading-[100%]">
           Filters
