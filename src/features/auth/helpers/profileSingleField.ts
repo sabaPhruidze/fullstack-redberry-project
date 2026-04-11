@@ -30,10 +30,17 @@ export type ProfileSingleFieldProps = {
   fieldBorderColor?: string;
 };
 
-export const getProfileIconClassName = (hasError: boolean) =>
-  hasError
-    ? "h-[22px] w-[22px] [&_path]:!fill-[#F4161A] [&_path]:!stroke-[#F4161A]"
-    : "h-[22px] w-[22px] [&_path]:!fill-[#B9B9B9] [&_path]:!stroke-[#B9B9B9]";
+export const getProfileIconClassName = (success?: boolean, hasError?: boolean) => {
+  if (hasError) {
+    return "h-[22px] w-[22px] [&_path]:!fill-[#F4161A] [&_path]:!stroke-[#F4161A]";
+  }
+
+  if (success) {
+    return "h-[22px] w-[22px] [&_path]:!fill-[#6ACF76] [&_path]:!stroke-[#6ACF76]";
+  }
+
+  return "h-[22px] w-[22px] [&_path]:!fill-[#B9B9B9] [&_path]:!stroke-[#B9B9B9]";
+};
 
 const getArrowIconClassName = (success?: boolean, hasError?: boolean) => {
   if (hasError) {
@@ -64,7 +71,7 @@ export const getTrailingIconNode = (
   success?: boolean,
   hasError?: boolean,
 ): ReactNode => {
-  const className = getProfileIconClassName(Boolean(hasError));
+  const className = getProfileIconClassName(success, hasError);
 
   if (trailingIconType === "pencil") {
     return createElement(PENCIL_SIMPLE_ICON, {
