@@ -4,10 +4,15 @@ import useInstructors from "../../../api/hooks/useInstructors";
 
 type InstructorProps = {
   selectedIds: number[];
+  activeFiltersCount: number;
   onToggle: (id: number) => void;
 };
 
-const Instructor = ({ selectedIds, onToggle }: InstructorProps) => {
+const Instructor = ({
+  selectedIds,
+  activeFiltersCount,
+  onToggle,
+}: InstructorProps) => {
   const { data, isLoading, error } = useInstructors();
 
   return (
@@ -59,7 +64,7 @@ const Instructor = ({ selectedIds, onToggle }: InstructorProps) => {
       <div className="border-t-[#ADADAD] border-t w-full h-[36px] ">
         <div className="mt-[16px] w-full h-[20px]">
           <p className="text-[#999999] font-[500] leading-[100%] text-[14px]">
-            0 Filters Active
+            {activeFiltersCount} Filters Active
           </p>
         </div>
       </div>

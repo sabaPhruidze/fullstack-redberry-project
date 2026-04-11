@@ -16,6 +16,16 @@ const CoursesCatalogPage = () => {
   const [selectedInstructorIds, setSelectedInstructorIds] = useState<number[]>(
     [],
   );
+  const activeFiltersCount =
+    selectedCategoryIds.length +
+    selectedTopicIds.length +
+    selectedInstructorIds.length;
+  const handleClearFilters = () => {
+    setCurrentPage(1);
+    setSelectedCategoryIds([]);
+    setSelectedTopicIds([]);
+    setSelectedInstructorIds([]);
+  };
   const handleVisibleTopicIdsChange = useCallback((topicIds: number[]) => {
     setSelectedTopicIds((prev) => prev.filter((id) => topicIds.includes(id)));
   }, []);
@@ -29,6 +39,8 @@ const CoursesCatalogPage = () => {
             selectedCategoryIds={selectedCategoryIds}
             selectedTopicIds={selectedTopicIds}
             selectedInstructorIds={selectedInstructorIds}
+            activeFiltersCount={activeFiltersCount}
+            onClearFilters={handleClearFilters}
             onCategoryToggle={(id) => {
               setCurrentPage(1);
               setSelectedCategoryIds((prev) => toggleId(prev, id));
