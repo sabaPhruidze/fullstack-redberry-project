@@ -131,5 +131,5 @@
 ## courses/catalog page
 
 1. removed StartLearning component and added breadcrumb
-2. Created Filter component and starting building it. I finished building visual part and now it's card time to be built
+2. Created Filter component and starting building it. I finished building visual part and now it's card time to be built. It's finished and moving forward on a pagination
 3.
