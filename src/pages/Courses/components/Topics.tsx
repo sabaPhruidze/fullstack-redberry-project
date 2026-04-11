@@ -1,14 +1,28 @@
 // Renders topic filter chips and applies selected highlight colors.
-// Keeps existing chip layout while using current checkbox selection state.
+// Loads topics by selected categories and keeps topic selection state valid.
+import { useEffect } from "react";
 import useTopics from "../../../api/hooks/useTopics";
 
 type TopicsProps = {
   selectedIds: number[];
+  selectedCategoryIds: number[];
   onToggle: (id: number) => void;
+  onVisibleTopicIdsChange: (ids: number[]) => void;
 };
 
-const Topics = ({ selectedIds, onToggle }: TopicsProps) => {
-  const { data, isLoading, error } = useTopics();
+const Topics = ({
+  selectedIds,
+  selectedCategoryIds,
+  onToggle,
+  onVisibleTopicIdsChange,
+}: TopicsProps) => {
+  const categoryIds = selectedCategoryIds.length ? selectedCategoryIds : undefined;
+  const { data, isLoading, error } = useTopics(categoryIds);
+
+  useEffect(() => {
+    if (!data) return;
+    onVisibleTopicIdsChange(data.map((item) => item.id));
+  }, [data, onVisibleTopicIdsChange]);
 
   return (
     <div className="w-full mt-[56px]">

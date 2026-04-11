@@ -1,32 +1,45 @@
 // Connects catalog list, sorting, and pagination using real backend course data.
-// Keeps the existing grid and top section while wiring sort dropdown behavior.
+// Applies real-time filters before sorting and client-side pagination.
 import { useMemo, useState } from "react";
 import useCourses from "../../../api/hooks/useCourses";
 import CardsMiddle from "./CardsMiddle";
 import CardsTop from "./CardsTop";
 import Pagination from "./Pagination";
-import {
-  sortCatalogCourses,
-  type CatalogSortValue,
-} from "./catalogSort";
+import { filterCatalogCourses } from "./catalogFilter";
+import { sortCatalogCourses, type CatalogSortValue } from "./catalogSort";
 
-const Cards = () => {
-  const [page, setPage] = useState(1);
+type CardsProps = {
+  currentPage: number;
+  onPageChange: (page: number) => void;
+  selectedCategoryIds: number[];
+  selectedTopicIds: number[];
+  selectedInstructorIds: number[];
+};
+
+const Cards = ({ currentPage, onPageChange, selectedCategoryIds, selectedTopicIds, selectedInstructorIds }: CardsProps) => {
   const [sortValue, setSortValue] = useState<CatalogSortValue>("newest-first");
-  const { data, isLoading, error } = useCourses(page);
+  const { data, isLoading, error } = useCourses();
 
   const courses = useMemo(() => data?.data ?? [], [data]);
   const meta = data?.meta;
-  const sortedCourses = useMemo(
-    () => sortCatalogCourses(courses, sortValue),
-    [courses, sortValue],
+  const filteredCourses = useMemo(
+    () => filterCatalogCourses(courses, { selectedCategoryIds, selectedTopicIds, selectedInstructorIds }),
+    [courses, selectedCategoryIds, selectedTopicIds, selectedInstructorIds],
   );
+  const sortedCourses = useMemo(
+    () => sortCatalogCourses(filteredCourses, sortValue),
+    [filteredCourses, sortValue],
+  );
+  const perPage = meta?.perPage ?? 9;
+  const lastPage = Math.max(1, Math.ceil(sortedCourses.length / perPage));
+  const safePage = Math.min(Math.max(currentPage, 1), lastPage);
+  const paginatedCourses = sortedCourses.slice((safePage - 1) * perPage, safePage * perPage);
 
   return (
     <div className="w-[1167px]">
       <CardsTop
-        total={meta?.total ?? 0}
-        visibleCount={sortedCourses.length}
+        total={sortedCourses.length}
+        visibleCount={paginatedCourses.length}
         isLoading={isLoading}
         sortValue={sortValue}
         onSortChange={setSortValue}
@@ -39,13 +52,13 @@ const Cards = () => {
           {error instanceof Error ? error.message : "Failed to load courses."}
         </p>
       ) : null}
-      {!isLoading && !error ? <CardsMiddle courses={sortedCourses} /> : null}
+      {!isLoading && !error ? <CardsMiddle courses={paginatedCourses} /> : null}
       <Pagination
-        currentPage={meta?.currentPage ?? page}
-        lastPage={meta?.lastPage ?? 1}
-        perPage={meta?.perPage ?? courses.length}
-        total={meta?.total ?? 0}
-        onPageChange={setPage}
+        currentPage={safePage}
+        lastPage={lastPage}
+        perPage={perPage}
+        total={sortedCourses.length}
+        onPageChange={onPageChange}
       />
     </div>
   );
