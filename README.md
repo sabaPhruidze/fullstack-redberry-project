@@ -127,3 +127,7 @@
 - profile feedback states were polished.
 - profile indicator now reflects completion state.
 - modal close behavior now respects incomplete profile rules.
+
+## courses/catalog page
+
+1. removed StartLearning component and added breadcrumb
