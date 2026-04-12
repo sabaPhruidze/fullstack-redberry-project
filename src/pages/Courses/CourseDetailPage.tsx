@@ -1,30 +1,38 @@
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
-import useFeaturedCourses from "../../api/hooks/useFeaturedCourses";
-import useInProgressCourses from "../../api/hooks/useInProgressCourses";
+import useCourseDetail from "../../api/hooks/useCourseDetail";
+import useCourseWeeklySchedules from "../../api/hooks/useCourseWeeklySchedules";
 import CourseDetailLeft from "./components/CourseDetailLeft";
 import CourseDetailRight from "./components/CourseDetailRight";
-
-const getIsAuthenticated = () => {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return Boolean(localStorage.getItem("access_token"));
-};
-
 const CourseDetailPage = () => {
   const params = useParams<{ id: string }>();
-  const courseId = Number(params.id);
-  const isAuthenticated = getIsAuthenticated();
-  const { data, isLoading, isError, error } = useFeaturedCourses();
-  const { data: inProgressCourses } = useInProgressCourses(isAuthenticated);
-  const selectedCourse = data?.find((course) => course.id === courseId);
-  const inProgressCourse = inProgressCourses?.find(
-    (item) => item.course.id === courseId,
-  )?.course;
-  const course = selectedCourse ?? inProgressCourse;
+  const parsedCourseId = Number(params.id);
+  const courseId =
+    Number.isInteger(parsedCourseId) && parsedCourseId > 0
+      ? parsedCourseId
+      : undefined;
+  const {
+    data: courseDetailResponse,
+    isLoading,
+    isError,
+    error,
+  } = useCourseDetail(courseId);
+  const { data: weeklySchedulesResponse } = useCourseWeeklySchedules(courseId);
+  const course = courseDetailResponse?.data;
 
+  // Temporary logs for backend integration check.
+  useEffect(() => {
+    if (courseDetailResponse) {
+      console.log("course detail response", courseDetailResponse);
+    }
+  }, [courseDetailResponse]);
+
+  useEffect(() => {
+    if (weeklySchedulesResponse) {
+      console.log("weekly schedules response", weeklySchedulesResponse);
+    }
+  }, [weeklySchedulesResponse]);
   return (
     <MainLayout>
       <div className="w-[1920px] px-[177px] py-[64px]">
@@ -40,7 +48,7 @@ const CourseDetailPage = () => {
               : "Failed to load course details."}
           </p>
         ) : null}
-        {!isLoading && !isError && (!Number.isInteger(courseId) || !course) ? (
+        {!isLoading && !isError && (!courseId || !course) ? (
           <div className="max-w-[780px] rounded-[12px] border border-[#E7E7E7] bg-white p-[24px]">
             <h1 className="text-[30px] font-semibold text-[#141414]">
               Course not found
@@ -66,5 +74,4 @@ const CourseDetailPage = () => {
     </MainLayout>
   );
 };
-
 export default CourseDetailPage;

@@ -152,4 +152,6 @@
 ## courses/catalog individual page
 
 1. built visual (left part and right part)
-2.
+2. Added backend foundation for course detail with new endpoint layer + query hooks for:
+   `/courses/{id}`, `/courses/{id}/weekly-schedules`, `/courses/{id}/time-slots`, `/courses/{id}/session-types`.
+3. Course detail page now reads route `id`, fetches real detail + weekly schedules, and uses real detail loading/error/not-found states without changing the current UI layout.
