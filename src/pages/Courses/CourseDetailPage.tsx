@@ -3,6 +3,7 @@ import MainLayout from "../../layouts/MainLayout";
 import useFeaturedCourses from "../../api/hooks/useFeaturedCourses";
 import useInProgressCourses from "../../api/hooks/useInProgressCourses";
 import CourseDetailLeft from "./components/CourseDetailLeft";
+import CourseDetailRight from "./components/CourseDetailRight";
 
 const getIsAuthenticated = () => {
   if (typeof window === "undefined") {
@@ -56,9 +57,9 @@ const CourseDetailPage = () => {
           </div>
         ) : null}
         {!isLoading && !isError && course ? (
-          <div>
+          <div className="flex flex-row gap-[133px]">
             <CourseDetailLeft />
-            <div id="right"></div>
+            <CourseDetailRight />
           </div>
         ) : null}
       </div>

@@ -151,4 +151,5 @@
 
 ## courses/catalog individual page
 
-1. built visual
+1. built visual (left part and right part)
+2.
