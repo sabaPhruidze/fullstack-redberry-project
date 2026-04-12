@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import useLogin from "../../../api/hooks/useLogin";
+import { inProgressCoursesQueryKey } from "../../../api/queryKeys";
 import {
   loginSchema,
   type LoginFormValues,
@@ -13,6 +15,7 @@ type UseLoginModalFormParams = {
 
 export const useLoginModalForm = ({ onSuccess }: UseLoginModalFormParams) => {
   const loginMutation = useLogin();
+  const queryClient = useQueryClient();
   const {
     control,
     handleSubmit,
@@ -55,6 +58,9 @@ export const useLoginModalForm = ({ onSuccess }: UseLoginModalFormParams) => {
       const response = await loginMutation.mutateAsync(values);
       localStorage.setItem("access_token", response.token);
       localStorage.setItem("auth_user", JSON.stringify(response.user));
+      await queryClient.invalidateQueries({
+        queryKey: inProgressCoursesQueryKey,
+      });
       onSuccess?.();
     } catch {
       return;

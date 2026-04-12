@@ -5,8 +5,6 @@ const useFeaturedCourses = () => {
   return useQuery({
     queryKey: ["featured-courses"],
     queryFn: getFeaturedCourses,
-    staleTime: 30_000,
-    refetchOnWindowFocus: false,
   });
 };
 

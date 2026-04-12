@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { getInProgressCourses } from "../endpoints/courses";
+import { inProgressCoursesQueryKey } from "../queryKeys";
 
 const useInProgressCourses = (enabled = true) => {
   return useQuery({
-    queryKey: ["in-progress-courses"],
+    queryKey: inProgressCoursesQueryKey,
     queryFn: getInProgressCourses,
     enabled,
-    staleTime: 30_000,
-    refetchOnWindowFocus: false,
   });
 };
 

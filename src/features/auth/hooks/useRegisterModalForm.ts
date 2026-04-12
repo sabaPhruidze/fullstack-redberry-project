@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import useRegister from "../../../api/hooks/useRegister";
+import { inProgressCoursesQueryKey } from "../../../api/queryKeys";
 import {
   registerSchema,
   type RegisterFormValues,
@@ -19,6 +21,7 @@ export const useRegisterModalForm = ({
   goToStepThree,
 }: UseRegisterModalFormParams) => {
   const registerMutation = useRegister();
+  const queryClient = useQueryClient();
   const {
     watch,
     setValue,
@@ -91,6 +94,9 @@ export const useRegisterModalForm = ({
       });
       localStorage.setItem("access_token", response.token);
       localStorage.setItem("auth_user", JSON.stringify(response.user));
+      await queryClient.invalidateQueries({
+        queryKey: inProgressCoursesQueryKey,
+      });
       onSuccess();
     } catch {
       return;

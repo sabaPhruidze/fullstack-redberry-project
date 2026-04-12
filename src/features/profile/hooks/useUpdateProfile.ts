@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { inProgressCoursesQueryKey } from "../../../api/queryKeys";
 import {
   updateProfile,
   type UpdateProfilePayload,
@@ -11,6 +12,7 @@ const FALLBACK_PROFILE_ERROR =
 
 export const useUpdateProfile = () => {
   const [serverError, setServerError] = useState<string>();
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (payload: UpdateProfilePayload) => updateProfile(payload),
   });
@@ -21,7 +23,11 @@ export const useUpdateProfile = () => {
     clearServerError();
 
     try {
-      return await mutation.mutateAsync(payload);
+      const updatedUser = await mutation.mutateAsync(payload);
+      await queryClient.invalidateQueries({
+        queryKey: inProgressCoursesQueryKey,
+      });
+      return updatedUser;
     } catch (error) {
       if (axios.isAxiosError<{ message?: string }>(error)) {
         setServerError(error.response?.data?.message ?? FALLBACK_PROFILE_ERROR);
