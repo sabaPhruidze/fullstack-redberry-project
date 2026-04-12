@@ -72,7 +72,7 @@ const CourseDetailLeft = () => {
           </div>
         </div>
         <div>
-          <div className="w-[179px] h-[46px] bg-white px-[12px] py-[8px] gap-[12px] rounded-[12px] flex flex-row">
+          <div className="mb-[18px] w-[179px] h-[46px] bg-white px-[12px] py-[8px] gap-[12px] rounded-[12px] flex flex-row">
             <img
               src={INSTRUCTOR}
               alt="instructor image"
@@ -83,7 +83,7 @@ const CourseDetailLeft = () => {
             </p>
           </div>
           <div className="w-full">
-            <h2 className="font-[600] text-[20px] leading-[24px] text-[#8A8A8A]">
+            <h2 className="mb-[24px] font-[600] text-[20px] leading-[24px] text-[#8A8A8A]">
               Course Description
             </h2>
             <p className="font-[500] leading-[24px] text-[#525252]">
