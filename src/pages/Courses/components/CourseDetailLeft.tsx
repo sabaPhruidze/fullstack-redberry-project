@@ -5,6 +5,7 @@ import HALF_STAR from "../../../assets/icons/home/Star (1).svg";
 import EMPTY_STAR from "../../../assets/icons/home/Star (2).svg";
 import STAR from "../../../assets/icons/home/Star.svg";
 
+import INSTRUCTOR from "../../../assets/images/catalog/instructor.jpg";
 import CALENDAR from "../../../assets/icons/courses/boxicons_calendar.svg";
 import TIME from "../../../assets/icons/courses/tabler_clock-hour-3.svg";
 import DEVELOPMENT from "../../../assets/icons/courses/Icon Set=Development.svg";
@@ -67,6 +68,43 @@ const CourseDetailLeft = () => {
             />
             <p className="font-[500] text-[#666666] leading-[24px]">
               Development
+            </p>
+          </div>
+        </div>
+        <div>
+          <div className="w-[179px] h-[46px] bg-white px-[12px] py-[8px] gap-[12px] rounded-[12px] flex flex-row">
+            <img
+              src={INSTRUCTOR}
+              alt="instructor image"
+              className="w-[30px] h-[30px] rounded-[4px] "
+            />
+            <p className="text-[#666666] font-[500] leading-[24px]">
+              Marilyn Mango
+            </p>
+          </div>
+          <div className="w-full">
+            <h2 className="font-[600] text-[20px] leading-[24px] text-[#8A8A8A]">
+              Course Description
+            </h2>
+            <p className="font-[500] leading-[24px] text-[#525252]">
+              This course focuses on building scalable, production-level
+              front-end applications using React and TypeScript. It covers
+              advanced component architecture, strong typing strategies, state
+              management patterns, and performance optimization techniques used
+              in modern web products.
+            </p>
+            <br />
+            <p className="font-[500] leading-[24px] text-[#525252]">
+              Participants learn how to design reusable components, structure
+              large codebases, and improve maintainability through strict typing
+              and clear interfaces. The course also explores advanced hooks,
+              custom hooks, API integration, error handling, and testing
+              approaches commonly used in professional development environments.
+              This course focuses on building scalable, production-level
+              front-end applications using React and TypeScript. It covers
+              advanced component architecture, strong typing strategies, state
+              management patterns, and performance optimization techniques used
+              in modern web products.
             </p>
           </div>
         </div>
