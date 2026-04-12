@@ -1,7 +1,10 @@
+import { useState } from "react";
 import ONE from "../../../assets/icons/courses/Icon Set=One.svg";
 import ARROW_DOWN from "../../../assets/icons/courses/glyphs_arrow-bold.svg?react";
 const WeeklySchedule = () => {
   const dates = ["Mon - Wed", "Tue - Thu", "Wed - Fri", "Weekend"];
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
   return (
     <div className="w-[full] h-[138px] ">
       <div className="w-full h-[30px] flex flex-row justify-between items-center">
@@ -18,14 +21,25 @@ const WeeklySchedule = () => {
       </div>
       <div className="mt-[18px] w-[530px] h-[91px] flex flex-row gap-[12px] justify-between">
         {dates.map((date) => (
-          <div
+          <button
             key={date}
-            className=" bg-white w-[123.5px] h-[91px] rounded-[12px] border border-[#D1D1D1] px-[10px] py-[36px]"
+            type="button"
+            aria-pressed={selectedDate === date}
+            onClick={() => setSelectedDate(date)}
+            className={`w-[123.5px] h-[91px] rounded-[12px] border px-[10px] py-[36px] ${
+              selectedDate === date
+                ? "border-[#958FEF] bg-[#DDDBFA]"
+                : "border-[#D1D1D1] bg-white"
+            }`}
           >
-            <p className="text-center font-[600] leading-[100%] text-[#292929]">
+            <p
+              className={`text-center font-[600] leading-[100%] ${
+                selectedDate === date ? "text-[#4F46E5]" : "text-[#292929]"
+              }`}
+            >
               {date}
             </p>
-          </div>
+          </button>
         ))}
       </div>
     </div>
