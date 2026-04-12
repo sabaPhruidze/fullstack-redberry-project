@@ -44,7 +44,7 @@ const TimeSlot = () => {
         </div>
         <ARROW_DOWN
           aria-hidden
-          className="w-[28px] h-[28px] [&_path]:stroke-current text-[#130E67]"
+          className="w-[28px] h-[28px] [&_path]:stroke-[#130E67]"
         />
       </div>
       <div className="w-full h-[61px] flex flex-row justify-between gap-[6px] mt-[18px]">
@@ -64,8 +64,10 @@ const TimeSlot = () => {
             >
               <Icon
                 aria-hidden
-                className={`w-[26px] h-[26px] [&_path]:fill-current [&_path]:stroke-current ${
-                  selectedTimeId === id ? "text-[#4F46E5]" : "text-[#525252]"
+                className={`w-[26px] h-[26px] [&_path]:fill-current ${
+                  selectedTimeId === id
+                    ? "text-[#4F46E5] [&_path[stroke]]:stroke-[#4F46E5]"
+                    : "text-[#525252] [&_path[stroke]]:stroke-[#666666]"
                 }`}
               />
               <div className="flex flex-col gap-[2px]">

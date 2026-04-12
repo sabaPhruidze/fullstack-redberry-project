@@ -1,7 +1,5 @@
 import WeeklySchedule from "./WeeklySchedule";
-import THREE from "../../../assets/icons/courses/Icon Set=Three.svg";
-import DESKTOP from "../../../assets/icons/courses/Icon Set=Desktop.svg";
-
+import TotalPrice from "./TotalPrice";
 import TimeSlot from "./TimeSlot";
 import SessionType from "./SessionType";
 
@@ -11,7 +9,7 @@ const CourseDetailRight = () => {
       <WeeklySchedule />
       <TimeSlot />
       <SessionType />
-      <div id="total-price"></div>
+      <TotalPrice />
     </div>
   );
 };

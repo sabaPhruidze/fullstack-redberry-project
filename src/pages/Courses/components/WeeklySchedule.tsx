@@ -16,7 +16,7 @@ const WeeklySchedule = () => {
         </div>
         <ARROW_DOWN
           aria-hidden
-          className="w-[28px] h-[28px] [&_path]:stroke-current text-[#130E67]"
+          className="w-[28px] h-[28px] [&_path]:stroke-[#130E67]"
         />
       </div>
       <div className="mt-[18px] w-[530px] h-[91px] flex flex-row gap-[12px] justify-between">
