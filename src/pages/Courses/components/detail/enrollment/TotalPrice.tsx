@@ -5,6 +5,7 @@ interface TotalPriceProps {
   isEnrollButtonActive: boolean;
   isEnrollPending: boolean;
   onEnroll: () => void;
+  actionText?: string;
 }
 
 const toSafeNumber = (value: unknown) => {
@@ -34,6 +35,7 @@ const TotalPrice = ({
   isEnrollButtonActive,
   isEnrollPending,
   onEnroll,
+  actionText = "Enroll Now",
 }: TotalPriceProps) => {
   return (
     <div className="w-[530px] h-[306px] p-[40px] border border-[#F5F5F5] rounded-[12px] bg-white">
@@ -73,7 +75,7 @@ const TotalPrice = ({
             : "bg-[#EEEDFC] text-[#B7B3F4]"
         }`}
       >
-        Enroll Now
+        {actionText}
       </button>
     </div>
   );

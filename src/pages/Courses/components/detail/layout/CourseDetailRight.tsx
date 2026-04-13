@@ -1,10 +1,13 @@
 import { useMemo } from "react";
 import useCreateEnrollment from "../../../../../api/hooks/useCreateEnrollment";
+import useCompleteEnrollment from "../../../../../api/hooks/useCompleteEnrollment";
+import useEnrollments from "../../../../../api/hooks/useEnrollments";
 import useCourseDetailAccordion from "../../../../../hooks/useCourseDetailAccordion";
 import useCourseScheduleSelection from "../../../../../hooks/useCourseScheduleSelection";
 import useCourseWeeklySchedules from "../../../../../api/hooks/useCourseWeeklySchedules";
 import { useAuthModal } from "../../../../../features/auth/hooks/useAuthModal";
 import { getAuthUser, getIsProfileCompleteFromUser } from "../../../../../features/profile/helpers/authUser";
+import type { CourseEnrollment } from "../../../../../types/courseDetail";
 import EnrollmentAccessNotice from "../enrollment/EnrollmentAccessNotice";
 import { getDisplaySessionTypes } from "../../schedule/utils/sessionTypeOptionUtils";
 import SessionType from "../../schedule/sections/SessionType";
@@ -17,10 +20,17 @@ import { getDisplayWeeklySchedules } from "../../schedule/utils/weeklyScheduleOp
 interface CourseDetailRightProps {
   courseId: number;
   courseBasePrice: number;
+  courseEnrollment?: CourseEnrollment;
 }
 
-const CourseDetailRight = ({ courseId, courseBasePrice }: CourseDetailRightProps) => {
+const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: CourseDetailRightProps) => {
+  const authUser = getAuthUser();
+  const isAuthenticated = typeof window !== "undefined" && Boolean(localStorage.getItem("access_token"));
+  const isProfileComplete = getIsProfileCompleteFromUser(authUser);
+  const hasCompleteAccess = isAuthenticated && isProfileComplete;
   const createEnrollmentMutation = useCreateEnrollment();
+  const completeEnrollmentMutation = useCompleteEnrollment();
+  const { data: enrollmentsData } = useEnrollments(isAuthenticated);
   const { data: weeklySchedulesResponse } = useCourseWeeklySchedules(courseId);
   const weeklySchedules = useMemo(() => weeklySchedulesResponse?.data ?? [], [weeklySchedulesResponse]);
   const displayWeeklySchedules = useMemo(
@@ -37,21 +47,38 @@ const CourseDetailRight = ({ courseId, courseBasePrice }: CourseDetailRightProps
   const accordion = useCourseDetailAccordion();
   const { openLoginModal, openProfileModal } = useAuthModal();
 
-  const authUser = getAuthUser();
-  const isAuthenticated = typeof window !== "undefined" && Boolean(localStorage.getItem("access_token"));
-  const isProfileComplete = getIsProfileCompleteFromUser(authUser);
-  const hasCompleteAccess = isAuthenticated && isProfileComplete;
+  const matchedEnrollment = useMemo(
+    () => courseEnrollment ?? enrollmentsData?.find((item) => item.course.id === courseId),
+    [courseEnrollment, enrollmentsData, courseId],
+  );
+  const enrollmentId = matchedEnrollment?.id;
+  const isCourseCompleted =
+    Number(matchedEnrollment?.progress ?? 0) >= 100 ||
+    Boolean(matchedEnrollment?.completedAt);
   const selectedCourseScheduleId = selection.selectedSessionType?.courseScheduleId;
-  const isEnrollButtonActive =
+  const isEnrollActionActive =
+    !enrollmentId &&
     hasCompleteAccess &&
     selection.selectedWeeklyScheduleId != null &&
     selection.selectedTimeSlotId != null &&
     selection.selectedSessionTypeId != null &&
     selectedCourseScheduleId != null;
+  const isCompleteActionActive = Boolean(enrollmentId) && hasCompleteAccess && !isCourseCompleted;
+  const isActionActive = enrollmentId ? isCompleteActionActive : isEnrollActionActive;
+  const isActionPending = createEnrollmentMutation.isPending || completeEnrollmentMutation.isPending;
+  const actionText = enrollmentId ? (isCourseCompleted ? "Completed" : "Complete Course") : "Enroll Now";
   const noticeVariant = !isAuthenticated ? "auth" : !isProfileComplete ? "profile" : null;
 
   const handleEnroll = () => {
-    if (!isEnrollButtonActive || selectedCourseScheduleId == null) {
+    if (enrollmentId != null) {
+      if (!isCompleteActionActive) {
+        return;
+      }
+      completeEnrollmentMutation.mutate(enrollmentId);
+      return;
+    }
+
+    if (!isEnrollActionActive || selectedCourseScheduleId == null) {
       return;
     }
 
@@ -71,9 +98,10 @@ const CourseDetailRight = ({ courseId, courseBasePrice }: CourseDetailRightProps
         basePrice={courseBasePrice}
         sessionTypeModifier={selection.sessionTypeModifier}
         totalPrice={selection.totalPrice}
-        isEnrollButtonActive={isEnrollButtonActive}
-        isEnrollPending={createEnrollmentMutation.isPending}
+        isEnrollButtonActive={isActionActive}
+        isEnrollPending={isActionPending}
         onEnroll={handleEnroll}
+        actionText={actionText}
       />
       {noticeVariant ? (
         <EnrollmentAccessNotice variant={noticeVariant} onAction={noticeVariant === "auth" ? openLoginModal : openProfileModal} />

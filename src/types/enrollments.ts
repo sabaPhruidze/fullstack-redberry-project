@@ -52,3 +52,19 @@ export interface CreateEnrollmentValidationError {
   message: string;
   errors: Record<string, string[]>;
 }
+
+export interface CompleteEnrollmentResponse {
+  data: EnrollmentItem;
+}
+
+export interface CompleteEnrollmentUnauthorizedError {
+  message: "Unauthenticated." | string;
+}
+
+export interface CompleteEnrollmentForbiddenError {
+  message: "This action is unauthorized." | string;
+}
+
+export interface CompleteEnrollmentNotFoundError {
+  message: "No query results for model." | string;
+}

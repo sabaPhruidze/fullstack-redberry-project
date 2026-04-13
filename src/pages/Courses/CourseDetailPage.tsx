@@ -54,6 +54,7 @@ const CourseDetailPage = () => {
             <CourseDetailRight
               courseId={course.id}
               courseBasePrice={course.basePrice}
+              courseEnrollment={course.enrollment}
             />
           </div>
         ) : null}
