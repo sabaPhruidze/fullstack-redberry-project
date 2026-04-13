@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLockBodyScroll } from "../../../hooks/use-lock-body-scroll";
+import useEnrollments from "../../../api/hooks/useEnrollments";
 import useInProgressCourses from "../../../api/hooks/useInProgressCourses";
 import Button from "../../../components/ui/Button";
 import AuthModalHeader from "./AuthModalHeader";
@@ -26,6 +27,7 @@ const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
   useLockBodyScroll(true);
   const navigate = useNavigate();
   const isAuthenticated = getIsAuthenticated();
+  const { data: enrollmentsData } = useEnrollments(isAuthenticated);
   const { data, isLoading, isError, error } = useInProgressCourses(isAuthenticated);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [completionMessage, setCompletionMessage] = useState<string>();
@@ -36,6 +38,14 @@ const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
     () => enrolledCourses.reduce((sum, course) => sum + Number(course.totalPrice || 0), 0),
     [enrolledCourses],
   );
+
+  useEffect(() => {
+    if (!enrollmentsData) {
+      return;
+    }
+
+    console.log("GET /enrollments:", enrollmentsData);
+  }, [enrollmentsData]);
 
   const handleBrowseCourses = () => {
     onClose?.();
