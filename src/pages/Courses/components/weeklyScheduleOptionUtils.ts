@@ -53,7 +53,10 @@ export const getDisplayWeeklySchedules = (options: WeeklyScheduleOption[]) => {
 
     return {
       ...matchedOption,
-      label: formatWeeklyScheduleLabel(matchedOption.label),
+      label:
+        template.key === "weekend"
+          ? template.label
+          : formatWeeklyScheduleLabel(matchedOption.label),
       isAvailable,
       available: isAvailable,
     } satisfies WeeklyScheduleOption;

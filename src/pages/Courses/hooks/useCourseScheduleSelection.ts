@@ -9,6 +9,11 @@ interface UseCourseScheduleSelectionParams {
   weeklySchedules: WeeklyScheduleOption[];
 }
 
+const toSafeNumber = (value: unknown) => {
+  const amount = Number(value);
+  return Number.isFinite(amount) ? amount : 0;
+};
+
 const useCourseScheduleSelection = ({
   courseId,
   courseBasePrice,
@@ -74,8 +79,8 @@ const useCourseScheduleSelection = ({
     [sessionTypes, selectedSessionTypeId],
   );
 
-  const sessionTypeModifier = selectedSessionType?.priceModifier ?? 0;
-  const totalPrice = courseBasePrice + sessionTypeModifier;
+  const sessionTypeModifier = toSafeNumber(selectedSessionType?.priceModifier ?? 0);
+  const totalPrice = toSafeNumber(courseBasePrice) + sessionTypeModifier;
 
   return {
     selectedWeeklyScheduleId,

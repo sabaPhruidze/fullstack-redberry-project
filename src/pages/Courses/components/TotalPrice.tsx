@@ -4,15 +4,22 @@ interface TotalPriceProps {
   totalPrice: number;
 }
 
-const formatPrice = (value: number) => `$${value}`;
+const toSafeNumber = (value: unknown) => {
+  const amount = Number(value);
+  return Number.isFinite(amount) ? amount : 0;
+};
+
+const formatPrice = (value: number) => `$${toSafeNumber(value).toFixed(2)}`;
 
 const formatModifier = (value: number) => {
-  if (value === 0) {
+  const safeValue = toSafeNumber(value);
+
+  if (safeValue === 0) {
     return "+ $0";
   }
 
-  const amount = Math.abs(value);
-  const prefix = value > 0 ? "+" : "-";
+  const amount = Math.abs(safeValue).toFixed(2);
+  const prefix = safeValue > 0 ? "+" : "-";
 
   return `${prefix} $${amount}`;
 };
