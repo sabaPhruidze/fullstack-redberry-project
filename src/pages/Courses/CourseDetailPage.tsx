@@ -1,8 +1,6 @@
-import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import useCourseDetail from "../../api/hooks/useCourseDetail";
-import useCourseWeeklySchedules from "../../api/hooks/useCourseWeeklySchedules";
 import CourseDetailLeft from "./components/CourseDetailLeft";
 import CourseDetailRight from "./components/CourseDetailRight";
 const CourseDetailPage = () => {
@@ -18,21 +16,7 @@ const CourseDetailPage = () => {
     isError,
     error,
   } = useCourseDetail(courseId);
-  const { data: weeklySchedulesResponse } = useCourseWeeklySchedules(courseId);
   const course = courseDetailResponse?.data;
-
-  // Temporary logs for backend integration check.
-  useEffect(() => {
-    if (courseDetailResponse) {
-      console.log("course detail response", courseDetailResponse);
-    }
-  }, [courseDetailResponse]);
-
-  useEffect(() => {
-    if (weeklySchedulesResponse) {
-      console.log("weekly schedules response", weeklySchedulesResponse);
-    }
-  }, [weeklySchedulesResponse]);
   return (
     <MainLayout>
       <div className="w-[1920px] px-[177px] py-[64px]">
@@ -66,8 +50,11 @@ const CourseDetailPage = () => {
         ) : null}
         {!isLoading && !isError && course ? (
           <div className="flex flex-row gap-[133px]">
-            <CourseDetailLeft />
-            <CourseDetailRight />
+            <CourseDetailLeft course={course} />
+            <CourseDetailRight
+              courseId={course.id}
+              courseBasePrice={course.basePrice}
+            />
           </div>
         ) : null}
       </div>

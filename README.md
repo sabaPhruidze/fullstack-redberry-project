@@ -155,3 +155,9 @@
 2. Added backend foundation for course detail with new endpoint layer + query hooks for:
    `/courses/{id}`, `/courses/{id}/weekly-schedules`, `/courses/{id}/time-slots`, `/courses/{id}/session-types`.
 3. Course detail page now reads route `id`, fetches real detail + weekly schedules, and uses real detail loading/error/not-found states without changing the current UI layout.
+4. Connected right-side schedule selection to real backend flow (weekly schedule -> time slot -> session type) with dependent reset logic.
+5. Total price card now reacts to real base price + selected session type modifier, and unavailable session types are shown as disabled with seat-status text.
+6. Left-side course detail now binds to the exact route course from `GET /courses/{id}` for title, image, description, category/topic text, instructor name, and duration weeks.
+7. Time Slot and Session Type cards now visibly render backend values in-place (real labels/times, session names, modifiers, seats, and location text).
+8. Unavailable options now stay visible but use disabled UI colors across weekly schedule, time slot, and session type cards.
+9. Right-side detail sections (Weekly Schedule, Time Slot, Session Type) now support independent open/close accordion behavior with smooth arrow/content animation, while keeping the same backend-driven selections and reset logic.

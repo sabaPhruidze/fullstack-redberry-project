@@ -9,6 +9,8 @@ export interface WeeklyScheduleOption {
   id: number;
   label: string;
   days: string[];
+  isAvailable?: boolean;
+  available?: boolean;
 }
 
 export interface TimeSlotOption {
@@ -16,6 +18,8 @@ export interface TimeSlotOption {
   label: string;
   startTime: string;
   endTime: string;
+  isAvailable?: boolean;
+  available?: boolean;
 }
 
 export interface SessionTypeOption {
@@ -25,6 +29,8 @@ export interface SessionTypeOption {
   priceModifier: number;
   availableSeats: number;
   location: string;
+  isAvailable?: boolean;
+  available?: boolean;
 }
 
 export interface CourseSchedule {

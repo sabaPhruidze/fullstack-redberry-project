@@ -1,13 +1,30 @@
-import { useState } from "react";
 import ONE from "../../../assets/icons/courses/Icon Set=One.svg";
 import ARROW_DOWN from "../../../assets/icons/courses/glyphs_arrow-bold.svg?react";
-const WeeklySchedule = () => {
-  const dates = ["Mon - Wed", "Tue - Thu", "Wed - Fri", "Weekend"];
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+import type { WeeklyScheduleOption } from "../../../types/courseDetail";
+import WeeklyScheduleOptionButton from "./WeeklyScheduleOptionButton";
 
+interface WeeklyScheduleProps {
+  options: WeeklyScheduleOption[];
+  selectedId: number | null;
+  onSelect: (weeklyScheduleId: number) => void;
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+const WeeklySchedule = ({
+  options,
+  selectedId,
+  onSelect,
+  isOpen,
+  onToggle,
+}: WeeklyScheduleProps) => {
   return (
-    <div className="w-[full] h-[138px]">
-      <div className="w-full h-[30px] flex flex-row justify-between items-center">
+    <div className="w-full">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full h-[30px] flex flex-row justify-between items-center"
+      >
         <img src={ONE} alt="one icon" className="w-[28px] h-[28px]" />
         <div className="w-[457px] h-[30px] ml-[8px] mr-[7px] text-left">
           <h2 className="text-[#130E67] font-[600] text-[24px] leading-[100%]">
@@ -16,31 +33,29 @@ const WeeklySchedule = () => {
         </div>
         <ARROW_DOWN
           aria-hidden
-          className="w-[28px] h-[28px] [&_path]:stroke-[#130E67]"
+          className={`w-[28px] h-[28px] transition-transform duration-300 ease-in-out [&_path]:stroke-[#130E67] ${
+            isOpen ? "rotate-180" : "rotate-0"
+          }`}
         />
-      </div>
-      <div className="mt-[18px] w-[530px] h-[91px] flex flex-row gap-[12px] justify-between">
-        {dates.map((date) => (
-          <button
-            key={date}
-            type="button"
-            aria-pressed={selectedDate === date}
-            onClick={() => setSelectedDate(date)}
-            className={`w-[123.5px] h-[91px] rounded-[12px] border px-[10px] py-[36px] ${
-              selectedDate === date
-                ? "border-[#958FEF] bg-[#DDDBFA]"
-                : "border-[#D1D1D1] bg-white"
-            }`}
-          >
-            <p
-              className={`text-center font-[600] leading-[100%] ${
-                selectedDate === date ? "text-[#4F46E5]" : "text-[#292929]"
-              }`}
-            >
-              {date}
-            </p>
-          </button>
-        ))}
+      </button>
+      <div
+        className={`grid overflow-hidden transition-[grid-template-rows,opacity,margin-top] duration-300 ease-in-out ${
+          isOpen ? "grid-rows-[1fr] opacity-100 mt-[18px]" : "grid-rows-[0fr] opacity-0 mt-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="w-[530px] h-[91px] flex flex-row gap-[12px] justify-between">
+            {options.map((option) => (
+              <WeeklyScheduleOptionButton
+                key={option.id}
+                option={option}
+                isSelected={selectedId === option.id}
+                isUnavailable={option.isAvailable === false || option.available === false}
+                onSelect={onSelect}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

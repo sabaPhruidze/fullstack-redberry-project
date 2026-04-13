@@ -1,4 +1,23 @@
-const TotalPrice = () => {
+interface TotalPriceProps {
+  basePrice: number;
+  sessionTypeModifier: number;
+  totalPrice: number;
+}
+
+const formatPrice = (value: number) => `$${value}`;
+
+const formatModifier = (value: number) => {
+  if (value === 0) {
+    return "+ $0";
+  }
+
+  const amount = Math.abs(value);
+  const prefix = value > 0 ? "+" : "-";
+
+  return `${prefix} $${amount}`;
+};
+
+const TotalPrice = ({ basePrice, sessionTypeModifier, totalPrice }: TotalPriceProps) => {
   return (
     <div className="w-[530px] h-[306px] p-[40px] border border-[#F5F5F5] rounded-[12px] bg-white">
       <div className="w-full h-[39px] flex flex-row justify-between items-center">
@@ -6,7 +25,7 @@ const TotalPrice = () => {
           Total Price
         </p>
         <p className="text-[#292929] text-[32px] font-[600] leading-[100%]">
-          $349
+          {formatPrice(totalPrice)}
         </p>
       </div>
       <div className="w-[446px] h-[60px] flex flex-col gap-[12px] mt-[32px]">
@@ -14,16 +33,24 @@ const TotalPrice = () => {
           <p className="font-[500] leading-[24px] text-[#8A8A8A] ">
             Base Price
           </p>
-          <p className="text-[#292929] font-[500] leading-[24px]">+ $0</p>
+          <p className="text-[#292929] font-[500] leading-[24px]">
+            {`+ ${formatPrice(basePrice)}`}
+          </p>
         </div>
         <div className="w-full h-[39px] flex flex-row justify-between items-center">
           <p className="font-[500] leading-[24px] text-[#8A8A8A] ">
             Session Type
           </p>
-          <p className="text-[#292929] font-[500] leading-[24px]">+ $0</p>
+          <p className="text-[#292929] font-[500] leading-[24px]">
+            {formatModifier(sessionTypeModifier)}
+          </p>
         </div>
       </div>
-      <button className="mt-[32px] w-full h-[63px] bg-[#EEEDFC] rounded-[12px] text-[#B7B3F4] text-[20px] font-[600] text-center leading-[24px]">
+      <button
+        type="button"
+        disabled
+        className="mt-[32px] w-full h-[63px] bg-[#EEEDFC] rounded-[12px] text-[#B7B3F4] text-[20px] font-[600] text-center leading-[24px]"
+      >
         Enroll Now
       </button>
     </div>
