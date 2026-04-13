@@ -2,12 +2,14 @@ import type { InProgressCourseItem } from "../../../types/courses";
 
 type EnrolledCourseListItemProps = {
   item: InProgressCourseItem;
-  onViewCourse: (courseId: number) => void;
+  onRemoveEnrollment: (enrollmentId: number) => void;
+  isRemoving?: boolean;
 };
 
 const EnrolledCourseListItem = ({
   item,
-  onViewCourse,
+  onRemoveEnrollment,
+  isRemoving = false,
 }: EnrolledCourseListItemProps) => {
   return (
     <li className="rounded-[10px] border border-[#E7E7E7] bg-white p-[12px]">
@@ -28,10 +30,11 @@ const EnrolledCourseListItem = ({
         <p className="text-[12px] text-[#666666]">{item.progress}% complete</p>
         <button
           type="button"
-          onClick={() => onViewCourse(item.course.id)}
+          disabled={isRemoving}
+          onClick={() => onRemoveEnrollment(item.id)}
           className="text-[13px] text-[#4F46E5] underline"
         >
-          View Course
+          {isRemoving ? "Removing..." : "Remove"}
         </button>
       </div>
     </li>

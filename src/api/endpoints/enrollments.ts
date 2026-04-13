@@ -25,3 +25,7 @@ export const completeEnrollment = async (enrollmentId: number) => {
   );
   return response.data;
 };
+
+export const deleteEnrollment = async (enrollmentId: number) => {
+  await api.delete(`/enrollments/${enrollmentId}`);
+};

@@ -68,3 +68,15 @@ export interface CompleteEnrollmentForbiddenError {
 export interface CompleteEnrollmentNotFoundError {
   message: "No query results for model." | string;
 }
+
+export interface DeleteEnrollmentUnauthorizedError {
+  message: "Unauthenticated." | string;
+}
+
+export interface DeleteEnrollmentForbiddenError {
+  message: "This action is unauthorized." | string;
+}
+
+export interface DeleteEnrollmentNotFoundError {
+  message: "No query results for model." | string;
+}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLockBodyScroll } from "../../../hooks/use-lock-body-scroll";
+import useDeleteEnrollment from "../../../api/hooks/useDeleteEnrollment";
 import useEnrollments from "../../../api/hooks/useEnrollments";
 import useInProgressCourses from "../../../api/hooks/useInProgressCourses";
 import Button from "../../../components/ui/Button";
@@ -27,10 +28,12 @@ const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
   useLockBodyScroll(true);
   const navigate = useNavigate();
   const isAuthenticated = getIsAuthenticated();
+  const deleteEnrollmentMutation = useDeleteEnrollment();
   const { data: enrollmentsData } = useEnrollments(isAuthenticated);
   const { data, isLoading, isError, error } = useInProgressCourses(isAuthenticated);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [completionMessage, setCompletionMessage] = useState<string>();
+  const [removingEnrollmentId, setRemovingEnrollmentId] = useState<number | null>(null);
 
   const enrolledCourses = data ?? [];
   const hasEnrollments = enrolledCourses.length > 0;
@@ -52,9 +55,18 @@ const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
     navigate("/courses/catalog");
   };
 
-  const handleViewCourse = (courseId: number) => {
-    onClose?.();
-    navigate(`/courses/${courseId}`);
+  const handleRemoveEnrollment = async (enrollmentId: number) => {
+    if (deleteEnrollmentMutation.isPending) {
+      return;
+    }
+
+    setRemovingEnrollmentId(enrollmentId);
+
+    try {
+      await deleteEnrollmentMutation.mutateAsync(enrollmentId);
+    } finally {
+      setRemovingEnrollmentId(null);
+    }
   };
 
   const handleConfirmCompletion = () => {
@@ -92,7 +104,12 @@ const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
         <>
           <ul className="flex max-h-[250px] w-[360px] flex-col gap-[8px] overflow-y-auto pr-[2px]">
             {enrolledCourses.map((course) => (
-              <EnrolledCourseListItem key={course.id} item={course} onViewCourse={handleViewCourse} />
+              <EnrolledCourseListItem
+                key={course.id}
+                item={course}
+                onRemoveEnrollment={handleRemoveEnrollment}
+                isRemoving={deleteEnrollmentMutation.isPending && removingEnrollmentId === course.id}
+              />
             ))}
           </ul>
           <EnrolledCoursesSummary courseCount={enrolledCourses.length} totalPrice={totalPrice} />
