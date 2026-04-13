@@ -165,7 +165,8 @@
 9. Right-side detail sections (Weekly Schedule, Time Slot, Session Type) now support independent open/close accordion behavior with smooth arrow/content animation, while keeping the same backend-driven selections and reset logic.
 10. Breadcrumb receives relevant category and display's it on the head of the left part also when home or browse clicked it will move on relevant page
 11. implementing enrollment backend GET/POST/PATCH/DELETE
-12.
+12. Now implemented post on enroll now button but Currently I will write only static text and after creating the design I retrieve data through GET method
+13.
 
 ## IMPORTANT CHANGES
 

@@ -1,6 +1,6 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import axios from "axios";
 import useCreateEnrollment from "../../../../../api/hooks/useCreateEnrollment";
-import useCompleteEnrollment from "../../../../../api/hooks/useCompleteEnrollment";
 import useEnrollments from "../../../../../api/hooks/useEnrollments";
 import useCourseDetailAccordion from "../../../../../hooks/useCourseDetailAccordion";
 import useCourseScheduleSelection from "../../../../../hooks/useCourseScheduleSelection";
@@ -8,6 +8,11 @@ import useCourseWeeklySchedules from "../../../../../api/hooks/useCourseWeeklySc
 import { useAuthModal } from "../../../../../features/auth/hooks/useAuthModal";
 import { getAuthUser, getIsProfileCompleteFromUser } from "../../../../../features/profile/helpers/authUser";
 import type { CourseEnrollment } from "../../../../../types/courseDetail";
+import type { CreateEnrollmentConflictError, CreateEnrollmentRequest } from "../../../../../types/enrollments";
+import EnrolledInfoRows from "../enrollment/EnrolledInfoRows";
+import EnrolledProgressActions from "../enrollment/EnrolledProgressActions";
+import EnrollmentConflictModal from "../enrollment/EnrollmentConflictModal";
+import EnrolledStatusBadge from "../enrollment/EnrolledStatusBadge";
 import EnrollmentAccessNotice from "../enrollment/EnrollmentAccessNotice";
 import { getDisplaySessionTypes } from "../../schedule/utils/sessionTypeOptionUtils";
 import SessionType from "../../schedule/sections/SessionType";
@@ -23,13 +28,20 @@ interface CourseDetailRightProps {
   courseEnrollment?: CourseEnrollment;
 }
 
+type EnrollmentConflictState = {
+  payload: CreateEnrollmentRequest;
+  message: string;
+  conflictingCourseName?: string;
+  conflictingSchedule?: string;
+};
+
 const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: CourseDetailRightProps) => {
   const authUser = getAuthUser();
   const isAuthenticated = typeof window !== "undefined" && Boolean(localStorage.getItem("access_token"));
   const isProfileComplete = getIsProfileCompleteFromUser(authUser);
   const hasCompleteAccess = isAuthenticated && isProfileComplete;
+  const [conflictState, setConflictState] = useState<EnrollmentConflictState | null>(null);
   const createEnrollmentMutation = useCreateEnrollment();
-  const completeEnrollmentMutation = useCompleteEnrollment();
   const { data: enrollmentsData } = useEnrollments(isAuthenticated);
   const { data: weeklySchedulesResponse } = useCourseWeeklySchedules(courseId);
   const weeklySchedules = useMemo(() => weeklySchedulesResponse?.data ?? [], [weeklySchedulesResponse]);
@@ -51,60 +63,105 @@ const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: Cour
     () => courseEnrollment ?? enrollmentsData?.find((item) => item.course.id === courseId),
     [courseEnrollment, enrollmentsData, courseId],
   );
-  const enrollmentId = matchedEnrollment?.id;
-  const isCourseCompleted =
-    Number(matchedEnrollment?.progress ?? 0) >= 100 ||
-    Boolean(matchedEnrollment?.completedAt);
+  const enrollmentId = matchedEnrollment?.id ?? null;
+  const isEnrolled = enrollmentId != null;
   const selectedCourseScheduleId = selection.selectedSessionType?.courseScheduleId;
   const isEnrollActionActive =
-    !enrollmentId &&
+    !isEnrolled &&
     hasCompleteAccess &&
     selection.selectedWeeklyScheduleId != null &&
     selection.selectedTimeSlotId != null &&
     selection.selectedSessionTypeId != null &&
     selectedCourseScheduleId != null;
-  const isCompleteActionActive = Boolean(enrollmentId) && hasCompleteAccess && !isCourseCompleted;
-  const isActionActive = enrollmentId ? isCompleteActionActive : isEnrollActionActive;
-  const isActionPending = createEnrollmentMutation.isPending || completeEnrollmentMutation.isPending;
-  const actionText = enrollmentId ? (isCourseCompleted ? "Completed" : "Complete Course") : "Enroll Now";
   const noticeVariant = !isAuthenticated ? "auth" : !isProfileComplete ? "profile" : null;
 
-  const handleEnroll = () => {
-    if (enrollmentId != null) {
-      if (!isCompleteActionActive) {
-        return;
-      }
-      completeEnrollmentMutation.mutate(enrollmentId);
-      return;
-    }
+  const submitEnrollment = (payload: CreateEnrollmentRequest) => {
+    createEnrollmentMutation.mutate(payload, {
+      onSuccess: () => {
+        setConflictState(null);
+      },
+      onError: (error) => {
+        if (!axios.isAxiosError<CreateEnrollmentConflictError>(error)) {
+          return;
+        }
 
+        if (error.response?.status !== 409) {
+          return;
+        }
+
+        const firstConflict = error.response.data?.conflicts?.[0];
+        setConflictState({
+          payload,
+          message: error.response.data?.message ?? "Schedule conflict detected",
+          conflictingCourseName: firstConflict?.conflictingCourseName,
+          conflictingSchedule: firstConflict?.schedule,
+        });
+      },
+    });
+  };
+
+  const handleEnroll = () => {
     if (!isEnrollActionActive || selectedCourseScheduleId == null) {
       return;
     }
 
-    createEnrollmentMutation.mutate({
+    submitEnrollment({
       courseId,
       courseScheduleId: selectedCourseScheduleId,
       force: false,
     });
   };
 
+  const handleConflictCancel = () => {
+    setConflictState(null);
+  };
+
+  const handleConflictContinue = () => {
+    if (!conflictState) {
+      return;
+    }
+
+    submitEnrollment({ ...conflictState.payload, force: true });
+  };
+
   return (
     <div className="mt-[130px] w-[530px] flex flex-col gap-[32px]">
-      <WeeklySchedule options={displayWeeklySchedules} selectedId={selection.selectedWeeklyScheduleId} onSelect={selection.handleWeeklyScheduleChange} isOpen={accordion.isWeeklyScheduleOpen} onToggle={accordion.toggleWeeklySchedule} />
-      <TimeSlot options={displayTimeSlots} selectedId={selection.selectedTimeSlotId} onSelect={selection.handleTimeSlotChange} isOpen={accordion.isTimeSlotOpen} onToggle={accordion.toggleTimeSlot} />
-      <SessionType options={displaySessionTypes} selectedId={selection.selectedSessionTypeId} onSelect={selection.handleSessionTypeChange} isOpen={accordion.isSessionTypeOpen} onToggle={accordion.toggleSessionType} />
-      <TotalPrice
-        basePrice={courseBasePrice}
-        sessionTypeModifier={selection.sessionTypeModifier}
-        totalPrice={selection.totalPrice}
-        isEnrollButtonActive={isActionActive}
-        isEnrollPending={isActionPending}
-        onEnroll={handleEnroll}
-        actionText={actionText}
-      />
-      {noticeVariant ? (
-        <EnrollmentAccessNotice variant={noticeVariant} onAction={noticeVariant === "auth" ? openLoginModal : openProfileModal} />
+      {isEnrolled ? (
+        <div className="flex w-[473px] flex-col gap-[48px]">
+          <div className="flex w-[473px] flex-col gap-[10px]">
+            <EnrolledStatusBadge />
+            <EnrolledInfoRows />
+          </div>
+          <EnrolledProgressActions />
+        </div>
+      ) : (
+        <>
+          <WeeklySchedule options={displayWeeklySchedules} selectedId={selection.selectedWeeklyScheduleId} onSelect={selection.handleWeeklyScheduleChange} isOpen={accordion.isWeeklyScheduleOpen} onToggle={accordion.toggleWeeklySchedule} />
+          <TimeSlot options={displayTimeSlots} selectedId={selection.selectedTimeSlotId} onSelect={selection.handleTimeSlotChange} isOpen={accordion.isTimeSlotOpen} onToggle={accordion.toggleTimeSlot} />
+          <SessionType options={displaySessionTypes} selectedId={selection.selectedSessionTypeId} onSelect={selection.handleSessionTypeChange} isOpen={accordion.isSessionTypeOpen} onToggle={accordion.toggleSessionType} />
+          <TotalPrice
+            basePrice={courseBasePrice}
+            sessionTypeModifier={selection.sessionTypeModifier}
+            totalPrice={selection.totalPrice}
+            isEnrollButtonActive={isEnrollActionActive}
+            isEnrollPending={createEnrollmentMutation.isPending}
+            onEnroll={handleEnroll}
+            actionText="Enroll Now"
+          />
+          {noticeVariant ? (
+            <EnrollmentAccessNotice variant={noticeVariant} onAction={noticeVariant === "auth" ? openLoginModal : openProfileModal} />
+          ) : null}
+        </>
+      )}
+      {conflictState ? (
+        <EnrollmentConflictModal
+          message={conflictState.message}
+          conflictingCourseName={conflictState.conflictingCourseName}
+          conflictingSchedule={conflictState.conflictingSchedule}
+          isSubmitting={createEnrollmentMutation.isPending}
+          onCancel={handleConflictCancel}
+          onContinue={handleConflictContinue}
+        />
       ) : null}
     </div>
   );
