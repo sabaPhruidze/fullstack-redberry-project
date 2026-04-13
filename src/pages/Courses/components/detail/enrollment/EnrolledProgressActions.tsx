@@ -1,14 +1,29 @@
 import CHECK_ICON from "../../../../../assets/icons/profile/Icon Set=Check.svg?react";
 
-const EnrolledProgressActions = () => {
+type EnrolledProgressActionsProps = {
+  progress?: number | null;
+};
+
+const EnrolledProgressActions = ({ progress }: EnrolledProgressActionsProps) => {
+  const numericProgress = Number(progress);
+  const clampedProgress = Number.isFinite(numericProgress)
+    ? Math.min(100, Math.max(0, numericProgress))
+    : 0;
+  const progressTextValue = Number.isInteger(clampedProgress)
+    ? clampedProgress.toString()
+    : clampedProgress.toFixed(1).replace(/\.0$/, "");
+
   return (
     <div className="flex w-[473px] flex-col gap-[40px]">
       <div className="flex w-[473px] flex-col gap-[12px]">
         <p className="h-[30.4px] w-[473px] text-[20px] font-[600] leading-[24px] tracking-[0] text-[#666666]">
-          65% Complete
+          {progressTextValue}% Complete
         </p>
         <div className="h-[23.4px] w-[473px] overflow-hidden rounded-[30px] bg-[#DDDBFA]">
-          <div className="h-[23.4px] w-[303.2px] rounded-[30px] bg-[#4F46E5]" />
+          <div
+            className="h-[23.4px] rounded-[30px] bg-[#4F46E5]"
+            style={{ width: `${clampedProgress}%` }}
+          />
         </div>
       </div>
       <button

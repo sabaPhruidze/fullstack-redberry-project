@@ -3,6 +3,13 @@ import CLOCK_ICON from "../../../../../assets/icons/courses/tabler_clock-hour-3.
 import DESKTOP_ICON from "../../../../../assets/icons/courses/Icon Set=Desktop.svg";
 import LOCATION_ICON from "../../../../../assets/icons/courses/location.svg";
 
+type EnrolledInfoRowsProps = {
+  weeklyScheduleLabel: string;
+  timeSlotLabel: string;
+  sessionTypeLabel: string;
+  locationLabel?: string;
+};
+
 type EnrolledInfoRowProps = {
   icon: string;
   label: string;
@@ -20,29 +27,32 @@ const EnrolledInfoRow = ({ icon, label, alt }: EnrolledInfoRowProps) => {
   );
 };
 
-const EnrolledInfoRows = () => {
+const formatSessionTypeLabel = (value: string) => {
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "online") return "Online";
+  if (normalized === "hybrid") return "Hybrid";
+  if (normalized === "in-person" || normalized === "in person" || normalized === "inperson") {
+    return "In-person";
+  }
+  return value ? `${value[0].toUpperCase()}${value.slice(1)}` : "";
+};
+
+const EnrolledInfoRows = ({
+  weeklyScheduleLabel,
+  timeSlotLabel,
+  sessionTypeLabel,
+  locationLabel,
+}: EnrolledInfoRowsProps) => {
+  const normalizedLocation = locationLabel?.trim();
+
   return (
     <div className="flex w-[473px] flex-col gap-[22px]">
-      <EnrolledInfoRow
-        icon={CALENDAR_ICON}
-        alt="calendar icon"
-        label="Monday-Wednesday"
-      />
-      <EnrolledInfoRow
-        icon={CLOCK_ICON}
-        alt="clock icon"
-        label="Evening 6:00 PM - 8:00 PM"
-      />
-      <EnrolledInfoRow
-        icon={DESKTOP_ICON}
-        alt="online session icon"
-        label="Online"
-      />
-      <EnrolledInfoRow
-        icon={LOCATION_ICON}
-        alt="location icon"
-        label="Tbilisi, Chavchavadze St.30"
-      />
+      <EnrolledInfoRow icon={CALENDAR_ICON} alt="calendar icon" label={weeklyScheduleLabel} />
+      <EnrolledInfoRow icon={CLOCK_ICON} alt="clock icon" label={timeSlotLabel} />
+      <EnrolledInfoRow icon={DESKTOP_ICON} alt="online session icon" label={formatSessionTypeLabel(sessionTypeLabel)} />
+      {normalizedLocation ? (
+        <EnrolledInfoRow icon={LOCATION_ICON} alt="location icon" label={normalizedLocation} />
+      ) : null}
     </div>
   );
 };

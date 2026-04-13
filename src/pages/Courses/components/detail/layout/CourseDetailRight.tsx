@@ -154,15 +154,26 @@ const CourseDetailRight = ({
     submitEnrollment({ ...conflictState.payload, force: true });
   };
 
+  const enrolledSchedule = matchedEnrollment?.schedule;
+  const enrolledLocation =
+    enrolledSchedule?.location?.trim() ||
+    enrolledSchedule?.sessionType.location?.trim() ||
+    undefined;
+
   return (
     <div className="mt-[130px] w-[530px] flex flex-col gap-[32px]">
       {isEnrolled ? (
         <div className="flex w-[473px] flex-col gap-[48px]">
           <div className="flex w-[473px] flex-col gap-[22px]">
             <EnrolledStatusBadge />
-            <EnrolledInfoRows />
+            <EnrolledInfoRows
+              weeklyScheduleLabel={enrolledSchedule?.weeklySchedule.label ?? ""}
+              timeSlotLabel={enrolledSchedule?.timeSlot.label ?? ""}
+              sessionTypeLabel={enrolledSchedule?.sessionType.name ?? ""}
+              locationLabel={enrolledLocation}
+            />
           </div>
-          <EnrolledProgressActions />
+          <EnrolledProgressActions progress={matchedEnrollment?.progress} />
         </div>
       ) : (
         <>
