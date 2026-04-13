@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useEffect, useState } from "react";
 import useCourseSessionTypes from "../../../api/hooks/useCourseSessionTypes";
 import useCourseTimeSlots from "../../../api/hooks/useCourseTimeSlots";
 import type { WeeklyScheduleOption } from "../../../types/courseDetail";
@@ -19,15 +19,22 @@ const useCourseScheduleSelection = ({
   courseBasePrice,
   weeklySchedules,
 }: UseCourseScheduleSelectionParams) => {
-  const [selectedWeeklyScheduleId, setSelectedWeeklyScheduleId] = useState<number | null>(null);
-  const [selectedTimeSlotId, setSelectedTimeSlotId] = useState<number | null>(null);
-  const [selectedSessionTypeId, setSelectedSessionTypeId] = useState<number | null>(null);
-
-  const { data: timeSlotsResponse, isLoading: isTimeSlotsLoading } = useCourseTimeSlots(
-    courseId,
-    selectedWeeklyScheduleId ?? undefined,
+  const [selectedWeeklyScheduleId, setSelectedWeeklyScheduleId] = useState<
+    number | null
+  >(null);
+  const [selectedTimeSlotId, setSelectedTimeSlotId] = useState<number | null>(
+    null,
   );
-  const timeSlots = useMemo(() => timeSlotsResponse?.data ?? [], [timeSlotsResponse]);
+  const [selectedSessionTypeId, setSelectedSessionTypeId] = useState<
+    number | null
+  >(null);
+
+  const { data: timeSlotsResponse, isLoading: isTimeSlotsLoading } =
+    useCourseTimeSlots(courseId, selectedWeeklyScheduleId ?? undefined);
+  const timeSlots = useMemo(
+    () => timeSlotsResponse?.data ?? [],
+    [timeSlotsResponse],
+  );
 
   const { data: sessionTypesResponse, isLoading: isSessionTypesLoading } =
     useCourseSessionTypes(
@@ -65,7 +72,9 @@ const useCourseScheduleSelection = ({
 
   const selectedWeeklySchedule = useMemo(
     () =>
-      weeklySchedules.find((weeklySchedule) => weeklySchedule.id === selectedWeeklyScheduleId),
+      weeklySchedules.find(
+        (weeklySchedule) => weeklySchedule.id === selectedWeeklyScheduleId,
+      ),
     [weeklySchedules, selectedWeeklyScheduleId],
   );
 
@@ -75,13 +84,28 @@ const useCourseScheduleSelection = ({
   );
 
   const selectedSessionType = useMemo(
-    () => sessionTypes.find((sessionType) => sessionType.id === selectedSessionTypeId),
+    () =>
+      sessionTypes.find(
+        (sessionType) => sessionType.id === selectedSessionTypeId,
+      ),
     [sessionTypes, selectedSessionTypeId],
   );
 
-  const sessionTypeModifier = toSafeNumber(selectedSessionType?.priceModifier ?? 0);
+  const sessionTypeModifier = toSafeNumber(
+    selectedSessionType?.priceModifier ?? 0,
+  );
   const totalPrice = toSafeNumber(courseBasePrice) + sessionTypeModifier;
-
+  useEffect(() => {
+    console.log("WeeklyScheduleId:", selectedWeeklyScheduleId);
+    console.log("TimeSlotId:", selectedTimeSlotId);
+    console.log("timeSlots response:", timeSlotsResponse?.data);
+    console.log("sessionTypes response:", sessionTypesResponse?.data);
+  }, [
+    selectedWeeklyScheduleId,
+    selectedTimeSlotId,
+    timeSlotsResponse,
+    sessionTypesResponse,
+  ]);
   return {
     selectedWeeklyScheduleId,
     selectedTimeSlotId,
