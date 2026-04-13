@@ -9,12 +9,12 @@ interface SessionTypeIconProps {
 }
 
 const SessionTypeIcon = ({ kind, isSelected, isUnavailable }: SessionTypeIconProps) => {
-  const iconClassName = `w-[26px] h-[26px] [&_path]:fill-current ${
+  const iconClassName = `w-[26px] h-[26px] [&_path]:fill-current [&_path]:stroke-current ${
     isUnavailable
-      ? "text-[#D1D1D1] [&_path[stroke]]:stroke-[#D1D1D1]"
+      ? "text-[#D1D1D1]"
       : isSelected
-        ? "text-[#4F46E5] [&_path[stroke]]:stroke-[#4F46E5]"
-        : "text-[#525252] [&_path[stroke]]:stroke-[#666666]"
+        ? "text-[#4F46E5]"
+        : "text-[#525252]"
   }`;
 
   if (kind === "online") {

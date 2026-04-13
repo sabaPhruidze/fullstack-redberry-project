@@ -24,7 +24,7 @@ const TimeSlotOptionButton = ({ option, isSelected, onSelect }: TimeSlotOptionBu
       disabled={isUnavailable}
       aria-pressed={isSelected}
       onClick={() => onSelect(option.id)}
-      className={`flex flex-row justify-between items-center rounded-[12px] w-[172.67px] h-[61px] py-[15px] px-[19.8px] border ${
+      className={`flex flex-row items-center justify-start gap-[12px] rounded-[12px] w-[172.67px] h-[61px] py-[15px] px-[19.8px] border ${
         isUnavailable
           ? "border-[#D1D1D1] bg-[#F5F5F5] cursor-not-allowed"
           : isSelected
@@ -33,7 +33,7 @@ const TimeSlotOptionButton = ({ option, isSelected, onSelect }: TimeSlotOptionBu
       }`}
     >
       <TimeSlotIcon period={period} isSelected={isSelected} isUnavailable={isUnavailable} />
-      <div className="flex flex-col gap-[2px]">
+      <div className="flex min-w-0 flex-col items-start gap-[2px] text-left">
         <h3
           className={`font-[500] text-[14px] leading-[100%] ${
             isUnavailable ? "text-[#D1D1D1]" : isSelected ? "text-[#4F46E5]" : "text-[#666666]"

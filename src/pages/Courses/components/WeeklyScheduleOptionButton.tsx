@@ -28,8 +28,12 @@ const WeeklyScheduleOptionButton = ({
       }`}
     >
       <p
-        className={`text-center font-[600] leading-[100%] ${
-          isUnavailable ? "text-[#D1D1D1]" : isSelected ? "text-[#4F46E5]" : "text-[#292929]"
+        className={`w-[103.5px] h-[19px] text-center font-[600] leading-[100%] ${
+          isUnavailable
+            ? "text-[#D1D1D1]"
+            : isSelected
+              ? "text-[#4F46E5]"
+              : "text-[#292929]"
         }`}
       >
         {option.label}

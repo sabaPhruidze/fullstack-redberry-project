@@ -33,7 +33,7 @@ const TimeSlot = ({
         </div>
         <ARROW_DOWN
           aria-hidden
-          className={`w-[28px] h-[28px] transition-transform duration-300 ease-in-out [&_path]:stroke-[#130E67] ${
+          className={`w-[28px] h-[28px] text-[#130E67] transition-transform duration-300 ease-in-out [&_path]:stroke-current ${
             isOpen ? "rotate-180" : "rotate-0"
           }`}
         />
