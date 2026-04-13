@@ -39,6 +39,11 @@ const CourseDetailRight = ({ courseId, courseBasePrice }: CourseDetailRightProps
   const isAuthenticated = typeof window !== "undefined" && Boolean(localStorage.getItem("access_token"));
   const isProfileComplete = getIsProfileCompleteFromUser(authUser);
   const hasCompleteAccess = isAuthenticated && isProfileComplete;
+  const isEnrollButtonActive =
+    hasCompleteAccess &&
+    selection.selectedWeeklyScheduleId != null &&
+    selection.selectedTimeSlotId != null &&
+    selection.selectedSessionTypeId != null;
   const noticeVariant = !isAuthenticated ? "auth" : !isProfileComplete ? "profile" : null;
 
   return (
@@ -46,7 +51,12 @@ const CourseDetailRight = ({ courseId, courseBasePrice }: CourseDetailRightProps
       <WeeklySchedule options={displayWeeklySchedules} selectedId={selection.selectedWeeklyScheduleId} onSelect={selection.handleWeeklyScheduleChange} isOpen={accordion.isWeeklyScheduleOpen} onToggle={accordion.toggleWeeklySchedule} />
       <TimeSlot options={displayTimeSlots} selectedId={selection.selectedTimeSlotId} onSelect={selection.handleTimeSlotChange} isOpen={accordion.isTimeSlotOpen} onToggle={accordion.toggleTimeSlot} />
       <SessionType options={displaySessionTypes} selectedId={selection.selectedSessionTypeId} onSelect={selection.handleSessionTypeChange} isOpen={accordion.isSessionTypeOpen} onToggle={accordion.toggleSessionType} />
-      <TotalPrice basePrice={courseBasePrice} sessionTypeModifier={selection.sessionTypeModifier} totalPrice={selection.totalPrice} hasCompleteAccess={hasCompleteAccess} />
+      <TotalPrice
+        basePrice={courseBasePrice}
+        sessionTypeModifier={selection.sessionTypeModifier}
+        totalPrice={selection.totalPrice}
+        isEnrollButtonActive={isEnrollButtonActive}
+      />
       {noticeVariant ? (
         <EnrollmentAccessNotice variant={noticeVariant} onAction={noticeVariant === "auth" ? openLoginModal : openProfileModal} />
       ) : null}

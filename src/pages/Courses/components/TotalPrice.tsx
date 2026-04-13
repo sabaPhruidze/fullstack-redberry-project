@@ -2,7 +2,7 @@ interface TotalPriceProps {
   basePrice: number;
   sessionTypeModifier: number;
   totalPrice: number;
-  hasCompleteAccess: boolean;
+  isEnrollButtonActive: boolean;
 }
 
 const toSafeNumber = (value: unknown) => {
@@ -29,7 +29,7 @@ const TotalPrice = ({
   basePrice,
   sessionTypeModifier,
   totalPrice,
-  hasCompleteAccess,
+  isEnrollButtonActive,
 }: TotalPriceProps) => {
   return (
     <div className="w-[530px] h-[306px] p-[40px] border border-[#F5F5F5] rounded-[12px] bg-white">
@@ -61,9 +61,9 @@ const TotalPrice = ({
       </div>
       <button
         type="button"
-        disabled={!hasCompleteAccess}
+        disabled={!isEnrollButtonActive}
         className={`mt-[32px] w-full h-[63px] rounded-[12px] text-[20px] font-[600] text-center leading-[24px] ${
-          hasCompleteAccess ? "bg-[#281ED2] text-[#FFFFFF]" : "bg-[#EEEDFC] text-[#B7B3F4]"
+          isEnrollButtonActive ? "bg-[#281ED2] text-[#FFFFFF]" : "bg-[#EEEDFC] text-[#B7B3F4]"
         }`}
       >
         Enroll Now
