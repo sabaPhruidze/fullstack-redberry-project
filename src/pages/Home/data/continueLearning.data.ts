@@ -1,5 +1,5 @@
 import MOCK_COURSE_IN_PROGRESS from "../../../assets/images/home/mock_course_in_progress.png";
-import type { ContinueLearningCourse } from "./ContinueLearningCard";
+import type { ContinueLearningCourse } from "../components/continue-learning/ContinueLearningCard";
 
 export const CONTINUE_LEARNING_DATA: ContinueLearningCourse[] = [
   {

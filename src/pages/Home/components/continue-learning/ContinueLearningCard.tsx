@@ -1,6 +1,6 @@
-import STAR from "../../../assets/icons/home/Star.svg";
-import OutlineButton from "../../../components/ui/OutlineButton";
-import { useProtectedAction } from "../../../features/auth/hooks/useProtectedAction";
+import STAR from "../../../../assets/icons/home/Star.svg";
+import OutlineButton from "../../../../components/ui/OutlineButton";
+import { useProtectedAction } from "../../../../features/auth/hooks/useProtectedAction";
 import { useNavigate } from "react-router-dom";
 
 export type ContinueLearningCourse = {

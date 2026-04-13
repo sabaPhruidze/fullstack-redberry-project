@@ -1,7 +1,7 @@
 import MainLayout from "../../layouts/MainLayout";
-import ContinueLearning from "./components/ContinueLearning";
-import HeroSection from "./components/HeroSection";
-import StartLearning from "./components/StartLearning";
+import ContinueLearning from "./components/continue-learning/ContinueLearning";
+import HeroSection from "./components/hero/HeroSection";
+import StartLearning from "./components/start-learning/StartLearning";
 
 const HomePage = () => {
   return (

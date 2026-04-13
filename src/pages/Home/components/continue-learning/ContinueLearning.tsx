@@ -1,9 +1,9 @@
 import ContinueLearningCard from "./ContinueLearningCard";
 import ContinueLearningLocked from "./ContinueLearningLocked";
-import { useProtectedAction } from "../../../features/auth/hooks/useProtectedAction";
-import { CONTINUE_LEARNING_DATA } from "./continueLearning.data";
-import { useAuthModal } from "../../../features/auth/hooks/useAuthModal";
-import useInProgressCourses from "../../../api/hooks/useInProgressCourses";
+import { useProtectedAction } from "../../../../features/auth/hooks/useProtectedAction";
+import { CONTINUE_LEARNING_DATA } from "../../data/continueLearning.data";
+import { useAuthModal } from "../../../../features/auth/hooks/useAuthModal";
+import useInProgressCourses from "../../../../api/hooks/useInProgressCourses";
 
 const getIsAuthenticated = () => {
   if (typeof window === "undefined") {

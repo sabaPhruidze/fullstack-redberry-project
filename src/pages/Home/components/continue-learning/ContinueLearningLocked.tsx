@@ -1,6 +1,6 @@
-import LOCK from "../../../assets/icons/home/Lock.svg";
-import Button from "../../../components/ui/Button";
-import { useAuthModal } from "../../../features/auth/hooks/useAuthModal";
+import LOCK from "../../../../assets/icons/home/Lock.svg";
+import Button from "../../../../components/ui/Button";
+import { useAuthModal } from "../../../../features/auth/hooks/useAuthModal";
 
 const ContinueLearningLocked = () => {
   const { openLoginModal } = useAuthModal();

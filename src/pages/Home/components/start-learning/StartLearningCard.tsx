@@ -1,8 +1,8 @@
-import STAR from "../../../assets/icons/home/Star.svg";
-import HALF_STAR from "../../../assets/icons/home/Star (1).svg";
-import EMPTY_STAR from "../../../assets/icons/home/Star (2).svg";
-import Button from "../../../components/ui/Button";
-import type { Course } from "../../../types/courses";
+import STAR from "../../../../assets/icons/home/Star.svg";
+import HALF_STAR from "../../../../assets/icons/home/Star (1).svg";
+import EMPTY_STAR from "../../../../assets/icons/home/Star (2).svg";
+import Button from "../../../../components/ui/Button";
+import type { Course } from "../../../../types/courses";
 import { useNavigate } from "react-router-dom";
 
 type StartLearningCardProps = {
