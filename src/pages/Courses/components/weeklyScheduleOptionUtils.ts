@@ -1,4 +1,5 @@
 import type { WeeklyScheduleOption } from "../../../types/courseDetail";
+import formatWeeklyScheduleLabel from "./formatWeeklyScheduleLabel";
 
 type WeeklyScheduleTemplate = {
   key: "mon-wed" | "tue-thu" | "wed-fri" | "weekend";
@@ -52,6 +53,7 @@ export const getDisplayWeeklySchedules = (options: WeeklyScheduleOption[]) => {
 
     return {
       ...matchedOption,
+      label: formatWeeklyScheduleLabel(matchedOption.label),
       isAvailable,
       available: isAvailable,
     } satisfies WeeklyScheduleOption;
