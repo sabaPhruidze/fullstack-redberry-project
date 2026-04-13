@@ -6,9 +6,15 @@ import useCourseDetailAccordion from "../../../../../hooks/useCourseDetailAccord
 import useCourseScheduleSelection from "../../../../../hooks/useCourseScheduleSelection";
 import useCourseWeeklySchedules from "../../../../../api/hooks/useCourseWeeklySchedules";
 import { useAuthModal } from "../../../../../features/auth/hooks/useAuthModal";
-import { getAuthUser, getIsProfileCompleteFromUser } from "../../../../../features/profile/helpers/authUser";
+import {
+  getAuthUser,
+  getIsProfileCompleteFromUser,
+} from "../../../../../features/profile/helpers/authUser";
 import type { CourseEnrollment } from "../../../../../types/courseDetail";
-import type { CreateEnrollmentConflictError, CreateEnrollmentRequest } from "../../../../../types/enrollments";
+import type {
+  CreateEnrollmentConflictError,
+  CreateEnrollmentRequest,
+} from "../../../../../types/enrollments";
 import EnrolledInfoRows from "../enrollment/EnrolledInfoRows";
 import EnrolledProgressActions from "../enrollment/EnrolledProgressActions";
 import EnrollmentConflictModal from "../enrollment/EnrollmentConflictModal";
@@ -35,23 +41,40 @@ type EnrollmentConflictState = {
   conflictingSchedule?: string;
 };
 
-const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: CourseDetailRightProps) => {
+const CourseDetailRight = ({
+  courseId,
+  courseBasePrice,
+  courseEnrollment,
+}: CourseDetailRightProps) => {
   const authUser = getAuthUser();
-  const isAuthenticated = typeof window !== "undefined" && Boolean(localStorage.getItem("access_token"));
+  const isAuthenticated =
+    typeof window !== "undefined" &&
+    Boolean(localStorage.getItem("access_token"));
   const isProfileComplete = getIsProfileCompleteFromUser(authUser);
   const hasCompleteAccess = isAuthenticated && isProfileComplete;
-  const [conflictState, setConflictState] = useState<EnrollmentConflictState | null>(null);
+  const [conflictState, setConflictState] =
+    useState<EnrollmentConflictState | null>(null);
   const createEnrollmentMutation = useCreateEnrollment();
   const { data: enrollmentsData } = useEnrollments(isAuthenticated);
   const { data: weeklySchedulesResponse } = useCourseWeeklySchedules(courseId);
-  const weeklySchedules = useMemo(() => weeklySchedulesResponse?.data ?? [], [weeklySchedulesResponse]);
+  const weeklySchedules = useMemo(
+    () => weeklySchedulesResponse?.data ?? [],
+    [weeklySchedulesResponse],
+  );
   const displayWeeklySchedules = useMemo(
     () => getDisplayWeeklySchedules(weeklySchedules),
     [weeklySchedules],
   );
 
-  const selection = useCourseScheduleSelection({ courseId, courseBasePrice, weeklySchedules });
-  const displayTimeSlots = useMemo(() => getDisplayTimeSlots(selection.timeSlots), [selection.timeSlots]);
+  const selection = useCourseScheduleSelection({
+    courseId,
+    courseBasePrice,
+    weeklySchedules,
+  });
+  const displayTimeSlots = useMemo(
+    () => getDisplayTimeSlots(selection.timeSlots),
+    [selection.timeSlots],
+  );
   const displaySessionTypes = useMemo(
     () => getDisplaySessionTypes(selection.sessionTypes),
     [selection.sessionTypes],
@@ -60,12 +83,15 @@ const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: Cour
   const { openLoginModal, openProfileModal } = useAuthModal();
 
   const matchedEnrollment = useMemo(
-    () => courseEnrollment ?? enrollmentsData?.find((item) => item.course.id === courseId),
+    () =>
+      courseEnrollment ??
+      enrollmentsData?.find((item) => item.course.id === courseId),
     [courseEnrollment, enrollmentsData, courseId],
   );
   const enrollmentId = matchedEnrollment?.id ?? null;
   const isEnrolled = enrollmentId != null;
-  const selectedCourseScheduleId = selection.selectedSessionType?.courseScheduleId;
+  const selectedCourseScheduleId =
+    selection.selectedSessionType?.courseScheduleId;
   const isEnrollActionActive =
     !isEnrolled &&
     hasCompleteAccess &&
@@ -73,7 +99,11 @@ const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: Cour
     selection.selectedTimeSlotId != null &&
     selection.selectedSessionTypeId != null &&
     selectedCourseScheduleId != null;
-  const noticeVariant = !isAuthenticated ? "auth" : !isProfileComplete ? "profile" : null;
+  const noticeVariant = !isAuthenticated
+    ? "auth"
+    : !isProfileComplete
+      ? "profile"
+      : null;
 
   const submitEnrollment = (payload: CreateEnrollmentRequest) => {
     createEnrollmentMutation.mutate(payload, {
@@ -128,7 +158,7 @@ const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: Cour
     <div className="mt-[130px] w-[530px] flex flex-col gap-[32px]">
       {isEnrolled ? (
         <div className="flex w-[473px] flex-col gap-[48px]">
-          <div className="flex w-[473px] flex-col gap-[10px]">
+          <div className="flex w-[473px] flex-col gap-[22px]">
             <EnrolledStatusBadge />
             <EnrolledInfoRows />
           </div>
@@ -136,9 +166,27 @@ const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: Cour
         </div>
       ) : (
         <>
-          <WeeklySchedule options={displayWeeklySchedules} selectedId={selection.selectedWeeklyScheduleId} onSelect={selection.handleWeeklyScheduleChange} isOpen={accordion.isWeeklyScheduleOpen} onToggle={accordion.toggleWeeklySchedule} />
-          <TimeSlot options={displayTimeSlots} selectedId={selection.selectedTimeSlotId} onSelect={selection.handleTimeSlotChange} isOpen={accordion.isTimeSlotOpen} onToggle={accordion.toggleTimeSlot} />
-          <SessionType options={displaySessionTypes} selectedId={selection.selectedSessionTypeId} onSelect={selection.handleSessionTypeChange} isOpen={accordion.isSessionTypeOpen} onToggle={accordion.toggleSessionType} />
+          <WeeklySchedule
+            options={displayWeeklySchedules}
+            selectedId={selection.selectedWeeklyScheduleId}
+            onSelect={selection.handleWeeklyScheduleChange}
+            isOpen={accordion.isWeeklyScheduleOpen}
+            onToggle={accordion.toggleWeeklySchedule}
+          />
+          <TimeSlot
+            options={displayTimeSlots}
+            selectedId={selection.selectedTimeSlotId}
+            onSelect={selection.handleTimeSlotChange}
+            isOpen={accordion.isTimeSlotOpen}
+            onToggle={accordion.toggleTimeSlot}
+          />
+          <SessionType
+            options={displaySessionTypes}
+            selectedId={selection.selectedSessionTypeId}
+            onSelect={selection.handleSessionTypeChange}
+            isOpen={accordion.isSessionTypeOpen}
+            onToggle={accordion.toggleSessionType}
+          />
           <TotalPrice
             basePrice={courseBasePrice}
             sessionTypeModifier={selection.sessionTypeModifier}
@@ -149,7 +197,12 @@ const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: Cour
             actionText="Enroll Now"
           />
           {noticeVariant ? (
-            <EnrollmentAccessNotice variant={noticeVariant} onAction={noticeVariant === "auth" ? openLoginModal : openProfileModal} />
+            <EnrollmentAccessNotice
+              variant={noticeVariant}
+              onAction={
+                noticeVariant === "auth" ? openLoginModal : openProfileModal
+              }
+            />
           ) : null}
         </>
       )}
@@ -168,5 +221,3 @@ const CourseDetailRight = ({ courseId, courseBasePrice, courseEnrollment }: Cour
 };
 
 export default CourseDetailRight;
-
-
