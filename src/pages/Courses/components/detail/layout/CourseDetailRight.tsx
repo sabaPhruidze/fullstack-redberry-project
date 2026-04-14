@@ -69,6 +69,8 @@ const CourseDetailRight = ({
     useState(false);
   const [isCourseCompletedModalOpen, setIsCourseCompletedModalOpen] =
     useState(false);
+  const [completedModalRatingValue, setCompletedModalRatingValue] =
+    useState<number | null>(null);
   const [isRatingCardVisible, setIsRatingCardVisible] = useState(false);
   const completeEnrollmentMutation = useCompleteEnrollment();
   const createCourseReviewMutation = useCreateCourseReview();
@@ -215,6 +217,7 @@ const CourseDetailRight = ({
       onSuccess: () => {
         setConflictState(null);
         setIsEnrollmentConfirmedOpen(false);
+        setCompletedModalRatingValue(null);
         setIsCourseCompletedModalOpen(true);
       },
     });
@@ -269,6 +272,7 @@ const CourseDetailRight = ({
   const isCourseCompletedFeedbackModalOpen =
     isCourseCompletedModalOpen && !isConflictModalOpen;
   const enrollmentConfirmedCourseTitle = courseTitle.trim() || "Course";
+  const completedCourseTitle = courseTitle.trim() || "Course";
 
   return (
     <div className="mt-[130px] w-[530px] flex flex-col gap-[32px]">
@@ -358,6 +362,12 @@ const CourseDetailRight = ({
       <CourseCompletedModal
         isOpen={isCourseCompletedFeedbackModalOpen}
         onClose={() => setIsCourseCompletedModalOpen(false)}
+        courseTitle={completedCourseTitle}
+        ratingValue={completedModalRatingValue}
+        onRatingChange={setCompletedModalRatingValue}
+        onSubmitRating={handleRateCourse}
+        isSubmittingRating={createCourseReviewMutation.isPending}
+        isRated={courseIsRated}
       />
     </div>
   );
