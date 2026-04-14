@@ -23,7 +23,9 @@ const StartLearning = () => {
           Choose from our most popular courses and begin your journey
         </p>
         <div className="w-full h-[576px] flex flex-row gap-[24px]">
-          {data?.map((course) => <StartLearningCard key={course.id} course={course} />)}
+          {data?.map((course) => (
+            <StartLearningCard key={course.id} course={course} />
+          ))}
         </div>
       </div>
     </section>

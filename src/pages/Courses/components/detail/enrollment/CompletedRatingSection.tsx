@@ -7,7 +7,7 @@ import EMPTY_STAR_ICON from "../../../../../assets/icons/home/Star (2).svg";
 type CompletedRatingSectionProps = {
   onClose: () => void;
   isRated?: boolean;
-  onRate?: (rating: number) => Promise<void> | void;
+  onRate?: (rating: number) => Promise<boolean> | boolean;
   isSubmitting?: boolean;
 };
 
@@ -21,13 +21,22 @@ const CompletedRatingSection = ({
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const activeRating = hoveredRating ?? selectedRating ?? 0;
 
-  const handleSelect = (rating: number) => {
-    if (selectedRating != null || isSubmitting) {
+  const handleSelect = async (rating: number) => {
+    if (selectedRating != null || isSubmitting || isRated) {
+      return;
+    }
+
+    const submitResult = onRate?.(rating);
+    const isPromise =
+      submitResult != null &&
+      typeof (submitResult as Promise<unknown>).then === "function";
+    const didSubmit = isPromise ? await submitResult : submitResult;
+
+    if (didSubmit === false) {
       return;
     }
 
     setSelectedRating(rating);
-    onRate?.(rating);
   };
 
   return (

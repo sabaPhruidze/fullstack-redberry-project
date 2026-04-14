@@ -1,4 +1,5 @@
 import MainLayout from "../../layouts/MainLayout";
+import useInProgressCourses from "../../api/hooks/useInProgressCourses";
 import ContinueLearning from "./components/continue-learning/ContinueLearning";
 import HeroSection from "./components/hero/HeroSection";
 import StartLearning from "./components/start-learning/StartLearning";
@@ -13,6 +14,18 @@ const getIsAuthenticated = () => {
 
 const HomePage = () => {
   const isAuthenticated = getIsAuthenticated();
+  const {
+    data: inProgressCourses,
+    error: inProgressError,
+    isError: isInProgressError,
+    isLoading: isInProgressLoading,
+  } = useInProgressCourses(isAuthenticated);
+  const hasAuthorizedContinueCourses = (inProgressCourses?.length ?? 0) > 0;
+  const shouldShowAuthorizedContinue =
+    isInProgressLoading || isInProgressError || hasAuthorizedContinueCourses;
+  const authorizedStartMarginClass = shouldShowAuthorizedContinue
+    ? "mb-[248px]"
+    : "mb-[192px]";
 
   return (
     <MainLayout>
@@ -20,13 +33,27 @@ const HomePage = () => {
         <HeroSection />
         {isAuthenticated ? (
           <>
-            <ContinueLearning />
-            <StartLearning />
+            <ContinueLearning
+              bottomMarginClass="mb-[64px]"
+              courses={inProgressCourses ?? []}
+              error={inProgressError}
+              isAuthenticated
+              isError={isInProgressError}
+              isLoading={isInProgressLoading}
+            />
+            <div className={authorizedStartMarginClass}>
+              <StartLearning />
+            </div>
           </>
         ) : (
           <>
-            <StartLearning />
-            <ContinueLearning />
+            <div className="mb-[64px]">
+              <StartLearning />
+            </div>
+            <ContinueLearning
+              bottomMarginClass="mb-[120px]"
+              isAuthenticated={false}
+            />
           </>
         )}
       </div>

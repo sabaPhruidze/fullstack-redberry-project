@@ -1,5 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCourseReview } from "../endpoints/courseDetail";
+import {
+  enrollmentsQueryKey,
+  inProgressCoursesQueryKey,
+} from "../queryKeys";
 
 type CreateCourseReviewInput = {
   courseId: number;
@@ -17,7 +21,19 @@ const useCreateCourseReview = () => {
         queryKey: ["course-detail", variables.courseId],
       });
       await queryClient.invalidateQueries({
-        queryKey: ["enrollments"],
+        queryKey: ["course-detail"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: enrollmentsQueryKey,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["courses"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["featured-courses"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: inProgressCoursesQueryKey,
       });
     },
   });

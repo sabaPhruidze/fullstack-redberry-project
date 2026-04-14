@@ -4,21 +4,23 @@ import ContinueLearningLocked from "./ContinueLearningLocked";
 import { useProtectedAction } from "../../../../features/auth/hooks/useProtectedAction";
 import { CONTINUE_LEARNING_DATA } from "../../data/continueLearning.data";
 import { useAuthModal } from "../../../../features/auth/hooks/useAuthModal";
-import useInProgressCourses from "../../../../api/hooks/useInProgressCourses";
+import type { InProgressCourseItem } from "../../../../types/courses";
 
 type ContinueLearningSectionProps = {
+  bottomMarginClass: string;
   showSeeAll: boolean;
   onSeeAll: () => void;
   children: ReactNode;
 };
 
 const ContinueLearningSection = ({
+  bottomMarginClass,
   showSeeAll,
   onSeeAll,
   children,
 }: ContinueLearningSectionProps) => (
   <section>
-    <div className="mb-[64px] w-[1566px]">
+    <div className={`${bottomMarginClass} w-[1566px]`}>
       <h2 className="h-[48px] text-[40px] font-[600] leading-[100%] text-redberry-text-black">
         Continue Learning
       </h2>
@@ -41,28 +43,37 @@ const ContinueLearningSection = ({
   </section>
 );
 
-const getIsAuthenticated = () => {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return Boolean(localStorage.getItem("access_token"));
+type ContinueLearningProps = {
+  bottomMarginClass: string;
+  courses?: InProgressCourseItem[];
+  error?: unknown;
+  isAuthenticated: boolean;
+  isError?: boolean;
+  isLoading?: boolean;
 };
 
-const ContinueLearning = () => {
-  const isAuthenticated = getIsAuthenticated();
-  const { data, isLoading, isError, error } =
-    useInProgressCourses(isAuthenticated);
+const ContinueLearning = ({
+  bottomMarginClass,
+  courses = [],
+  error,
+  isAuthenticated,
+  isError = false,
+  isLoading = false,
+}: ContinueLearningProps) => {
   const { handleProtectedAction } = useProtectedAction();
   const { openEnrolledCoursesModal } = useAuthModal();
   const openEnrolledCourses = () =>
     handleProtectedAction(() => openEnrolledCoursesModal());
-  const authorizedCourses = (data ?? []).slice(0, 3);
+  const authorizedCourses = courses.slice(0, 3);
   const hasAuthorizedCourses = authorizedCourses.length > 0;
 
   if (!isAuthenticated) {
     return (
-      <ContinueLearningSection showSeeAll onSeeAll={openEnrolledCourses}>
+      <ContinueLearningSection
+        bottomMarginClass={bottomMarginClass}
+        showSeeAll
+        onSeeAll={openEnrolledCourses}
+      >
         <div className="relative z-1 mt-[32px] flex h-[219px] w-full flex-row flex-wrap gap-[24px]">
           {CONTINUE_LEARNING_DATA.map((course) => (
             <ContinueLearningCard key={course.id} course={course} isBlurred />
@@ -79,6 +90,7 @@ const ContinueLearning = () => {
 
   return (
     <ContinueLearningSection
+      bottomMarginClass={bottomMarginClass}
       showSeeAll={hasAuthorizedCourses}
       onSeeAll={openEnrolledCourses}
     >

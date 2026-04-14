@@ -11,7 +11,7 @@ type CourseCompletedModalProps = {
   courseTitle: string;
   ratingValue: number | null;
   onRatingChange: (rating: number) => void;
-  onSubmitRating?: (rating: number) => Promise<void> | void;
+  onSubmitRating?: (rating: number) => Promise<boolean> | boolean;
   isSubmittingRating?: boolean;
   isRated?: boolean;
 };
@@ -30,13 +30,22 @@ const CourseCompletedModal = ({
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const activeRating = hoveredRating ?? ratingValue ?? 0;
 
-  const handleSelect = (rating: number) => {
+  const handleSelect = async (rating: number) => {
     if (isSubmittingRating || isRated || ratingValue != null) {
       return;
     }
 
+    const submitResult = onSubmitRating?.(rating);
+    const isPromise =
+      submitResult != null &&
+      typeof (submitResult as Promise<unknown>).then === "function";
+    const didSubmit = isPromise ? await submitResult : submitResult;
+
+    if (didSubmit === false) {
+      return;
+    }
+
     onRatingChange(rating);
-    onSubmitRating?.(rating);
   };
 
   return (

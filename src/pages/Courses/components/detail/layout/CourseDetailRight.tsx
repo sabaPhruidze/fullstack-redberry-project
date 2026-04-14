@@ -238,13 +238,18 @@ const CourseDetailRight = ({
 
   const handleRateCourse = async (rating: number) => {
     if (createCourseReviewMutation.isPending) {
-      return;
+      return false;
     }
 
-    await createCourseReviewMutation.mutateAsync({
-      courseId,
-      rating,
-    });
+    try {
+      await createCourseReviewMutation.mutateAsync({
+        courseId,
+        rating,
+      });
+      return true;
+    } catch {
+      return false;
+    }
   };
   const isConflictModalOpen = conflictState != null;
   const selectedWeeklyScheduleLabel =
