@@ -1,3 +1,5 @@
+import HALF_STAR from "../../../../assets/icons/home/Star (1).svg";
+import EMPTY_STAR from "../../../../assets/icons/home/Star (2).svg";
 import STAR from "../../../../assets/icons/home/Star.svg";
 import OutlineButton from "../../../../components/ui/OutlineButton";
 import { useProtectedAction } from "../../../../features/auth/hooks/useProtectedAction";
@@ -22,10 +24,21 @@ type Props = {
   isBlurred?: boolean;
 };
 
+const getRatingIcon = (avgRating: number) => {
+  if (!avgRating) return EMPTY_STAR;
+  if (avgRating <= 4) return HALF_STAR;
+  return STAR;
+};
+
 const ContinueLearningCard = ({ course, isBlurred = false }: Props) => {
   const { handleProtectedAction } = useProtectedAction();
   const navigate = useNavigate();
   const progress = Math.max(course.progress, 0);
+  const ratingValue = Number(course.course.avgRating);
+  const normalizedRating = Number.isFinite(ratingValue) ? ratingValue : 0;
+  const displayRating = Number.isFinite(ratingValue)
+    ? String(course.course.avgRating)
+    : "0";
 
   return (
     <div
@@ -43,9 +56,13 @@ const ContinueLearningCard = ({ course, isBlurred = false }: Props) => {
               {course.course.instructor.name}
             </p>
             <div className="flex flex-row items-center gap-[4px]">
-              <img src={STAR} alt="star icon" className="w-[18px] h-[18px]" />
+              <img
+                src={getRatingIcon(normalizedRating)}
+                alt="star icon"
+                className="w-[18px] h-[18px]"
+              />
               <p className="font-[500] text-[14px] leading-[100%] text-redberry-text-gray-light">
-                {course.course.avgRating || 0}
+                {displayRating}
               </p>
             </div>
           </div>
