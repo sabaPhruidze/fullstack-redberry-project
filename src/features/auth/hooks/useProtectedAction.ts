@@ -1,14 +1,7 @@
 import { useAuthModal } from "./useAuthModal";
 import { runProtectedAction } from "../helpers/protectedAction";
+import { isAuthenticatedClient } from "../helpers/authSession";
 import { useRequireCompleteProfile } from "../../profile/hooks/useRequireCompleteProfile";
-
-const getIsAuthenticated = () => {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return Boolean(localStorage.getItem("access_token"));
-};
 
 export const useProtectedAction = () => {
   const { openLoginModal } = useAuthModal();
@@ -16,7 +9,7 @@ export const useProtectedAction = () => {
 
   const handleProtectedAction = (action?: () => void) => {
     runProtectedAction({
-      isAuthenticated: getIsAuthenticated(),
+      isAuthenticated: isAuthenticatedClient(),
       openLoginModal,
       action,
     });

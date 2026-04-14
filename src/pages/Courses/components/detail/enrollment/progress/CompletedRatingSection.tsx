@@ -1,8 +1,6 @@
 import { useState } from "react";
 import CLOSE_ICON from "../../../../../../assets/icons/authentification/ic_round-close.svg";
-import STAR_ICON from "../../../../../../assets/icons/home/Star.svg";
-import HALF_STAR_ICON from "../../../../../../assets/icons/home/Star (1).svg";
-import EMPTY_STAR_ICON from "../../../../../../assets/icons/home/Star (2).svg";
+import StarRatingInput from "../shared/StarRatingInput";
 
 type CompletedRatingSectionProps = {
   onClose: () => void;
@@ -17,9 +15,7 @@ const CompletedRatingSection = ({
   onRate,
   isSubmitting = false,
 }: CompletedRatingSectionProps) => {
-  const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
-  const activeRating = hoveredRating ?? selectedRating ?? 0;
 
   const handleSelect = async (rating: number) => {
     if (selectedRating != null || isSubmitting || isRated) {
@@ -57,32 +53,13 @@ const CompletedRatingSection = ({
           You&apos;ve already rated this course
         </p>
       ) : (
-        <div className="flex h-[50px] w-[373px] items-center justify-center gap-[18px]">
-          {Array.from({ length: 5 }, (_, index) => {
-            const starPosition = index + 1;
-            const starIcon =
-              activeRating >= starPosition
-                ? STAR_ICON
-                : activeRating >= starPosition - 0.5
-                  ? HALF_STAR_ICON
-                  : EMPTY_STAR_ICON;
-
-            return (
-              <button
-                key={starPosition}
-                type="button"
-                onClick={() => handleSelect(starPosition)}
-                onMouseEnter={() => setHoveredRating(starPosition)}
-                onMouseLeave={() => setHoveredRating(null)}
-                disabled={isSubmitting}
-                className="flex h-[50px] w-[50px] items-center justify-center disabled:cursor-not-allowed"
-                aria-label={`Rate ${starPosition} star${starPosition > 1 ? "s" : ""}`}
-              >
-                <img src={starIcon} alt="rating star" className="h-[50px] w-[50px]" />
-              </button>
-            );
-          })}
-        </div>
+        <StarRatingInput
+          value={selectedRating}
+          size={50}
+          disabled={isSubmitting}
+          onSelect={handleSelect}
+          containerClassName="flex h-[50px] w-[373px] items-center justify-center gap-[18px]"
+        />
       )}
     </div>
   );

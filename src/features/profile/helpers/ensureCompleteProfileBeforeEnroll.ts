@@ -1,3 +1,4 @@
+import { isAuthenticatedClient } from "../../auth/helpers/authSession";
 import type { RegisteredUser } from "../../auth/types/signup";
 import { getAuthUser, getIsProfileCompleteFromUser } from "./authUser";
 
@@ -5,13 +6,8 @@ type EnsureResult =
   | { blocked: true; reason: "unauthenticated" | "incomplete_profile" }
   | { blocked: false; user: RegisteredUser };
 
-const getIsAuthenticated = () => {
-  if (typeof window === "undefined") return false;
-  return Boolean(localStorage.getItem("access_token"));
-};
-
 export const ensureCompleteProfileBeforeEnroll = (): EnsureResult => {
-  if (!getIsAuthenticated()) {
+  if (!isAuthenticatedClient()) {
     return { blocked: true, reason: "unauthenticated" };
   }
 

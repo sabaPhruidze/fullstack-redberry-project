@@ -1,9 +1,6 @@
-import { useState } from "react";
 import CELEBRATION_ICON from "../../../../../../assets/icons/modal/congratulations.svg";
-import STAR_ICON from "../../../../../../assets/icons/home/Star.svg";
-import HALF_STAR_ICON from "../../../../../../assets/icons/home/Star (1).svg";
-import EMPTY_STAR_ICON from "../../../../../../assets/icons/home/Star (2).svg";
 import CourseFeedbackModalShell from "./CourseFeedbackModalShell";
+import StarRatingInput from "../shared/StarRatingInput";
 
 type CourseCompletedModalProps = {
   isOpen: boolean;
@@ -27,9 +24,6 @@ const CourseCompletedModal = ({
   isRated = false,
 }: CourseCompletedModalProps) => {
   // Completed modal keeps Figma layout while reusing the existing course rating flow.
-  const [hoveredRating, setHoveredRating] = useState<number | null>(null);
-  const activeRating = hoveredRating ?? ratingValue ?? 0;
-
   const handleSelect = async (rating: number) => {
     if (isSubmittingRating || isRated || ratingValue != null) {
       return;
@@ -81,32 +75,13 @@ const CourseCompletedModal = ({
                 You&apos;ve already rated this course
               </p>
             ) : (
-              <div className="flex w-[302px] items-center justify-center gap-[18px]">
-                {Array.from({ length: 5 }, (_, index) => {
-                  const starPosition = index + 1;
-                  const starIcon =
-                    activeRating >= starPosition
-                      ? STAR_ICON
-                      : activeRating >= starPosition - 0.5
-                        ? HALF_STAR_ICON
-                        : EMPTY_STAR_ICON;
-
-                  return (
-                    <button
-                      key={starPosition}
-                      type="button"
-                      onClick={() => handleSelect(starPosition)}
-                      onMouseEnter={() => setHoveredRating(starPosition)}
-                      onMouseLeave={() => setHoveredRating(null)}
-                      disabled={isSubmittingRating}
-                      className="flex h-[46px] w-[46px] items-center justify-center disabled:cursor-not-allowed"
-                      aria-label={`Rate ${starPosition} star${starPosition > 1 ? "s" : ""}`}
-                    >
-                      <img src={starIcon} alt="rating star" className="h-[46px] w-[46px]" />
-                    </button>
-                  );
-                })}
-              </div>
+              <StarRatingInput
+                value={ratingValue}
+                size={46}
+                disabled={isSubmittingRating}
+                onSelect={handleSelect}
+                containerClassName="flex w-[302px] items-center justify-center gap-[18px]"
+              />
             )}
           </div>
         </div>

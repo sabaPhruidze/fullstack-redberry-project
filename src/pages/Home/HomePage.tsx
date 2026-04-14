@@ -1,19 +1,12 @@
 import MainLayout from "../../layouts/MainLayout";
 import useInProgressCourses from "../../api/hooks/courses/useInProgressCourses";
+import { isAuthenticatedClient } from "../../features/auth/helpers/authSession";
 import ContinueLearning from "./components/continue-learning/ContinueLearning";
 import HeroSection from "./components/hero/HeroSection";
 import StartLearning from "./components/start-learning/StartLearning";
 
-const getIsAuthenticated = () => {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return Boolean(localStorage.getItem("access_token"));
-};
-
 const HomePage = () => {
-  const isAuthenticated = getIsAuthenticated();
+  const isAuthenticated = isAuthenticatedClient();
   const {
     data: inProgressCourses,
     error: inProgressError,

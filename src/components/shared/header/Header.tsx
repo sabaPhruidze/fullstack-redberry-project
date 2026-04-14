@@ -1,20 +1,13 @@
 import { Link } from "react-router-dom";
 import LOGO from "../../../assets/icons/header/Logo.svg";
 import { useAuthModal } from "../../../features/auth/hooks/useAuthModal";
+import { isAuthenticatedClient } from "../../../features/auth/helpers/authSession";
 import {
   getAuthUser,
   getIsProfileCompleteFromUser,
 } from "../../../features/profile/helpers/authUser";
 import HeaderAuthenticatedActions from "./HeaderAuthenticatedActions";
 import HeaderGuestActions from "./HeaderGuestActions";
-
-const getIsAuthenticated = () => {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return Boolean(localStorage.getItem("access_token"));
-};
 
 const Header = () => {
   const {
@@ -23,7 +16,7 @@ const Header = () => {
     openProfileModal,
     openEnrolledCoursesModal,
   } = useAuthModal();
-  const isAuthenticated = getIsAuthenticated();
+  const isAuthenticated = isAuthenticatedClient();
   const authUser = getAuthUser();
   const isProfileComplete = getIsProfileCompleteFromUser(authUser);
 

@@ -1,25 +1,16 @@
 // Enrolled courses modal keeps shell/timing unchanged and switches by real enrollments state.
 import { useEffect } from "react";
+import { isAuthenticatedClient } from "../../helpers/authSession";
 import EnrolledCoursesEmptyState from "./EnrolledCoursesEmptyState";
 import EnrolledCourseCard from "./EnrolledCourseCard";
 import EnrolledCoursesPanelHeader from "./EnrolledCoursesPanelHeader";
 import EnrolledCoursesSidebarShell from "./EnrolledCoursesSidebarShell";
 import useEnrollments from "../../../../api/hooks/enrollments/useEnrollments";
 
-type EnrolledCoursesModalProps = {
-  onClose?: () => void;
-};
-
-const getIsAuthenticated = () => {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return Boolean(localStorage.getItem("access_token"));
-};
+type EnrolledCoursesModalProps = { onClose?: () => void };
 
 const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
-  const isAuthenticated = getIsAuthenticated();
+  const isAuthenticated = isAuthenticatedClient();
   const { data: enrollmentsData = [], refetch } =
     useEnrollments(isAuthenticated);
   const totalEnrollments = enrollmentsData?.length ?? 0;
