@@ -19,14 +19,25 @@ type CardsProps = {
   selectedInstructorIds: number[];
 };
 
-const Cards = ({ currentPage, onPageChange, selectedCategoryIds, selectedTopicIds, selectedInstructorIds }: CardsProps) => {
+const Cards = ({
+  currentPage,
+  onPageChange,
+  selectedCategoryIds,
+  selectedTopicIds,
+  selectedInstructorIds,
+}: CardsProps) => {
   const [sortValue, setSortValue] = useState<CatalogSortValue>("newest-first");
   const { data, isLoading, error } = useCourses();
 
   const courses = useMemo(() => data?.data ?? [], [data]);
   const meta = data?.meta;
   const filteredCourses = useMemo(
-    () => filterCatalogCourses(courses, { selectedCategoryIds, selectedTopicIds, selectedInstructorIds }),
+    () =>
+      filterCatalogCourses(courses, {
+        selectedCategoryIds,
+        selectedTopicIds,
+        selectedInstructorIds,
+      }),
     [courses, selectedCategoryIds, selectedTopicIds, selectedInstructorIds],
   );
   const sortedCourses = useMemo(
@@ -36,7 +47,10 @@ const Cards = ({ currentPage, onPageChange, selectedCategoryIds, selectedTopicId
   const perPage = meta?.perPage ?? 9;
   const lastPage = Math.max(1, Math.ceil(sortedCourses.length / perPage));
   const safePage = Math.min(Math.max(currentPage, 1), lastPage);
-  const paginatedCourses = sortedCourses.slice((safePage - 1) * perPage, safePage * perPage);
+  const paginatedCourses = sortedCourses.slice(
+    (safePage - 1) * perPage,
+    safePage * perPage,
+  );
 
   return (
     <div className="w-[1167px]">
@@ -48,7 +62,9 @@ const Cards = ({ currentPage, onPageChange, selectedCategoryIds, selectedTopicId
         onSortChange={setSortValue}
       />
       {isLoading ? (
-        <p className="mt-[32px] text-[16px] text-[#8A8A8A]">Loading courses...</p>
+        <p className="mt-[32px] text-[16px] text-[#8A8A8A]">
+          Loading courses...
+        </p>
       ) : null}
       {error ? (
         <p className="mt-[32px] text-[16px] text-[#F4161A]">
@@ -68,5 +84,3 @@ const Cards = ({ currentPage, onPageChange, selectedCategoryIds, selectedTopicId
 };
 
 export default Cards;
-
-

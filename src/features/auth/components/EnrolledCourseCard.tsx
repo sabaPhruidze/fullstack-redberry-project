@@ -22,28 +22,57 @@ const getRatingIcon = (avgRating: number) => {
 const EnrolledCourseCard = ({ item, onView }: EnrolledCourseCardProps) => {
   const rawRating = item.course.avgRating;
   const ratingValue = Number(rawRating);
-  const progress = Number.isFinite(Number(item.progress)) ? Number(item.progress) : 0;
-  const displayRating = rawRating == null || rawRating === "" ? "0" : String(rawRating);
-  const locationLabel = item.schedule.location?.trim() || item.schedule.sessionType.location?.trim() || "";
+  const progress = Number.isFinite(Number(item.progress))
+    ? Number(item.progress)
+    : 0;
+  const displayRating = rawRating == null ? "0" : String(rawRating);
+  const locationLabel =
+    item.schedule.location?.trim() ||
+    item.schedule.sessionType.location?.trim() ||
+    "";
   const infoRows = [
-    { icon: CALENDAR_ICON, alt: "calendar icon", label: item.schedule.weeklySchedule.label },
-    { icon: CLOCK_ICON, alt: "clock icon", label: item.schedule.timeSlot.label },
-    { icon: USERS_ICON, alt: "session type icon", label: item.schedule.sessionType.name },
-    ...(locationLabel ? [{ icon: LOCATION_ICON, alt: "location icon", label: locationLabel }] : []),
+    {
+      icon: CALENDAR_ICON,
+      alt: "calendar icon",
+      label: item.schedule.weeklySchedule.label,
+    },
+    {
+      icon: CLOCK_ICON,
+      alt: "clock icon",
+      label: item.schedule.timeSlot.label,
+    },
+    {
+      icon: USERS_ICON,
+      alt: "session type icon",
+      label: item.schedule.sessionType.name,
+    },
+    ...(locationLabel
+      ? [{ icon: LOCATION_ICON, alt: "location icon", label: locationLabel }]
+      : []),
   ];
 
   return (
     <article className="flex h-[295px] w-[623px] flex-col gap-[16px] rounded-[12px] bg-white p-[20px]">
       <div className="flex h-[191px] w-full flex-row gap-[18px]">
-        <img src={item.course.image} alt={item.course.title} className="h-[191px] w-[269px] rounded-[10px]" />
+        <img
+          src={item.course.image}
+          alt={item.course.title}
+          className="h-[191px] w-[269px] rounded-[10px]"
+        />
         <div className="min-w-0 flex-1">
-          <div className="flex h-[18px] w-full flex-row justify-between">
+          <div className="flex h-[18px] w-full flex-row justify-between items-center">
             <p className="h-[17px] truncate text-[14px] font-[500] leading-[100%] text-[#8A8A8A]">
               Instructor {item.course.instructor.name}
             </p>
             <div className="flex flex-row items-center gap-[4px]">
-              <img src={getRatingIcon(ratingValue)} alt="star icon" className="h-[18px] w-[18px]" />
-              <p className="text-[14px] font-[500] leading-[100%] text-redberry-text-gray-light">{displayRating}</p>
+              <img
+                src={getRatingIcon(ratingValue)}
+                alt="star icon"
+                className="h-[18px] w-[18px]"
+              />
+              <p className="text-[14px] font-[500] leading-[100%] text-redberry-text-gray-light">
+                {displayRating}
+              </p>
             </div>
           </div>
           <h2 className="mt-[8px] h-[48px] w-full text-[20px] font-[600] leading-[24px] text-[#141414]">
@@ -51,8 +80,15 @@ const EnrolledCourseCard = ({ item, onView }: EnrolledCourseCardProps) => {
           </h2>
           <div className="mt-[8px] flex h-[104px] w-full flex-col">
             {infoRows.map((row) => (
-              <div key={`${row.alt}-${row.label}`} className="flex h-[26px] w-full items-center gap-[8px]">
-                <img src={row.icon} alt={row.alt} className="h-[16px] w-[16px]" />
+              <div
+                key={`${row.alt}-${row.label}`}
+                className="flex h-[26px] w-full items-center gap-[8px]"
+              >
+                <img
+                  src={row.icon}
+                  alt={row.alt}
+                  className="h-[16px] w-[16px]"
+                />
                 <p className="h-[26px] w-full truncate text-[14px] font-[400] leading-[26px] text-[#666666]">
                   {row.label}
                 </p>
@@ -63,7 +99,9 @@ const EnrolledCourseCard = ({ item, onView }: EnrolledCourseCardProps) => {
       </div>
       <div className="flex h-[48px] w-full flex-row items-center justify-between gap-[20px]">
         <div className="flex h-[39px] w-[446px] flex-col gap-[8px]">
-          <p className="h-[16px] text-[#141414] font-[500] leading-[100%]">{Math.round(progress)}% Complete</p>
+          <p className="h-[16px] text-[#141414] font-[500] leading-[100%]">
+            {Math.round(progress)}% Complete
+          </p>
           <EnrolledCourseProgress value={progress} />
         </div>
         <button

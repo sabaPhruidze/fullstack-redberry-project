@@ -20,8 +20,10 @@ const getIsAuthenticated = () => {
 
 const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
   const isAuthenticated = getIsAuthenticated();
-  const { data: enrollmentsData = [], refetch } = useEnrollments(isAuthenticated);
+  const { data: enrollmentsData = [], refetch } =
+    useEnrollments(isAuthenticated);
   const totalEnrollments = enrollmentsData?.length ?? 0;
+
   const hasEnrollments = totalEnrollments > 0;
 
   useEffect(() => {
@@ -65,7 +67,9 @@ const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
                 </div>
               </div>
             ) : (
-              <EnrolledCoursesEmptyState onBrowseCourses={handleBrowseCourses} />
+              <EnrolledCoursesEmptyState
+                onBrowseCourses={handleBrowseCourses}
+              />
             )}
           </div>
         </div>

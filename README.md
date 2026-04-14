@@ -184,3 +184,7 @@
 2. Enrolled Courses sidebar now reads real enrollments count and conditionally shows empty state or a single filled-state placeholder block.
 3. built the empty case version similar how it looks in figma file
 4. built the enrolled case when cards are displayed.
+
+## Tab
+
+1. renamed tab and added relevant logo as an icon
