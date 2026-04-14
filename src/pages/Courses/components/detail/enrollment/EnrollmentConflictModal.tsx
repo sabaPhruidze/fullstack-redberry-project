@@ -1,45 +1,66 @@
 import CourseFeedbackModalShell from "./CourseFeedbackModalShell";
 import WARNING from "../../../../../assets/icons/modal/warning.svg";
+
 type EnrollmentConflictModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onContinue: () => void;
+  courseTitle: string;
+  scheduleLabel: string;
 };
 
 const EnrollmentConflictModal = ({
   isOpen,
   onClose,
+  onContinue,
+  courseTitle,
+  scheduleLabel,
 }: EnrollmentConflictModalProps) => {
-  // Conflict feedback modal frame only; content is intentionally deferred.
+  // Conflict modal uses the dedicated feedback shell and real conflict actions.
   return (
     <CourseFeedbackModalShell
       isOpen={isOpen}
       onClose={onClose}
       width={476}
-      height={471}
+      height={495}
     >
-      <div className="w-full h-full flex flex-col gap-[40px]">
-        <div className="h-[277px] flex flex-col justify-start items-center text-center gap-[24px]">
-          <img src={WARNING} alt="warning icon" className="w-[94px] h-[94px]" />
-          <div className="w-[24px] w-full flex flex-col gap-[24px]">
-            <h2 className="text-[#3D3D3D] font-[600] text-[32px] leading-[100%] w-[356px] h-[39px] ">
-              Enrollment Conflict
-            </h2>
-            <p className="font-[500] text-[20px] leading-[100%] text-[#3D3D3D] w-[356px]">
-              You are already enrolled in{" "}
-              <span className="font-[700] text-[20px] leading-[24px]">
-                “UX/UI Design Fundamentals”
-              </span>{" "}
-              with the same schedule: Wed-Fri at 12AM-2PM
-            </p>
+      <div className="h-full flex flex-col justify-between">
+        <div className="mx-auto w-[356px] flex flex-col gap-[40px]">
+          <div className="w-[356px] flex flex-col items-center text-center gap-[24px]">
+            <img
+              src={WARNING}
+              alt="warning icon"
+              className="h-[94px] w-[94px]"
+            />
+            <div className="w-[356px] flex flex-col gap-[24px]">
+              <h2 className="h-[39px] w-[356px] text-center text-[32px] font-[600] leading-[100%] text-[#3D3D3D]">
+                Enrollment Conflict
+              </h2>
+              <p className="w-[356px] h-[96px] text-center text-[20px] font-[500] leading-[100%] text-[#3D3D3D]">
+                You are already enrolled in{" "}
+                <span className="text-[20px] font-[600] leading-[24px] text-[#3D3D3D]">
+                  &ldquo;{courseTitle}&rdquo;
+                </span>{" "}
+                with the same schedule: {scheduleLabel}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="w-full h-[58px] flex flex-row gap-[8px]">
-          <button className="text-[#4F46E5] font-[500] leading-[24px] w-[174px] h-[58px] px-[16px] py-[12px] rounded-[8px] border-[2px] border-[#958FEF] ">
-            Continue Anyway
-          </button>
-          <button className="w-[174px] h-[58px] bg-[#4F46E5] rounded-[8px] py-[17px] px-[25px] text-white font-[500] leading-[24px]">
-            Cancel
-          </button>
+          <div className="flex h-[58px] w-[356px] gap-[8px]">
+            <button
+              type="button"
+              onClick={onContinue}
+              className="flex h-[58px] w-[174px] items-center justify-center gap-[2px] rounded-[8px] border-[2px] border-[#958FEF] px-[16px] py-[12px] text-[16px] font-[500] leading-[24px] text-[#4F46E5]"
+            >
+              Continue Anyway
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex h-[58px] w-[174px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-[16px] font-[500] leading-[24px] text-white"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </CourseFeedbackModalShell>

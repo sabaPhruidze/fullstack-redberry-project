@@ -180,7 +180,7 @@ const CourseDetailRight = ({
     submitEnrollment({ ...conflictState.payload, force: true });
   };
   const conflictModalHandlers = {
-    // Keep both handlers for upcoming conflict modal button wiring.
+    // Keep these handlers tied to the existing 409 conflict flow.
     onCancel: handleConflictCancel,
     onContinue: handleConflictContinue,
   };
@@ -242,6 +242,24 @@ const CourseDetailRight = ({
     });
   };
   const isConflictModalOpen = conflictState != null;
+  const selectedWeeklyScheduleLabel =
+    displayWeeklySchedules
+      .find((item) => item.id === selection.selectedWeeklyScheduleId)
+      ?.label?.trim() ?? "";
+  const selectedTimeSlotLabel =
+    displayTimeSlots
+      .find((item) => item.id === selection.selectedTimeSlotId)
+      ?.label?.trim() ?? "";
+  const derivedScheduleLabel =
+    selectedWeeklyScheduleLabel && selectedTimeSlotLabel
+      ? `${selectedWeeklyScheduleLabel} at ${selectedTimeSlotLabel}`
+      : selectedWeeklyScheduleLabel || selectedTimeSlotLabel;
+  const conflictCourseTitle =
+    conflictState?.conflictingCourseName?.trim() || "another course";
+  const conflictScheduleLabel =
+    conflictState?.conflictingSchedule?.trim() ||
+    derivedScheduleLabel ||
+    "selected schedule";
   const isEnrollmentConfirmedModalOpen =
     isEnrollmentConfirmedOpen &&
     !isConflictModalOpen &&
@@ -325,6 +343,9 @@ const CourseDetailRight = ({
       <EnrollmentConflictModal
         isOpen={isConflictModalOpen}
         onClose={conflictModalHandlers.onCancel}
+        onContinue={conflictModalHandlers.onContinue}
+        courseTitle={conflictCourseTitle}
+        scheduleLabel={conflictScheduleLabel}
       />
       <EnrollmentConfirmedModal
         isOpen={isEnrollmentConfirmedModalOpen}
