@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import useCompleteEnrollment from "../../../../../api/hooks/useCompleteEnrollment";
 import useCreateEnrollment from "../../../../../api/hooks/useCreateEnrollment";
+import useCreateCourseReview from "../../../../../api/hooks/useCreateCourseReview";
+import useDeleteEnrollment from "../../../../../api/hooks/useDeleteEnrollment";
 import useEnrollments from "../../../../../api/hooks/useEnrollments";
 import useCourseDetailAccordion from "../../../../../hooks/useCourseDetailAccordion";
 import useCourseScheduleSelection from "../../../../../hooks/useCourseScheduleSelection";
@@ -61,7 +63,9 @@ const CourseDetailRight = ({
     useState<EnrollmentConflictState | null>(null);
   const [isRatingCardVisible, setIsRatingCardVisible] = useState(false);
   const completeEnrollmentMutation = useCompleteEnrollment();
+  const createCourseReviewMutation = useCreateCourseReview();
   const createEnrollmentMutation = useCreateEnrollment();
+  const deleteEnrollmentMutation = useDeleteEnrollment();
   const { data: enrollmentsData } = useEnrollments(isAuthenticated);
   const { data: weeklySchedulesResponse } = useCourseWeeklySchedules(courseId);
   const weeklySchedules = useMemo(
@@ -194,7 +198,27 @@ const CourseDetailRight = ({
   };
 
   const handleRetakeCourse = () => {
-    console.log("Retake flow is not implemented yet.");
+    if (enrollmentId == null || deleteEnrollmentMutation.isPending) {
+      return;
+    }
+
+    setIsRatingCardVisible(false);
+    deleteEnrollmentMutation.mutate(enrollmentId, {
+      onSuccess: () => {
+        selection.resetSelection();
+      },
+    });
+  };
+
+  const handleRateCourse = async (rating: number) => {
+    if (createCourseReviewMutation.isPending) {
+      return;
+    }
+
+    await createCourseReviewMutation.mutateAsync({
+      courseId,
+      rating,
+    });
   };
 
   return (
@@ -222,6 +246,8 @@ const CourseDetailRight = ({
               <CompletedRatingSection
                 onClose={() => setIsRatingCardVisible(false)}
                 isRated={courseIsRated}
+                onRate={handleRateCourse}
+                isSubmitting={createCourseReviewMutation.isPending}
               />
             ) : null}
           </div>

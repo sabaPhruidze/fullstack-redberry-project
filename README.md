@@ -168,11 +168,10 @@
 12. Now implemented post on enroll now button but Currently I will write only static text and after creating the design I retrieve data through GET method
 13. retrieves data correctly and dispays it
 14. correctly added the rating block and retake button for the completed state.
-15.
-
-After Enroll Now succeeds, the right panel switches from the schedule selection flow to the enrolled state and shows the selected weekly schedule, time slot, session type, optional location, and backend-driven progress in the existing design.
-
-After Complete Course succeeds and the backend progress becomes 100, the same panel switches to the completed state and shows the Completed badge, full progress, the Retake Course action, and the one-time rating section.
+15. After Enroll Now succeeds, the right panel switches from the schedule selection flow to the enrolled state and shows the selected weekly schedule, time slot, session type, optional location, and backend-driven progress in the existing design.
+16. After Complete Course succeeds and the backend progress becomes 100, the same panel switches to the completed state and shows the Completed badge, full progress, the Retake Course action, and the one-time rating section.
+17. When retake is clicked it get's back on the stage of "enroll now" and if it is again clicked do the same process. Also rating is only one time.
+18. adding 3 modal (congratulations, conflict ,confirmed)
 
 ## IMPORTANT CHANGES
 

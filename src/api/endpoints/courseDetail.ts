@@ -4,6 +4,8 @@ import type {
   SessionTypeOption,
   TimeSlotOption,
   WeeklyScheduleOption,
+  CreateCourseReviewRequest,
+  CreateCourseReviewResponse,
 } from "../../types/courseDetail";
 
 type WeeklySchedulesResponse = { data: WeeklyScheduleOption[] };
@@ -45,6 +47,17 @@ export const getCourseSessionTypes = async (
         time_slot_id: timeSlotId,
       },
     },
+  );
+  return response.data;
+};
+
+export const createCourseReview = async (
+  courseId: number,
+  payload: CreateCourseReviewRequest,
+) => {
+  const response = await api.post<CreateCourseReviewResponse>(
+    `/courses/${courseId}/reviews`,
+    payload,
   );
   return response.data;
 };

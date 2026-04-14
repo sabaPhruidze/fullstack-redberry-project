@@ -69,3 +69,11 @@ export interface CourseDetail {
 export interface CourseDetailResponse {
   data: CourseDetail;
 }
+
+export interface CreateCourseReviewRequest {
+  rating: number;
+}
+
+export interface CreateCourseReviewResponse {
+  data: CourseReview;
+}

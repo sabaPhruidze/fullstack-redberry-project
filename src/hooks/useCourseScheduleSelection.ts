@@ -70,6 +70,12 @@ const useCourseScheduleSelection = ({
     setSelectedSessionTypeId(sessionTypeId);
   };
 
+  const resetSelection = () => {
+    setSelectedWeeklyScheduleId(null);
+    setSelectedTimeSlotId(null);
+    setSelectedSessionTypeId(null);
+  };
+
   const selectedWeeklySchedule = useMemo(
     () =>
       weeklySchedules.find(
@@ -112,6 +118,7 @@ const useCourseScheduleSelection = ({
     handleWeeklyScheduleChange,
     handleTimeSlotChange,
     handleSessionTypeChange,
+    resetSelection,
   };
 };
 

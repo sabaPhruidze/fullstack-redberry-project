@@ -7,20 +7,27 @@ import EMPTY_STAR_ICON from "../../../../../assets/icons/home/Star (2).svg";
 type CompletedRatingSectionProps = {
   onClose: () => void;
   isRated?: boolean;
+  onRate?: (rating: number) => Promise<void> | void;
+  isSubmitting?: boolean;
 };
 
-const CompletedRatingSection = ({ onClose, isRated = false }: CompletedRatingSectionProps) => {
+const CompletedRatingSection = ({
+  onClose,
+  isRated = false,
+  onRate,
+  isSubmitting = false,
+}: CompletedRatingSectionProps) => {
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const activeRating = hoveredRating ?? selectedRating ?? 0;
 
   const handleSelect = (rating: number) => {
-    if (selectedRating != null) {
+    if (selectedRating != null || isSubmitting) {
       return;
     }
 
     setSelectedRating(rating);
-    onClose();
+    onRate?.(rating);
   };
 
   return (
@@ -58,7 +65,8 @@ const CompletedRatingSection = ({ onClose, isRated = false }: CompletedRatingSec
                 onClick={() => handleSelect(starPosition)}
                 onMouseEnter={() => setHoveredRating(starPosition)}
                 onMouseLeave={() => setHoveredRating(null)}
-                className="flex h-[50px] w-[50px] items-center justify-center"
+                disabled={isSubmitting}
+                className="flex h-[50px] w-[50px] items-center justify-center disabled:cursor-not-allowed"
                 aria-label={`Rate ${starPosition} star${starPosition > 1 ? "s" : ""}`}
               >
                 <img src={starIcon} alt="rating star" className="h-[50px] w-[50px]" />
