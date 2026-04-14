@@ -53,6 +53,7 @@ const CourseDetailPage = () => {
             <CourseDetailLeft course={course} />
             <CourseDetailRight
               courseId={course.id}
+              courseTitle={course.title}
               courseBasePrice={course.basePrice}
               courseEnrollment={course.enrollment}
               courseIsRated={course.isRated}

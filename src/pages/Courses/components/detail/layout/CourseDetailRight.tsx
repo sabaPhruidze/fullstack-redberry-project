@@ -37,6 +37,7 @@ import { getDisplayWeeklySchedules } from "../../schedule/utils/weeklyScheduleOp
 
 interface CourseDetailRightProps {
   courseId: number;
+  courseTitle: string;
   courseBasePrice: number;
   courseEnrollment?: CourseEnrollment;
   courseIsRated?: boolean;
@@ -51,6 +52,7 @@ type EnrollmentConflictState = {
 
 const CourseDetailRight = ({
   courseId,
+  courseTitle,
   courseBasePrice,
   courseEnrollment,
   courseIsRated = false,
@@ -266,6 +268,7 @@ const CourseDetailRight = ({
     !isCourseCompletedModalOpen;
   const isCourseCompletedFeedbackModalOpen =
     isCourseCompletedModalOpen && !isConflictModalOpen;
+  const enrollmentConfirmedCourseTitle = courseTitle.trim() || "Course";
 
   return (
     <div className="mt-[130px] w-[530px] flex flex-col gap-[32px]">
@@ -350,6 +353,7 @@ const CourseDetailRight = ({
       <EnrollmentConfirmedModal
         isOpen={isEnrollmentConfirmedModalOpen}
         onClose={() => setIsEnrollmentConfirmedOpen(false)}
+        courseTitle={enrollmentConfirmedCourseTitle}
       />
       <CourseCompletedModal
         isOpen={isCourseCompletedFeedbackModalOpen}
