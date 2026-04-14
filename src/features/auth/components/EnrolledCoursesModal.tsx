@@ -1,6 +1,7 @@
 // Enrolled courses modal keeps shell/timing unchanged and switches by real enrollments state.
+import { useEffect } from "react";
 import EnrolledCoursesEmptyState from "./EnrolledCoursesEmptyState";
-import EnrolledCoursesFilledPlaceholder from "./EnrolledCoursesFilledPlaceholder";
+import EnrolledCourseCard from "./EnrolledCourseCard";
 import EnrolledCoursesPanelHeader from "./EnrolledCoursesPanelHeader";
 import EnrolledCoursesSidebarShell from "./EnrolledCoursesSidebarShell";
 import useEnrollments from "../../../api/hooks/useEnrollments";
@@ -19,9 +20,15 @@ const getIsAuthenticated = () => {
 
 const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
   const isAuthenticated = getIsAuthenticated();
-  const { data: enrollmentsData } = useEnrollments(isAuthenticated);
+  const { data: enrollmentsData = [], refetch } = useEnrollments(isAuthenticated);
   const totalEnrollments = enrollmentsData?.length ?? 0;
   const hasEnrollments = totalEnrollments > 0;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      void refetch();
+    }
+  }, [isAuthenticated, refetch]);
 
   const handleBrowseCourses = () => {
     onClose?.();
@@ -31,14 +38,32 @@ const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
     }
   };
 
+  const handleViewCourse = (courseId: number) => {
+    onClose?.();
+
+    if (typeof window !== "undefined") {
+      window.location.assign(`/courses/${courseId}`);
+    }
+  };
+
   return (
     <EnrolledCoursesSidebarShell onClose={onClose}>
       <div className="h-full w-full px-[74px] pb-[60px] pt-[60px]">
         <div className="flex w-[646px] flex-col gap-[45px]">
           <EnrolledCoursesPanelHeader totalEnrollments={totalEnrollments} />
-          <div className="flex h-[876px] w-[646px] flex-col gap-[32px]">
+          <div className="h-[876px] w-[646px]">
             {hasEnrollments ? (
-              <EnrolledCoursesFilledPlaceholder />
+              <div className="h-full w-full overflow-y-auto pr-[4px]">
+                <div className="flex w-full flex-col gap-[16px]">
+                  {enrollmentsData.map((item) => (
+                    <EnrolledCourseCard
+                      key={item.id}
+                      item={item}
+                      onView={handleViewCourse}
+                    />
+                  ))}
+                </div>
+              </div>
             ) : (
               <EnrolledCoursesEmptyState onBrowseCourses={handleBrowseCourses} />
             )}

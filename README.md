@@ -183,3 +183,4 @@
 1. Enrolled Courses now uses a dedicated animated right sidebar shell (overlay fade + right slide), and currently renders the empty-state panel layout for the next UI step.
 2. Enrolled Courses sidebar now reads real enrollments count and conditionally shows empty state or a single filled-state placeholder block.
 3. built the empty case version similar how it looks in figma file
+4. built the enrolled case when cards are displayed.
