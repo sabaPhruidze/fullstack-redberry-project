@@ -1,13 +1,14 @@
-import { useMemo, useState } from "react";
+import { useMemo, useReducer } from "react";
 import useCourseSessionTypes from "../api/hooks/course-detail/useCourseSessionTypes";
 import useCourseTimeSlots from "../api/hooks/course-detail/useCourseTimeSlots";
-import type { WeeklyScheduleOption } from "../types/courseDetail";
-
-interface UseCourseScheduleSelectionParams {
-  courseId: number;
-  courseBasePrice: number;
-  weeklySchedules: WeeklyScheduleOption[];
-}
+import {
+  courseScheduleSelectionReducer,
+  initialCourseScheduleSelectionState,
+} from "./courseScheduleSelectionReducer";
+import type {
+  UseCourseScheduleSelectionParams,
+  UseCourseScheduleSelectionResult,
+} from "../types/courseScheduleSelection";
 
 const toSafeNumber = (value: unknown) => {
   const amount = Number(value);
@@ -18,94 +19,36 @@ const useCourseScheduleSelection = ({
   courseId,
   courseBasePrice,
   weeklySchedules,
-}: UseCourseScheduleSelectionParams) => {
-  const [selectedWeeklyScheduleId, setSelectedWeeklyScheduleId] = useState<
-    number | null
-  >(null);
-  const [selectedTimeSlotId, setSelectedTimeSlotId] = useState<number | null>(
-    null,
+}: UseCourseScheduleSelectionParams): UseCourseScheduleSelectionResult => {
+  const [selection, dispatchSelection] = useReducer(
+    courseScheduleSelectionReducer,
+    initialCourseScheduleSelectionState,
   );
-  const [selectedSessionTypeId, setSelectedSessionTypeId] = useState<
-    number | null
-  >(null);
-
+  const { selectedWeeklyScheduleId, selectedTimeSlotId, selectedSessionTypeId } =
+    selection;
   const { data: timeSlotsResponse, isLoading: isTimeSlotsLoading } =
     useCourseTimeSlots(courseId, selectedWeeklyScheduleId ?? undefined);
-  const timeSlots = useMemo(
-    () => timeSlotsResponse?.data ?? [],
-    [timeSlotsResponse],
-  );
-
+  const timeSlots = useMemo(() => timeSlotsResponse?.data ?? [], [timeSlotsResponse]);
   const { data: sessionTypesResponse, isLoading: isSessionTypesLoading } =
-    useCourseSessionTypes(
-      courseId,
-      selectedWeeklyScheduleId ?? undefined,
-      selectedTimeSlotId ?? undefined,
-    );
-  const sessionTypes = useMemo(
-    () => sessionTypesResponse?.data ?? [],
-    [sessionTypesResponse],
-  );
-
-  const handleWeeklyScheduleChange = (weeklyScheduleId: number) => {
-    if (weeklyScheduleId === selectedWeeklyScheduleId) {
-      return;
-    }
-
-    setSelectedWeeklyScheduleId(weeklyScheduleId);
-    setSelectedTimeSlotId(null);
-    setSelectedSessionTypeId(null);
-  };
-
-  const handleTimeSlotChange = (timeSlotId: number) => {
-    if (timeSlotId === selectedTimeSlotId) {
-      return;
-    }
-
-    setSelectedTimeSlotId(timeSlotId);
-    setSelectedSessionTypeId(null);
-  };
-
-  const handleSessionTypeChange = (sessionTypeId: number) => {
-    setSelectedSessionTypeId(sessionTypeId);
-  };
-
-  const resetSelection = () => {
-    setSelectedWeeklyScheduleId(null);
-    setSelectedTimeSlotId(null);
-    setSelectedSessionTypeId(null);
-  };
-
+    useCourseSessionTypes(courseId, selectedWeeklyScheduleId ?? undefined, selectedTimeSlotId ?? undefined);
+  const sessionTypes = useMemo(() => sessionTypesResponse?.data ?? [], [sessionTypesResponse]);
   const selectedWeeklySchedule = useMemo(
-    () =>
-      weeklySchedules.find(
-        (weeklySchedule) => weeklySchedule.id === selectedWeeklyScheduleId,
-      ),
+    () => weeklySchedules.find((item) => item.id === selectedWeeklyScheduleId),
     [weeklySchedules, selectedWeeklyScheduleId],
   );
-
   const selectedTimeSlot = useMemo(
-    () => timeSlots.find((timeSlot) => timeSlot.id === selectedTimeSlotId),
+    () => timeSlots.find((item) => item.id === selectedTimeSlotId),
     [timeSlots, selectedTimeSlotId],
   );
-
   const selectedSessionType = useMemo(
-    () =>
-      sessionTypes.find(
-        (sessionType) => sessionType.id === selectedSessionTypeId,
-      ),
+    () => sessionTypes.find((item) => item.id === selectedSessionTypeId),
     [sessionTypes, selectedSessionTypeId],
   );
-
-  const sessionTypeModifier = toSafeNumber(
-    selectedSessionType?.priceModifier ?? 0,
-  );
+  const sessionTypeModifier = toSafeNumber(selectedSessionType?.priceModifier ?? 0);
   const totalPrice = toSafeNumber(courseBasePrice) + sessionTypeModifier;
 
   return {
-    selectedWeeklyScheduleId,
-    selectedTimeSlotId,
-    selectedSessionTypeId,
+    ...selection,
     selectedWeeklySchedule,
     selectedTimeSlot,
     selectedSessionType,
@@ -115,10 +58,13 @@ const useCourseScheduleSelection = ({
     isSessionTypesLoading,
     sessionTypeModifier,
     totalPrice,
-    handleWeeklyScheduleChange,
-    handleTimeSlotChange,
-    handleSessionTypeChange,
-    resetSelection,
+    handleWeeklyScheduleChange: (weeklyScheduleId) =>
+      dispatchSelection({ type: "SELECT_WEEKLY", weeklyScheduleId }),
+    handleTimeSlotChange: (timeSlotId) =>
+      dispatchSelection({ type: "SELECT_TIME_SLOT", timeSlotId }),
+    handleSessionTypeChange: (sessionTypeId) =>
+      dispatchSelection({ type: "SELECT_SESSION_TYPE", sessionTypeId }),
+    resetSelection: () => dispatchSelection({ type: "RESET_SELECTION" }),
   };
 };
 
