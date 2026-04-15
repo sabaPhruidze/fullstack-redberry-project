@@ -16,7 +16,9 @@ const Topics = ({
   onToggle,
   onVisibleTopicIdsChange,
 }: TopicsProps) => {
-  const categoryIds = selectedCategoryIds.length ? selectedCategoryIds : undefined;
+  const categoryIds = selectedCategoryIds.length
+    ? selectedCategoryIds
+    : undefined;
   const { data, isLoading, error } = useTopics(categoryIds);
   const hasTopicsData = Boolean(data?.length);
 
@@ -43,7 +45,7 @@ const Topics = ({
           return (
             <label
               key={item.id}
-              className={`px-[12px] py-[8px] gap-[10px] flex flex-row rounded-[12px] ${
+              className={`cursor-pointer px-[12px] py-[8px] gap-[10px] flex flex-row rounded-[12px] ${
                 isSelected ? "bg-[#DDDBFA]" : "bg-white"
               }`}
             >
@@ -69,5 +71,3 @@ const Topics = ({
 };
 
 export default Topics;
-
-

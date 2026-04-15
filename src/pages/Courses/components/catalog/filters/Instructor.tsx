@@ -33,7 +33,7 @@ const Instructor = ({
           return (
             <label
               key={item.id}
-              className={`self-start inline-flex items-center px-[12px] py-[8px] gap-[12px] rounded-[12px] ${
+              className={`cursor-pointer self-start inline-flex items-center px-[12px] py-[8px] gap-[12px] rounded-[12px] ${
                 isSelected ? "bg-[#DDDBFA]" : "bg-white"
               }`}
             >
@@ -73,5 +73,3 @@ const Instructor = ({
 };
 
 export default Instructor;
-
-

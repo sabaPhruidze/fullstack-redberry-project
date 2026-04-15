@@ -30,7 +30,7 @@ const Categories = ({ selectedIds, onToggle }: CategoriesProps) => {
           return (
             <label
               key={item.id}
-              className={`px-[12px] py-[8px] gap-[10px] flex flex-row rounded-[12px] ${
+              className={`cursor-pointer px-[12px] py-[8px] gap-[10px] flex flex-row rounded-[12px] ${
                 isSelected ? "bg-[#DDDBFA]" : "bg-white"
               }`}
             >
@@ -64,5 +64,3 @@ const Categories = ({ selectedIds, onToggle }: CategoriesProps) => {
 };
 
 export default Categories;
-
-

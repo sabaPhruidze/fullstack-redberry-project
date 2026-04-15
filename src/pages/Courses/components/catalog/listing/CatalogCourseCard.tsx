@@ -26,8 +26,13 @@ const getRatingIcon = (avgRating: number) => {
 };
 
 const renderCategoryIcon = (icon: string) => {
-  const normalizedIcon = icon.trim().toLowerCase().replaceAll("_", "-").replaceAll(" ", "-");
-  const iconClassName = "h-[18px] w-[18px] [&_path]:fill-current text-[#525252]";
+  const normalizedIcon = icon
+    .trim()
+    .toLowerCase()
+    .replaceAll("_", "-")
+    .replaceAll(" ", "-");
+  const iconClassName =
+    "h-[18px] w-[18px] [&_path]:fill-current text-[#525252]";
 
   switch (normalizedIcon) {
     case "development":
@@ -48,21 +53,24 @@ const renderCategoryIcon = (icon: string) => {
 const CatalogCourseCard = ({ course }: CatalogCourseCardProps) => {
   const categoryName = course.category?.name ?? "";
   const ratingValue = Number(course.avgRating);
-  const displayRating = Number.isFinite(ratingValue) ? ratingValue.toFixed(1) : "0";
+  const displayRating = Number.isFinite(ratingValue)
+    ? ratingValue.toFixed(1)
+    : "0";
   const ratingNumber = Number(displayRating);
 
   return (
-    <Link
-      to={`/courses/${course.id}`}
-      className="flex w-[373px] h-[451px] flex-col rounded-[12px] border border-[#F5F5F5] bg-white p-[20px]"
-    >
+    <div className="flex w-[373px] h-[451px] flex-col rounded-[12px] border border-[#F5F5F5] bg-white p-[20px]">
       <img src={course.image} alt={course.title} className="w-full h-[181px]" />
       <div className="mt-[18px] mb-[12px] flex flex-row justify-between w-full">
         <p className="leading-[100%] font-[500] text-[14px] text-[#ADADAD]">
           {course.instructor?.name ?? ""} | {course.durationWeeks ?? ""} Weeks
         </p>
         <div className="flex flex-row items-center gap-[4px]">
-          <img src={getRatingIcon(ratingNumber)} alt="star icon" className="w-[18px] h-[18px]" />
+          <img
+            src={getRatingIcon(ratingNumber)}
+            alt="star icon"
+            className="w-[18px] h-[18px]"
+          />
           <p className="font-[500] text-[14px] leading-[100%] text-redberry-text-gray-light">
             {displayRating}
           </p>
@@ -87,13 +95,16 @@ const CatalogCourseCard = ({ course }: CatalogCourseCardProps) => {
           </p>
         </div>
         <div className="w-[103px] h-[48px] py-[12px] rounded-[8px] bg-redberry-text-purple flex items-center justify-center">
-          <p className="text-[#F5F5F5] font-[500]">Details</p>
+          <Link
+            to={`/courses/${course.id}`}
+            className="text-[#F5F5F5] font-[500]"
+          >
+            Details
+          </Link>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
 export default CatalogCourseCard;
-
-
