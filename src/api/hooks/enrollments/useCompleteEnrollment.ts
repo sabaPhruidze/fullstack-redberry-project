@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { completeEnrollment } from "../../endpoints/enrollments";
-import { enrollmentsQueryKey } from "../../queryKeys";
+import {
+  enrollmentsQueryKey,
+  inProgressCoursesQueryKey,
+} from "../../queryKeys";
 import type {
   CompleteEnrollmentForbiddenError,
   CompleteEnrollmentNotFoundError,
@@ -14,12 +17,20 @@ const useCompleteEnrollment = () => {
   return useMutation({
     mutationFn: (enrollmentId: number) => completeEnrollment(enrollmentId),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: enrollmentsQueryKey,
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["course-detail"],
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: enrollmentsQueryKey,
+          refetchType: "all",
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["course-detail"],
+          refetchType: "all",
+        }),
+        queryClient.invalidateQueries({
+          queryKey: inProgressCoursesQueryKey,
+          refetchType: "all",
+        }),
+      ]);
     },
     onError: (error) => {
       if (
