@@ -40,11 +40,15 @@ const StarRatingInput = ({
             onMouseEnter={() => setHoveredRating(starPosition)}
             onMouseLeave={() => setHoveredRating(null)}
             disabled={disabled}
-            className="flex items-center justify-center disabled:cursor-not-allowed"
+            className="flex items-center justify-center disabled:cursor-not-allowed cursor-pointer"
             style={{ width: size, height: size }}
             aria-label={`Rate ${starPosition} star${starPosition > 1 ? "s" : ""}`}
           >
-            <img src={starIcon} alt="rating star" style={{ width: size, height: size }} />
+            <img
+              src={starIcon}
+              alt="rating star"
+              style={{ width: size, height: size }}
+            />
           </button>
         );
       })}

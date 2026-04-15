@@ -15,14 +15,20 @@ type HeroArrowButtonProps = {
   altText: string;
 };
 
-const HeroArrowButton = ({ icon, canClick, onClick, ariaLabel, altText }: HeroArrowButtonProps) => {
+const HeroArrowButton = ({
+  icon,
+  canClick,
+  onClick,
+  ariaLabel,
+  altText,
+}: HeroArrowButtonProps) => {
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={!canClick}
       aria-label={ariaLabel}
-      className="h-[54px] w-[54px] disabled:cursor-not-allowed"
+      className="h-[54px] w-[54px] disabled:cursor-not-allowed cursor-pointer"
     >
       <img src={icon} alt={altText} className="h-[54px] w-[54px]" />
     </button>

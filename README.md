@@ -199,3 +199,5 @@
 5. moved similar or same code out of 2 or more components and than imported it so same code will not be written two or more times
 6. Solving missed logic about enroll now (When someone is not authentificated or authentificated but not fully filled profile enroll now button still has to be functional and that is done)
 7. on start learning in carousel it will show enrolled list's if person is authentificated and if not it will not login modal
+8. added cursor pointers to all buttons when necessary it will show relevant pointer
+9. enrolledCourseModal now correctly be moved and do not cause refresh

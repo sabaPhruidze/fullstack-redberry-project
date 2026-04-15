@@ -43,7 +43,7 @@ const EnrollmentConfirmedModal = ({
         <button
           type="button"
           onClick={onClose}
-          className="flex h-[58px] w-[356px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-[16px] font-[500] leading-[24px] text-white"
+          className="flex h-[58px] w-[356px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-[16px] font-[500] leading-[24px] text-white cursor-pointer"
         >
           Done
         </button>

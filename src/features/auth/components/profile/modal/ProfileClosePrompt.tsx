@@ -33,7 +33,7 @@ const ProfileClosePrompt = ({
             <button
               type="button"
               onClick={onStay}
-              className="flex w-[174px] h-[58px] items-center justify-center rounded-[8px] border-2 border-[#958FEF] bg-white px-[16px] py-[12px]"
+              className="flex w-[174px] h-[58px] cursor-pointer items-center justify-center rounded-[8px] border-2 border-[#958FEF] bg-white px-[16px] py-[12px]"
             >
               <span className="inline-flex w-[128px] h-[24px] items-center justify-center text-center text-[16px] leading-[24px] font-[500] tracking-[0] text-[#4F46E5]">
                 Complete Profile

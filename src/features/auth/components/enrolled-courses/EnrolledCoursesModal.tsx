@@ -1,5 +1,5 @@
-// Enrolled courses modal keeps shell/timing unchanged and switches by real enrollments state.
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { isAuthenticatedClient } from "../../helpers/authSession";
 import EnrolledCoursesEmptyState from "./EnrolledCoursesEmptyState";
 import EnrolledCourseCard from "./EnrolledCourseCard";
@@ -10,11 +10,12 @@ import useEnrollments from "../../../../api/hooks/enrollments/useEnrollments";
 type EnrolledCoursesModalProps = { onClose?: () => void };
 
 const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
+  const navigate = useNavigate();
   const isAuthenticated = isAuthenticatedClient();
   const { data: enrollmentsData = [], refetch } =
     useEnrollments(isAuthenticated);
-  const totalEnrollments = enrollmentsData?.length ?? 0;
 
+  const totalEnrollments = enrollmentsData?.length ?? 0;
   const hasEnrollments = totalEnrollments > 0;
 
   useEffect(() => {
@@ -25,18 +26,12 @@ const EnrolledCoursesModal = ({ onClose }: EnrolledCoursesModalProps) => {
 
   const handleBrowseCourses = () => {
     onClose?.();
-
-    if (typeof window !== "undefined") {
-      window.location.assign("/courses/catalog");
-    }
+    navigate("/courses/catalog");
   };
 
   const handleViewCourse = (courseId: number) => {
     onClose?.();
-
-    if (typeof window !== "undefined") {
-      window.location.assign(`/courses/${courseId}`);
-    }
+    navigate(`/courses/${courseId}`);
   };
 
   return (

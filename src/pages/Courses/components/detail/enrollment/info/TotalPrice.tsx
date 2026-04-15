@@ -73,7 +73,7 @@ const TotalPrice = ({
         type="button"
         disabled={!isEnrollButtonActive || isEnrollPending}
         onClick={onEnroll}
-        className={`mt-[32px] h-[63px] w-full rounded-[12px] text-center text-[20px] font-[600] leading-[24px] ${
+        className={`mt-[32px] h-[63px] w-full rounded-[12px] text-center cursor-pointer text-[20px] font-[600] leading-[24px] ${
           isEnrollButtonActive && !isEnrollPending
             ? "bg-[#281ED2] text-[#FFFFFF] cursor-pointer"
             : "bg-[#EEEDFC] text-[#B7B3F4] cursor-not-allowed"

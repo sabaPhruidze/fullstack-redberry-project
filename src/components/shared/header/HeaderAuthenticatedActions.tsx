@@ -26,9 +26,15 @@ const HeaderAuthenticatedActions = ({
     : "incomplete";
 
   return (
-    <div className="flex w-[547px] h-[56px] items-center gap-[36px]" style={{ fontFamily: "Inter, sans-serif" }}>
+    <div
+      className="flex w-[547px] h-[56px] items-center gap-[36px]"
+      style={{ fontFamily: "Inter, sans-serif" }}
+    >
       <div className="flex w-[447px] h-[56px] items-center gap-[8px]">
-        <Link to="/courses/catalog" className="flex h-[56px] w-[220px] items-center gap-[8px] rounded-[8px] p-[15px]">
+        <Link
+          to="/courses/catalog"
+          className="flex h-[56px] w-[220px] items-center gap-[8px] rounded-[8px] p-[15px]"
+        >
           <span className="flex h-[26px] w-[190px] items-center gap-[8px]">
             <STAR3
               aria-hidden
@@ -38,7 +44,9 @@ const HeaderAuthenticatedActions = ({
             />
             <p
               className={`h-[24px] w-[156px] font-[500] text-[20px] leading-[100%] ${
-                isCatalogPage ? "text-[#4F46E5]" : "text-redberry-text-gray-light"
+                isCatalogPage
+                  ? "text-[#4F46E5]"
+                  : "text-redberry-text-gray-light"
               }`}
             >
               Browse Courses
@@ -48,17 +56,25 @@ const HeaderAuthenticatedActions = ({
         <button
           type="button"
           onClick={onEnrolledCoursesClick}
-          className="flex h-[56px] w-[227px] items-center gap-[8px] rounded-[8px] p-[15px]"
+          className="flex h-[56px] w-[227px] items-center gap-[8px] rounded-[8px] p-[15px] cursor-pointer"
         >
           <span className="flex h-[26px] w-[197px] items-center gap-[8px]">
-            <img src={OPENED_BOOK} alt="opened book" className="h-[26px] w-[26px]" />
+            <img
+              src={OPENED_BOOK}
+              alt="opened book"
+              className="h-[26px] w-[26px]"
+            />
             <span className="h-[24px] w-[163px] text-left font-[500] text-[20px] leading-[100%] text-redberry-text-gray-light">
               Enrolled Courses
             </span>
           </span>
         </button>
       </div>
-      <button type="button" onClick={onProfileClick} className="h-[56px] w-[56px]">
+      <button
+        type="button"
+        onClick={onProfileClick}
+        className="h-[56px] w-[56px]"
+      >
         <UserAvatar
           avatarUrl={avatarUrl}
           username={username}

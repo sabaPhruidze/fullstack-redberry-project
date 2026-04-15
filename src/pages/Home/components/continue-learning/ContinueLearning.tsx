@@ -32,7 +32,7 @@ const ContinueLearningSection = ({
           <button
             type="button"
             onClick={onSeeAll}
-            className="font-[500] text-[20px] leading-[100%] text-[#4F46E5] underline"
+            className="font-[500] text-[20px] leading-[100%] text-[#4F46E5] underline cursor-pointer"
           >
             See All
           </button>

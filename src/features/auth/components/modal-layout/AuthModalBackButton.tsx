@@ -10,10 +10,15 @@ const AuthModalBackButton = ({ onClick }: AuthModalBackButtonProps) => {
       type="button"
       onClick={onClick}
       aria-label="Back to previous step"
-      className="absolute flex h-8 w-4 items-center justify-center"
+      className="absolute flex h-8 w-4 items-center justify-center cursor-pointer"
       style={{ top: "16.5px", left: "17px" }}
     >
-      <img src={BACK_ARROW_ICON} alt="" aria-hidden="true" className="h-8 w-4" />
+      <img
+        src={BACK_ARROW_ICON}
+        alt=""
+        aria-hidden="true"
+        className="h-8 w-4"
+      />
     </button>
   );
 };

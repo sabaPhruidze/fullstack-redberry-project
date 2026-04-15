@@ -45,7 +45,7 @@ const EnrolledProgressActions = ({
         type="button"
         onClick={handleAction}
         disabled={isActionPending}
-        className="w-[full] h-[58px] flex w-full items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-white"
+        className="w-[full] h-[58px] flex w-full items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-white cursor-pointer"
       >
         <span className="inline-flex h-[24px] items-center justify-center text-center text-[20px] font-[500] leading-[100%] tracking-[0]">
           {actionText}

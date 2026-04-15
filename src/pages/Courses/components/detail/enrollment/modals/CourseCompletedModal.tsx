@@ -52,7 +52,11 @@ const CourseCompletedModal = ({
       <div className="h-[455px] w-[356px] flex flex-col justify-between">
         <div className="w-[356px] flex flex-col items-center text-center gap-[40px]">
           <div className="w-[356px] flex flex-col items-center gap-[24px]">
-            <img src={CELEBRATION_ICON} alt="celebration icon" className="h-[94px] w-[94px]" />
+            <img
+              src={CELEBRATION_ICON}
+              alt="celebration icon"
+              className="h-[94px] w-[94px]"
+            />
             <div className="w-[356px] flex flex-col gap-[24px]">
               <h2 className="h-[39px] w-[356px] text-center text-[32px] font-[600] leading-[100%] text-[#3D3D3D]">
                 Congratulations!
@@ -88,7 +92,7 @@ const CourseCompletedModal = ({
         <button
           type="button"
           onClick={onClose}
-          className="flex h-[58px] w-[356px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-[16px] font-[500] leading-[24px] text-white"
+          className="flex h-[58px] w-[356px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-[16px] font-[500] leading-[24px] text-white cursor-pointer"
         >
           Done
         </button>

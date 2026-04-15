@@ -30,7 +30,7 @@ const EnrolledCoursesEmptyState = ({
           <button
             type="button"
             onClick={onBrowseCourses}
-            className="mx-auto flex h-[58px] w-[175px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px]"
+            className="mx-auto flex h-[58px] w-[175px] cursor-pointer items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px]"
           >
             <span className="h-[24px] w-[125px] text-center text-[16px] font-[500] leading-[24px] tracking-[0] text-white">
               Browse Courses

@@ -18,7 +18,7 @@ const ContinueLearningLocked = () => {
         </p>
         <Button
           text="Log In"
-          classname="leading-[24px] text-[16px] p-0 w-[83px] h-[42px]"
+          classname="leading-[24px] text-[16px] p-0 w-[83px] h-[42px] cursor-pointer"
           onClick={openLoginModal}
         />
       </div>

@@ -85,7 +85,7 @@ const LoginModalFormContent = ({
       <button
         type="submit"
         disabled={isPending}
-        className="mt-[16px] flex h-[47px] w-[360px] items-center justify-center rounded-[8px] bg-[#4F46E5] p-[10px] text-[16px] leading-[100%] text-white"
+        className="mt-[16px] cursor-pointer flex h-[47px] w-[360px] items-center justify-center rounded-[8px] bg-[#4F46E5] p-[10px] text-[16px] leading-[100%] text-white"
         style={{ fontWeight: 500 }}
       >
         {isPending ? "Logging In..." : "Log In"}

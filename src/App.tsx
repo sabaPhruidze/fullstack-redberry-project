@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { AnimatePresence } from "framer-motion";
 import Loader from "./components/shared/feedback/Loader";
@@ -31,16 +31,14 @@ const AppContent = () => {
 
   return (
     <>
-      <BrowserRouter>
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/courses/catalog" element={<CoursesCatalogPage />} />
-            <Route path="/courses/:id" element={<CourseDetailPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/courses/catalog" element={<CoursesCatalogPage />} />
+          <Route path="/courses/:id" element={<CourseDetailPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
 
       {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
       {isRegisterModalOpen && <RegisterModal onClose={closeRegisterModal} />}

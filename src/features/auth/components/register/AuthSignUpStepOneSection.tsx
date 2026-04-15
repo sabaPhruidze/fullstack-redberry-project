@@ -31,7 +31,7 @@ const AuthSignUpStepOneSection = ({
       <button
         type="button"
         onClick={onNext}
-        className="mt-[16px] flex h-[47px] w-[360px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] p-[10px] text-[16px] leading-[100%] text-white"
+        className="mt-[16px] flex h-[47px] w-[360px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] p-[10px] text-[16px] leading-[100%] text-white cursor-pointer"
         style={{ fontWeight: 500 }}
       >
         Next

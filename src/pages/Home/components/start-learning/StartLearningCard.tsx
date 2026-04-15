@@ -30,7 +30,11 @@ const StartLearningCard = ({ course }: StartLearningCardProps) => {
           {course.instructor.name}
         </p>
         <div className="flex flex-row items-center gap-[4px]">
-          <img src={getRatingIcon(course.avgRating)} alt="star icon" className="w-[18px] h-[18px]" />
+          <img
+            src={getRatingIcon(course.avgRating)}
+            alt="star icon"
+            className="w-[18px] h-[18px]"
+          />
           <p className="font-[500] text-[14px] leading-[100%] text-redberry-text-gray-light">
             {course.avgRating || 0}
           </p>
@@ -44,14 +48,16 @@ const StartLearningCard = ({ course }: StartLearningCardProps) => {
       </p>
       <div className="flex flex-row w-full h-[58px] justify-between items-center">
         <div className="w-[167px] h-full flex flex-row items-center gap-[8px]">
-          <p className="font-[500] text-[12px] leading-none text-[#8A8A8A]">Starting from</p>
+          <p className="font-[500] text-[12px] leading-none text-[#8A8A8A]">
+            Starting from
+          </p>
           <p className="font-[600] text-[32px] leading-none text-[#141414]">
             ${Number(course.basePrice)}
           </p>
         </div>
         <Button
           text="Details"
-          classname="text-[#F5F5F5] text-[20px]"
+          classname="text-[#F5F5F5] text-[20px] "
           onClick={() => navigate(`/courses/${course.id}`)}
         />
       </div>

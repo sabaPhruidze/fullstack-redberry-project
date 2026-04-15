@@ -49,14 +49,14 @@ const EnrollmentConflictModal = ({
             <button
               type="button"
               onClick={onContinue}
-              className="flex h-[58px] w-[174px] items-center justify-center gap-[2px] rounded-[8px] border-[2px] border-[#958FEF] px-[16px] py-[12px] text-[16px] font-[500] leading-[24px] text-[#4F46E5]"
+              className="flex h-[58px] w-[174px] items-center justify-center gap-[2px] rounded-[8px] border-[2px] border-[#958FEF] px-[16px] py-[12px] text-[16px] font-[500] leading-[24px] text-[#4F46E5] cursor-pointer"
             >
               Continue Anyway
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex h-[58px] w-[174px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-[16px] font-[500] leading-[24px] text-white"
+              className="flex h-[58px] w-[174px] items-center justify-center gap-[10px] rounded-[8px] bg-[#4F46E5] px-[25px] py-[17px] text-[16px] font-[500] leading-[24px] text-white cursor-pointer"
             >
               Cancel
             </button>

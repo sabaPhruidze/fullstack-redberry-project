@@ -36,7 +36,7 @@ const FooterLinksColumns = ({ onLinkClick }: FooterLinksColumnsProps) => {
                   <button
                     type="button"
                     onClick={() => onLinkClick(link)}
-                    className="w-full text-left text-[18px] leading-[100%] font-[400] text-[#666666]"
+                    className="w-full text-left text-[18px] leading-[100%] font-[400] text-[#666666] cursor-pointer"
                   >
                     {link}
                   </button>

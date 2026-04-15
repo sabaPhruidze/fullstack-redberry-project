@@ -16,7 +16,11 @@ const buildPages = (currentPage: number, lastPage: number) => {
   }
   const pages: Array<number | "ellipsis"> = [1];
   if (currentPage > 3) pages.push("ellipsis");
-  for (let page = Math.max(2, currentPage - 1); page <= Math.min(lastPage - 1, currentPage + 1); page += 1) {
+  for (
+    let page = Math.max(2, currentPage - 1);
+    page <= Math.min(lastPage - 1, currentPage + 1);
+    page += 1
+  ) {
     pages.push(page);
   }
   if (currentPage < lastPage - 2) pages.push("ellipsis");
@@ -24,7 +28,13 @@ const buildPages = (currentPage: number, lastPage: number) => {
   return pages;
 };
 
-const Pagination = ({ currentPage, lastPage, perPage, total, onPageChange }: PaginationProps) => {
+const Pagination = ({
+  currentPage,
+  lastPage,
+  perPage,
+  total,
+  onPageChange,
+}: PaginationProps) => {
   const derivedLastPage = perPage > 0 ? Math.ceil(total / perPage) : 1;
   const safeLastPage = Math.max(lastPage || derivedLastPage || 1, 1);
   const safeCurrentPage = Math.min(Math.max(currentPage, 1), safeLastPage);
@@ -39,7 +49,7 @@ const Pagination = ({ currentPage, lastPage, perPage, total, onPageChange }: Pag
           type="button"
           disabled={isPrevDisabled}
           onClick={() => onPageChange(Math.max(1, safeCurrentPage - 1))}
-          className="mr-[8px] flex justify-center items-center w-[40px] h-[40px] bg-white border border-[#D1D1D1]"
+          className="mr-[8px] flex justify-center items-center w-[40px] h-[40px] bg-white border border-[#D1D1D1] cursor-pointer"
         >
           <ARROW_ICON
             aria-hidden
@@ -50,7 +60,10 @@ const Pagination = ({ currentPage, lastPage, perPage, total, onPageChange }: Pag
         </button>
         {pages.map((page, index) =>
           page === "ellipsis" ? (
-            <div key={`ellipsis-${index}`} className="mr-[8px] flex justify-center items-center w-[40px] h-[40px] bg-white border border-[#D1D1D1]">
+            <div
+              key={`ellipsis-${index}`}
+              className="mr-[8px] flex justify-center items-center w-[40px] h-[40px] bg-white border border-[#D1D1D1]"
+            >
               <p className="text-[#4F46E5]">...</p>
             </div>
           ) : (
@@ -58,19 +71,27 @@ const Pagination = ({ currentPage, lastPage, perPage, total, onPageChange }: Pag
               key={page}
               type="button"
               onClick={() => onPageChange(page)}
-              className={`mr-[8px] flex justify-center items-center w-[40px] h-[40px] border border-[#D1D1D1] ${
+              className={`cursor-pointer mr-[8px] flex justify-center items-center w-[40px] h-[40px] border border-[#D1D1D1] ${
                 page === safeCurrentPage ? "bg-[#281ED2]" : "bg-white"
               }`}
             >
-              <p className={page === safeCurrentPage ? "text-white" : "text-[#4F46E5]"}>{page}</p>
+              <p
+                className={
+                  page === safeCurrentPage ? "text-white" : "text-[#4F46E5]"
+                }
+              >
+                {page}
+              </p>
             </button>
           ),
         )}
         <button
           type="button"
           disabled={isNextDisabled}
-          onClick={() => onPageChange(Math.min(safeLastPage, safeCurrentPage + 1))}
-          className="flex justify-center items-center w-[40px] h-[40px] bg-white border border-[#D1D1D1]"
+          onClick={() =>
+            onPageChange(Math.min(safeLastPage, safeCurrentPage + 1))
+          }
+          className="flex justify-center items-center w-[40px] h-[40px] bg-white border border-[#D1D1D1] cursor-pointer"
         >
           <ARROW_ICON
             aria-hidden
@@ -85,5 +106,3 @@ const Pagination = ({ currentPage, lastPage, perPage, total, onPageChange }: Pag
 };
 
 export default Pagination;
-
-

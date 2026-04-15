@@ -31,7 +31,7 @@ const AuthModalFooter = ({
         <button
           type="button"
           onClick={onActionClick}
-          className="text-[14px] leading-[100%] text-[#141414] underline"
+          className="cursor-pointer text-[14px] leading-[100%] text-[#141414] underline"
           style={{ fontFamily: "Inter, sans-serif", fontWeight: 500 }}
         >
           {actionText}

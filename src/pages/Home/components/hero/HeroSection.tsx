@@ -76,7 +76,7 @@ const HeroSection = () => {
 
           <Button
             text={activeSlide.buttonText}
-            classname={`h-[64px] text-[20px] ${activeSlide.buttonWidthClass}`}
+            classname={`h-[64px] text-[20px] cursor-pointer ${activeSlide.buttonWidthClass}`}
             onClick={handleHeroButtonClick}
           />
         </div>

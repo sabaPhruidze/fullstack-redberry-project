@@ -15,7 +15,7 @@ const OutlineButton = ({
     <button
       type={type}
       onClick={onClick}
-      className={`${classname} border-2 border-redberry-border-purple-light rounded-[8px] text-[20px] text-redberry-text-purple py-[12px] px-[16px] font-[500]`}
+      className={`${classname} border-2 border-redberry-border-purple-light rounded-[8px] text-[20px] text-redberry-text-purple py-[12px] px-[16px] font-[500] cursor-pointer`}
     >
       {text}
     </button>

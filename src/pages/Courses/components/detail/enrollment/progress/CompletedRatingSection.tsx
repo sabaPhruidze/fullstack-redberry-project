@@ -40,7 +40,7 @@ const CompletedRatingSection = ({
       <button
         type="button"
         onClick={onClose}
-        className="absolute right-[10px] top-[10px] flex h-[22px] w-[22px] items-center justify-center"
+        className="absolute right-[10px] top-[10px] flex h-[22px] w-[22px] items-center justify-center cursor-pointer"
         aria-label="Close rating"
       >
         <img src={CLOSE_ICON} alt="" className="h-[22px] w-[22px]" />

@@ -13,7 +13,7 @@ const Button = ({ text, classname, onClick, type = "button" }: ButtonProps) => {
     <button
       type={type}
       onClick={onClick}
-      className={`${paddingClass} bg-redberry-text-purple text-white rounded-[8px] font-[500] ${classname ?? ""}`}
+      className={`${paddingClass} bg-redberry-text-purple cursor-pointer text-white rounded-[8px] font-[500] ${classname ?? ""}`}
     >
       {text}
     </button>

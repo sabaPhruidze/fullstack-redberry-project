@@ -56,10 +56,18 @@ const AuthSignUpStepTwoSection = ({
         onChange={onConfirmPasswordChange}
         onToggleVisibility={() => setShowConfirmPassword((prev) => !prev)}
       />
-      <button type="button" onClick={onNext} className="mt-[16px] flex h-[47px] w-[360px] items-center justify-center rounded-[8px] bg-[#4F46E5] p-[10px] text-[16px] leading-[100%] text-white" style={{ fontWeight: 500 }}>
+      <button
+        type="button"
+        onClick={onNext}
+        className="mt-[16px] flex h-[47px] w-[360px] items-center justify-center rounded-[8px] bg-[#4F46E5] p-[10px] text-[16px] leading-[100%] text-white font-[500] cursor-pointer"
+      >
         Next
       </button>
-      <AuthModalFooter questionText="Already have an account?" actionText="Log In" onActionClick={onLogInClick} />
+      <AuthModalFooter
+        questionText="Already have an account?"
+        actionText="Log In"
+        onActionClick={onLogInClick}
+      />
     </div>
   );
 };

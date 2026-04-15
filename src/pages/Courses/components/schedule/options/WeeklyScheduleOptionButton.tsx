@@ -23,7 +23,7 @@ const WeeklyScheduleOptionButton = ({
         isUnavailable
           ? "border-[#D1D1D1] bg-[#F5F5F5] cursor-not-allowed"
           : isSelected
-            ? "border-[#958FEF] bg-[#DDDBFA] cursor-default"
+            ? "border-[#958FEF] bg-[#DDDBFA] cursor-pointer"
             : "border-[#D1D1D1] bg-white cursor-pointer"
       }`}
     >
@@ -43,5 +43,3 @@ const WeeklyScheduleOptionButton = ({
 };
 
 export default WeeklyScheduleOptionButton;
-
-

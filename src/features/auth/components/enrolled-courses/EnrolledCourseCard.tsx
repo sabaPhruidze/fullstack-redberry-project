@@ -107,7 +107,7 @@ const EnrolledCourseCard = ({ item, onView }: EnrolledCourseCardProps) => {
         <button
           type="button"
           onClick={() => onView(item.course.id)}
-          className="h-[48px] w-[117px] rounded-[8px] border-[2px] border-[#958FEF] px-[16px] py-[12px] text-[#4F46E5] font-[500] leading-[24px]"
+          className="h-[48px] w-[117px] rounded-[8px] border-[2px] cursor-pointer border-[#958FEF] px-[16px] py-[12px] text-[#4F46E5] font-[500] leading-[24px]"
         >
           View
         </button>

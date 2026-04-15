@@ -44,13 +44,16 @@ const AuthSignUpStepThreeSection = ({
         type="button"
         disabled={isSigningUp}
         onClick={onSignUp}
-        className="mt-[16px] flex h-[47px] w-[360px] items-center justify-center rounded-[8px] bg-[#4F46E5] p-[10px] text-[16px] leading-[100%] text-white"
+        className="mt-[16px] flex h-[47px] w-[360px] items-center justify-center rounded-[8px] bg-[#4F46E5] p-[10px] text-[16px] leading-[100%] text-white cursor-pointer"
         style={{ fontWeight: 500 }}
       >
         {isSigningUp ? "Signing Up..." : "Sign Up"}
       </button>
       {signUpError ? (
-        <p className="mt-[8px] text-[12px] leading-[100%] text-[#F4161A]" style={{ fontWeight: 400 }}>
+        <p
+          className="mt-[8px] text-[12px] leading-[100%] text-[#F4161A]"
+          style={{ fontWeight: 400 }}
+        >
           {signUpError}
         </p>
       ) : null}

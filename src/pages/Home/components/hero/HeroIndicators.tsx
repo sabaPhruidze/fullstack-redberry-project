@@ -26,7 +26,7 @@ const HeroIndicators = ({
             onClick={() => onSelect(index)}
             aria-label={`Go to slide ${index + 1}`}
             aria-current={isActive}
-            className="h-[8px] w-[57px] rounded-full"
+            className="h-[8px] w-[57px] rounded-full cursor-pointer"
             style={{ backgroundColor: indicatorColor }}
           />
         );

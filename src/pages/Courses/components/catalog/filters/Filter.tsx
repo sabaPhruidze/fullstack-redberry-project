@@ -38,7 +38,7 @@ const Filter = ({
         <button
           type="button"
           onClick={onClearFilters}
-          className="w-[133px] h-[24px] flex flex-row justify-between items-center bg-transparent border-0 p-0"
+          className="w-[133px] h-[24px] flex flex-row justify-between items-center bg-transparent border-0 p-0 cursor-pointer"
           aria-label="Clear all filters"
         >
           <p className="text-[#8A8A8A] font-[500] leading-[24px]">
@@ -71,5 +71,3 @@ const Filter = ({
 };
 
 export default Filter;
-
-

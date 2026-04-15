@@ -62,7 +62,7 @@ const AuthModalShell = ({
             type="button"
             onClick={enableCloseActions ? onClose : undefined}
             aria-label={closeAriaLabel}
-            className={`absolute flex h-6 w-6 items-center justify-center ${closeButtonClassName}`}
+            className={`absolute flex h-6 w-6 items-center justify-center cursor-pointer ${closeButtonClassName}`}
           >
             <img src={CLOSE_ICON} alt="" className="h-6 w-6" />
           </button>
