@@ -1,4 +1,4 @@
-import ONE from "../../../../../assets/icons/courses/schedule-steps/Icon Set=One.svg";
+import ONE from "../../../../../assets/icons/courses/schedule-steps/Icon Set=One.svg?react";
 import ARROW_DOWN from "../../../../../assets/icons/courses/navigation/glyphs_arrow-bold.svg?react";
 import type { WeeklyScheduleOption } from "../../../../../types/courseDetail";
 import WeeklyScheduleOptionButton from "../options/WeeklyScheduleOptionButton";
@@ -18,6 +18,9 @@ const WeeklySchedule = ({
   isOpen,
   onToggle,
 }: WeeklyScheduleProps) => {
+  const titleColorClass = isOpen ? "text-[#130E67]" : "text-[#8A8A8A]";
+  const closedStateIconClass = isOpen ? "" : "[&_path]:stroke-[#8A8A8A]";
+
   return (
     <div className="w-full">
       <button
@@ -25,22 +28,29 @@ const WeeklySchedule = ({
         onClick={onToggle}
         className="w-full h-[30px] flex flex-row justify-between items-center cursor-pointer"
       >
-        <img src={ONE} alt="one icon" className="w-[28px] h-[28px]" />
+        <ONE
+          aria-hidden
+          className={`w-[28px] h-[28px] ${closedStateIconClass}`}
+        />
         <div className="w-[457px] h-[30px] ml-[8px] mr-[7px] text-left">
-          <h2 className="text-[#130E67] font-[600] text-[24px] leading-[100%]">
+          <h2
+            className={`${titleColorClass} font-[600] text-[24px] leading-[100%]`}
+          >
             Weekly Schedule
           </h2>
         </div>
         <ARROW_DOWN
           aria-hidden
-          className={`w-[28px] h-[28px] transition-transform duration-300 ease-in-out [&_path]:stroke-[#130E67] ${
-            isOpen ? "rotate-180" : "rotate-0"
-          }`}
+          className={`w-[28px] h-[28px] transition-transform duration-300 ease-in-out ${
+            isOpen ? "[&_path]:stroke-[#130E67]" : "[&_path]:stroke-[#8A8A8A]"
+          } ${isOpen ? "rotate-180" : "rotate-0"}`}
         />
       </button>
       <div
         className={`grid overflow-hidden transition-[grid-template-rows,opacity,margin-top] duration-300 ease-in-out ${
-          isOpen ? "grid-rows-[1fr] opacity-100 mt-[18px]" : "grid-rows-[0fr] opacity-0 mt-0"
+          isOpen
+            ? "grid-rows-[1fr] opacity-100 mt-[18px]"
+            : "grid-rows-[0fr] opacity-0 mt-0"
         }`}
       >
         <div className="overflow-hidden">
@@ -50,7 +60,9 @@ const WeeklySchedule = ({
                 key={option.id}
                 option={option}
                 isSelected={selectedId === option.id}
-                isUnavailable={option.isAvailable === false || option.available === false}
+                isUnavailable={
+                  option.isAvailable === false || option.available === false
+                }
                 onSelect={onSelect}
               />
             ))}
@@ -62,5 +74,3 @@ const WeeklySchedule = ({
 };
 
 export default WeeklySchedule;
-
-
