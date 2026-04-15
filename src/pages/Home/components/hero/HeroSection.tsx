@@ -1,58 +1,86 @@
-import Button from "../../../../components/ui/Button";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import HeroIndicators from "./HeroIndicators";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../../components/ui/Button";
+import { useProtectedAction } from "../../../../features/auth/hooks/useProtectedAction";
+import { useAuthModal } from "../../../../features/auth/hooks/useAuthModal";
 import HeroArrows from "./HeroArrows";
+import HeroIndicators from "./HeroIndicators";
 import { HERO_SLIDES } from "./heroCarousel.data";
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const { handleProtectedAction } = useProtectedAction();
+  const { openEnrolledCoursesModal } = useAuthModal();
+
   const [currentSlide, setCurrentSlide] = useState(0);
+
   const activeSlide = HERO_SLIDES[currentSlide];
   const canGoPrev = currentSlide > 0;
   const canGoNext = currentSlide < HERO_SLIDES.length - 1;
+
   const containerGapClass = currentSlide === 2 ? "gap-[74px]" : "gap-[31px]";
 
   const goPrev = () => {
-    if (!canGoPrev) return;
+    if (!canGoPrev) {
+      return;
+    }
+
     setCurrentSlide((previousSlide) => previousSlide - 1);
   };
 
   const goNext = () => {
-    if (!canGoNext) return;
+    if (!canGoNext) {
+      return;
+    }
+
     setCurrentSlide((previousSlide) => previousSlide + 1);
   };
 
   const goToSlide = (slideIndex: number) => {
-    if (slideIndex < 0 || slideIndex >= HERO_SLIDES.length) return;
+    if (slideIndex < 0 || slideIndex >= HERO_SLIDES.length) {
+      return;
+    }
+
     setCurrentSlide(slideIndex);
+  };
+
+  const handleHeroButtonClick = () => {
+    if (activeSlide.action === "open-enrolled-courses") {
+      handleProtectedAction(openEnrolledCoursesModal);
+      return;
+    }
+
+    navigate("/courses/catalog");
   };
 
   return (
     <section className="py-[64px]">
       <div
-        className={`relative text-white w-[1566px] h-[420px] rounded-[30px] flex flex-col ${containerGapClass} bg-cover bg-center bg-no-repeat ${activeSlide.containerPaddingClass}`}
+        className={`relative flex h-[420px] w-[1566px] flex-col rounded-[30px] bg-cover bg-center bg-no-repeat text-white ${containerGapClass} ${activeSlide.containerPaddingClass}`}
         style={{ backgroundImage: `url(${activeSlide.image})` }}
       >
         <div className="flex w-[1470px] flex-col gap-[40px]">
           <div>
             <h1
-              className={`leading-[100%] text-[48px] font-bold ${activeSlide.titleHeightClass}`}
+              className={`text-[48px] font-bold leading-[100%] ${activeSlide.titleHeightClass}`}
             >
               {activeSlide.title}
             </h1>
+
             {activeSlide.description ? (
-              <p className="mt-[12px] font-light text-[24px] w-[1218px]">
+              <p className="mt-[12px] w-[1218px] text-[24px] font-light">
                 {activeSlide.description}
               </p>
             ) : null}
           </div>
+
           <Button
             text={activeSlide.buttonText}
-            classname={`text-[20px] h-[64px] ${activeSlide.buttonWidthClass}`}
-            onClick={() => navigate("/courses/catalog")}
+            classname={`h-[64px] text-[20px] ${activeSlide.buttonWidthClass}`}
+            onClick={handleHeroButtonClick}
           />
         </div>
+
         <div className="relative flex h-[54px] w-full items-center justify-center">
           <HeroIndicators
             slideCount={HERO_SLIDES.length}
@@ -61,6 +89,7 @@ const HeroSection = () => {
             inactiveColor={activeSlide.inactiveIndicatorColor}
             onSelect={goToSlide}
           />
+
           <div className="absolute right-0 top-0">
             <HeroArrows
               leftIcon={activeSlide.leftArrowIcon}

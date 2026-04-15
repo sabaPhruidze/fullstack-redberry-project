@@ -6,6 +6,8 @@ import LEFT_WHITE_ICON from "../../../../assets/icons/home/left_white.svg";
 import RIGHT_GRAY_ICON from "../../../../assets/icons/home/right_gray.svg";
 import RIGHT_WHITE_ICON from "../../../../assets/icons/home/right_white.svg";
 
+export type HeroSlideAction = "browse-courses" | "open-enrolled-courses";
+
 export type HeroSlide = {
   title: string;
   description?: string;
@@ -18,6 +20,7 @@ export type HeroSlide = {
   rightArrowIcon: string;
   activeIndicatorColor: string;
   inactiveIndicatorColor: string;
+  action: HeroSlideAction;
 };
 
 export const HERO_SLIDES: HeroSlide[] = [
@@ -34,6 +37,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     rightArrowIcon: RIGHT_WHITE_ICON,
     activeIndicatorColor: "#F5F5F5",
     inactiveIndicatorColor: "rgba(193, 188, 188, 0.5)",
+    action: "browse-courses",
   },
   {
     title: "Pick up where you left off",
@@ -48,6 +52,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     rightArrowIcon: RIGHT_WHITE_ICON,
     activeIndicatorColor: "#F5F5F5",
     inactiveIndicatorColor: "#ADADAD",
+    action: "open-enrolled-courses",
   },
   {
     title: "Learn together, grow faster",
@@ -60,5 +65,6 @@ export const HERO_SLIDES: HeroSlide[] = [
     rightArrowIcon: RIGHT_GRAY_ICON,
     activeIndicatorColor: "#F5F5F5",
     inactiveIndicatorColor: "#ADADAD",
+    action: "browse-courses",
   },
 ];
